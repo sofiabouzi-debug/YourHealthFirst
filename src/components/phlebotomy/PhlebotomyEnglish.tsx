@@ -9,6 +9,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { Icon, type IconName } from "./icons";
 import AppointmentSteps, { type JourneyStep } from "./AppointmentSteps";
+import { ACCENTS, accentGradient } from "./accents";
 
 /**
  * DRAFT SWITCH. While true the page shows the "draft for approval" banner, highlights every
@@ -296,9 +297,15 @@ export default async function PhlebotomyEnglish() {
       <section className="relative z-10 w-full px-5">
         <div className="mx-auto -mt-[60px] max-w-[1400px]">
           <div className="grid grid-cols-1 overflow-hidden rounded-[20px] border border-tan/30 bg-white shadow-xl sm:grid-cols-2 lg:grid-cols-5">
-            {quickFacts.map((f) => (
+            {quickFacts.map((f, i) => (
               <div key={f.label} className="flex items-start gap-4 border-b border-tan/20 p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm"
+                  style={{
+                    background: accentGradient(ACCENTS[i % ACCENTS.length]),
+                    color: ACCENTS[i % ACCENTS.length].ink,
+                  }}
+                >
                   <Icon name={f.icon} className="h-5 w-5" />
                 </span>
                 <div className="flex flex-col gap-1">
@@ -388,10 +395,16 @@ export default async function PhlebotomyEnglish() {
             </div>
 
             <ul className="flex flex-col overflow-hidden rounded-[24px] border border-tan/25 bg-white/70 shadow-sm backdrop-blur-sm">
-              {whoFor.map((w) => (
+              {whoFor.map((w, i) => (
                 <li key={w.text} className="flex flex-1 items-center gap-5 border-b border-tan/25 px-7 py-6 last:border-b-0 lg:px-9">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
-                    <Icon name={w.icon} className="h-6 w-6" />
+                  <span
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-md"
+                    style={{
+                      background: accentGradient(ACCENTS[i % ACCENTS.length]),
+                      color: ACCENTS[i % ACCENTS.length].ink,
+                    }}
+                  >
+                    <Icon name={w.icon} className="h-7 w-7" />
                   </span>
                   <p className="text-[16px] leading-[26px] text-body-text">{w.text}</p>
                 </li>
