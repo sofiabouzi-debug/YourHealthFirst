@@ -10,6 +10,7 @@ import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { Icon, type IconName } from "./icons";
 import AppointmentSteps, { type JourneyStep } from "./AppointmentSteps";
 import { ACCENTS, accentGradient } from "./accents";
+import KitSending from "./KitSending";
 
 /**
  * DRAFT SWITCH. While true the page shows the "draft for approval" banner, highlights every
@@ -69,13 +70,6 @@ const labs = [
   "Key Clinic",
   "RGCC International",
   "Religen USA",
-];
-
-const postage: { icon: IconName; title: string; text: string }[] = [
-  { icon: "building", title: "Post Office", text: "The nearest branch is less than a 10-minute walk from the clinic." },
-  { icon: "pin", title: "UPS", text: "A UPS drop-off point is 5 minutes from the clinic." },
-  { icon: "truck", title: "DHL", text: "Once we confirm your appointment, call DHL and ask them to collect from your home or the clinic between 3pm and 5pm." },
-  { icon: "truck", title: "FedEx", text: "Once we confirm your appointment, call FedEx and ask them to collect from your home or the clinic between 3pm and 5pm." },
 ];
 
 /** `answer` is clean text (also used for the FAQ search markup). `draft` is shown only while drafting. */
@@ -144,6 +138,8 @@ const guides: { slug: string; title: string; blurb: string }[] = [
   { slug: "why-book-private-phlebotomy-london", title: "Why book a private phlebotomy service in London?", blurb: "The advantages of a private appointment" },
 ];
 
+const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat", "check"];
+
 const sofiaChecklist: string[] = [
   "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
   "Mobile visits: price, minimum notice, which areas besides Teddington and Twickenham, and the furthest distance.",
@@ -178,8 +174,6 @@ const primaryBtn =
   "inline-flex h-14 items-center gap-3 rounded-[10px] bg-tan px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-forest uppercase transition-opacity hover:opacity-90";
 const ghostBtn =
   "inline-flex h-14 items-center gap-3 rounded-[10px] border border-white/35 px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-white uppercase transition-colors hover:border-tan hover:text-tan";
-const card =
-  "rounded-[20px] border border-tan/25 bg-white/70 p-7 shadow-sm backdrop-blur-sm";
 const creamBg =
   "relative w-full overflow-hidden bg-[linear-gradient(135deg,#faf4ea_0%,#f0e0c8_100%)] px-5";
 
@@ -631,36 +625,7 @@ export default async function PhlebotomyEnglish() {
         <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
           <SectionBars>Sending your kit</SectionBars>
 
-          <div className={`${card} mt-10 flex items-start gap-4`}>
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
-              <Icon name="truck" className="h-5 w-5" />
-            </span>
-            <p className="text-[15px] leading-[24px] text-body-text">
-              If your test needs a courier, book a <strong className="font-semibold text-forest">morning appointment, Monday to Thursday</strong>, and arrange collection from the clinic the same day between 3pm and 5pm. If your form requires it, we can freeze the sample and hold it at the clinic until the courier collects it.
-            </p>
-          </div>
-
-          <div className={`${card} mt-6 flex flex-col gap-6`}>
-            <div className="flex items-start gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
-                <Icon name="box" className="h-5 w-5" />
-              </span>
-              <p className="text-[15px] leading-[24px] text-body-text">
-                Your kit gives you up to four ways to send the sample. Which one you use depends on the laboratory.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {postage.map((o) => (
-                <div key={o.title} className="flex flex-col gap-3 rounded-[14px] bg-white p-6 shadow-sm">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
-                    <Icon name={o.icon} className="h-5 w-5" />
-                  </span>
-                  <h3 className="font-subheading text-[14px] font-semibold tracking-[0.5px] text-forest uppercase">{o.title}</h3>
-                  <p className="text-[13px] leading-[20px] text-body-text">{o.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <KitSending />
         </div>
       </section>
 
@@ -681,21 +646,33 @@ export default async function PhlebotomyEnglish() {
 
       {/* Guides */}
       <section className="w-full border-t border-black/8 bg-cream px-5">
-        <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <SectionBars>Read before your appointment</SectionBars>
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.map((g) => (
-              <Link
-                key={g.slug}
-                href={`/blog/${g.slug}`}
-                className="group flex flex-col gap-2 rounded-[14px] border border-tan/25 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
-              >
-                <span className="font-subheading text-[15px] font-semibold leading-[22px] text-forest transition-colors group-hover:text-tan">
-                  {g.title}
-                </span>
-                <span className="text-[14px] leading-[21px] text-body-text">{g.blurb}</span>
-              </Link>
-            ))}
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {guides.map((g, i) => {
+              const a = ACCENTS[i % ACCENTS.length];
+              return (
+                <Link
+                  key={g.slug}
+                  href={`/blog/${g.slug}`}
+                  className="group flex items-center gap-4 rounded-[16px] border p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ background: a.tint, borderColor: a.line, borderLeft: `4px solid ${a.grad[0]}` }}
+                >
+                  <span
+                    className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full shadow-sm transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: accentGradient(a), color: a.ink }}
+                  >
+                    <Icon name={guideIcons[i % guideIcons.length]} className="h-6 w-6" />
+                  </span>
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    <span className="font-subheading text-[15px] font-semibold leading-[21px]" style={{ color: a.text }}>
+                      {g.title}
+                    </span>
+                    <span className="text-[13px] leading-[19px] text-body-text">{g.blurb}</span>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -703,41 +680,59 @@ export default async function PhlebotomyEnglish() {
       {/* Find us and book */}
       <section className="relative w-full overflow-hidden bg-forest px-5">
         <div className="pointer-events-none absolute -right-[8%] -top-[30%] h-[460px] w-[460px] rounded-full bg-tan/10 blur-[110px]" />
-        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-12 py-[70px] lg:grid-cols-[1.3fr_0.7fr] lg:gap-20 lg:py-[90px]">
+        <div className="pointer-events-none absolute -left-[6%] bottom-[-40%] h-[380px] w-[380px] rounded-full bg-[#3f7a63]/25 blur-[110px]" />
+        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-10 py-[56px] lg:grid-cols-[1.35fr_0.65fr] lg:gap-14 lg:py-[72px]">
           <div className="flex flex-col gap-5">
             <SectionBars light>YourHealthFirst Clinic, 2 Wimpole Street</SectionBars>
-            <p className="max-w-[560px] text-[16px] leading-[27px] text-white/75">
-              London W1G 0EB, in the Harley Street medical district. A few minutes&apos; walk from Oxford Circus and Bond Street stations.
+            <p className="max-w-[620px] text-[16px] leading-[26px] text-white/75">
+              London W1G 0EB, in the Harley Street medical district. A few minutes&apos; walk from Oxford Circus and Bond Street stations. Tell us your laboratory, whether your kit needs centrifuging or a courier, and whether the appointment is for a child or a mobile visit.
             </p>
-            <p className="max-w-[560px] text-[16px] leading-[27px] text-white/75">
-              Tell us your laboratory, whether your kit needs centrifuging or a courier, and whether the appointment is for a child or a mobile visit.
-            </p>
-            <div className="mt-2 flex flex-wrap gap-3">
-              <a href={PHONE_TEL} className={primaryBtn}>
-                <Icon name="phone" className="h-4 w-4" />
-                Call 0207 225 3582
-              </a>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
-                <Icon name="chat" className="h-4 w-4" />
-                WhatsApp
-              </a>
-              <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
-                <Icon name="pin" className="h-4 w-4" />
-                Directions
-              </a>
+            <div className="mt-1 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {[
+                { href: PHONE_TEL, icon: "phone" as IconName, label: "Call", value: "0207 225 3582", a: ACCENTS[1], ext: false },
+                { href: WHATSAPP_URL, icon: "chat" as IconName, label: "WhatsApp", value: "07818 474041", a: ACCENTS[5], ext: true },
+                { href: DIRECTIONS_URL, icon: "pin" as IconName, label: "Directions", value: "Open in Maps", a: ACCENTS[2], ext: true },
+              ].map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="group flex items-center gap-3 rounded-[16px] border border-white/15 bg-white/[0.06] p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.12]"
+                >
+                  <span
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full shadow-md transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: accentGradient(c.a), color: c.a.ink }}
+                  >
+                    <Icon name={c.icon} className="h-5 w-5" />
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="font-subheading text-[12px] font-semibold tracking-[1.5px] text-tan uppercase">{c.label}</span>
+                    <span className="text-[14px] font-medium text-white">{c.value}</span>
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
-          <div className="flex flex-col gap-3 rounded-[20px] border border-white/15 bg-white/5 p-7">
+          <div className="flex flex-col gap-4 rounded-[20px] border border-white/15 bg-white/[0.06] p-6">
             <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">Opening hours</h3>
-            <p className="text-[15px] leading-[26px] text-white/80">
-              <Confirm note="Sofia to confirm hours">
-                Monday to Friday: 10am to 6:30pm
-                <br />
-                Saturday: 12pm to 4pm
-                <br />
-                Sunday and out of hours: by appointment only
-              </Confirm>
-            </p>
+            <ul className="flex flex-col gap-3 text-[15px] leading-[22px] text-white/85">
+              {[
+                { day: "Monday to Friday", time: "10am to 6:30pm", c: ACCENTS[1].grad[0] },
+                { day: "Saturday", time: "12pm to 4pm", c: ACCENTS[5].grad[0] },
+                { day: "Sunday and out of hours", time: "By appointment only", c: ACCENTS[2].grad[0] },
+              ].map((h) => (
+                <li key={h.day} className="flex items-center gap-3 border-t border-white/10 pt-3 first:border-t-0 first:pt-0">
+                  <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: h.c }} />
+                  <span className="flex flex-1 flex-wrap items-baseline justify-between gap-x-3">
+                    <span>{h.day}</span>
+                    <span className="font-medium text-white">
+                      <Confirm>{h.time}</Confirm>
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {SHOW_DRAFT_MARKERS && <p className="text-[12px] font-semibold text-[#ffd45c]">[Sofia to confirm hours]</p>}
             <p className="text-[14px] leading-[22px] text-white/60">info@yourhealthfirst.uk</p>
           </div>
         </div>

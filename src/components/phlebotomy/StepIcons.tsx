@@ -3,7 +3,17 @@
  * is reached (see the .phl-* rules in globals.css). Without JavaScript, or with "reduce motion",
  * they simply show their finished state.
  */
-export type StepIconName = "book" | "prepare" | "arrive" | "draw" | "centrifuge" | "dispatch";
+export type StepIconName =
+  | "book"
+  | "prepare"
+  | "arrive"
+  | "draw"
+  | "centrifuge"
+  | "dispatch"
+  | "post"
+  | "dropoff"
+  | "truck"
+  | "pickup";
 
 const duo = { fill: "currentColor", fillOpacity: 0.22, stroke: "none" } as const;
 
@@ -86,6 +96,51 @@ export function StepIcon({ name, className }: { name: StepIconName; className?: 
           <g className="phl-lid">
             <path d="M4 7h16v3.5H4Z" {...duo} />
             <path d="M4 7h16v3.5H4Z" />
+          </g>
+        </svg>
+      );
+    case "post":
+      return (
+        <svg className={cls} {...common}>
+          <rect x="4" y="10" width="16" height="10" rx="2" {...duo} />
+          <rect x="4" y="10" width="16" height="10" rx="2" />
+          <path d="M8 13.5h8" />
+          <g className="phl-letter">
+            <rect x="8.5" y="3" width="7" height="5" rx="0.8" fill="currentColor" fillOpacity={0.4} />
+            <path d="m8.5 3.6 3.5 2.4 3.5-2.4" strokeWidth={1.2} />
+          </g>
+        </svg>
+      );
+    case "dropoff":
+      return (
+        <svg className={cls} {...common}>
+          <ellipse className="phl-ripple" cx="12" cy="20.6" rx="5" ry="1.6" strokeWidth={1.2} />
+          <g className="phl-hop">
+            <path d="M12 19s6-5.2 6-9.8a6 6 0 0 0-12 0C6 13.8 12 19 12 19Z" {...duo} />
+            <path d="M12 19s6-5.2 6-9.8a6 6 0 0 0-12 0C6 13.8 12 19 12 19Z" />
+            <path d="M9.6 8.2 12 7l2.4 1.2v2.6L12 12l-2.4-1.2Z" strokeWidth={1.4} />
+          </g>
+        </svg>
+      );
+    case "truck":
+      return (
+        <svg className={cls} {...common}>
+          <path className="phl-lines" d="M1.5 9h3M0.5 12.5h4M2 16h2.5" strokeWidth={1.3} />
+          <g className="phl-truck">
+            <path d="M5 7h9v9H5Z" {...duo} />
+            <path d="M5 7h9v9H5ZM14 10h3.6L20 12.8V16h-6Z" />
+            <circle cx="8.5" cy="17.5" r="1.8" fill="#fff" fillOpacity={0.9} />
+            <circle cx="16.5" cy="17.5" r="1.8" fill="#fff" fillOpacity={0.9} />
+          </g>
+        </svg>
+      );
+    case "pickup":
+      return (
+        <svg className={cls} {...common}>
+          <path className="phl-arrow" d="M12 8V2.5M9.2 5 12 2.3 14.8 5" />
+          <g className="phl-parcel">
+            <path d="M5 11h14v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z" {...duo} />
+            <path d="M5 11h14v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1ZM12 11v10M8.5 11l3.5 3 3.5-3" />
           </g>
         </svg>
       );
