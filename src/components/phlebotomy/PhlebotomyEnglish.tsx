@@ -1,0 +1,690 @@
+import Image from "next/image";
+import type { ReactNode } from "react";
+import { Link } from "@/i18n/routing";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
+import type { TreatmentFaq } from "@/data/treatments";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import { Icon, type IconName } from "./icons";
+
+/**
+ * DRAFT SWITCH. While true the page shows the "draft for approval" banner, highlights every
+ * fact Sofia still has to confirm, and shows the "For Sofia only" checklist at the bottom.
+ * Set to false before this page goes to the live site: the banner, highlights and checklist
+ * disappear and the fallback wording is shown as normal text.
+ */
+const SHOW_DRAFT_MARKERS = true;
+
+const PHONE_TEL = "tel:+442072253582";
+const WHATSAPP_URL = "https://wa.me/447818474041";
+const DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=2+Wimpole+Street+London+W1G+0EB";
+
+/** Wraps wording Sofia still has to confirm. Visible highlight while SHOW_DRAFT_MARKERS is true. */
+function Confirm({ children, note }: { children: ReactNode; note?: string }) {
+  if (!SHOW_DRAFT_MARKERS) return <>{children}</>;
+  return (
+    <mark className="rounded-[4px] border border-dashed border-[#d9a400] bg-[#fff3c4] px-1.5 py-0.5 text-[0.95em] text-[#6b4a00]">
+      {children}
+      {note ? <span className="font-semibold"> [{note}]</span> : null}
+    </mark>
+  );
+}
+
+const draftNote = (text: string) => (SHOW_DRAFT_MARKERS ? ` [Sofia to confirm: ${text}]` : "");
+
+/* ---------------------------------------------------------------- content */
+
+const whoFor: { icon: IconName; text: string }[] = [
+  { icon: "clipboard", text: "You have a blood test kit from a private, NHS or international laboratory and need a practitioner to take the sample." },
+  { icon: "user", text: "A doctor, consultant or therapist has asked you to arrange an independent blood draw." },
+  { icon: "tubes", text: "Your kit says the sample must be centrifuged before it is sent, and you need a clinic that can do it." },
+  { icon: "child", text: "Your child needs a blood test and you want a calm, unhurried appointment." },
+  { icon: "shield", text: "You are nervous about needles or have difficult veins. Tell us when you book and we will plan extra time." },
+];
+
+const steps: { title: string; text: string }[] = [
+  { title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
+  { title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
+  { title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
+  { title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
+  { title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
+  { title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
+];
+
+const labs = [
+  "Functional DX",
+  "Regenerus Labs",
+  "Cyrex",
+  "Genova",
+  "ArminLabs",
+  "Nordic Lab",
+  "Alletess Medical Laboratory",
+  "FRAT",
+  "Viva Health",
+  "Key Clinic",
+  "RGCC International",
+  "Religen USA",
+];
+
+const postage: { icon: IconName; title: string; text: string }[] = [
+  { icon: "building", title: "Post Office", text: "The nearest branch is less than a 10-minute walk from the clinic." },
+  { icon: "pin", title: "UPS", text: "A UPS drop-off point is 5 minutes from the clinic." },
+  { icon: "truck", title: "DHL", text: "Once we confirm your appointment, call DHL and ask them to collect from your home or the clinic between 3pm and 5pm." },
+  { icon: "truck", title: "FedEx", text: "Once we confirm your appointment, call FedEx and ask them to collect from your home or the clinic between 3pm and 5pm." },
+];
+
+/** `answer` is clean text (also used for the FAQ search markup). `draft` is shown only while drafting. */
+const faqSource: { question: string; answer: string; draft?: string }[] = [
+  {
+    question: "Do I need a referral or a doctor's request?",
+    answer:
+      "Not if you already have a private laboratory test kit with its requisition form. You can book directly with us. If you do not have a kit yet, call us first: we collect and prepare the sample, and the test itself is ordered from a laboratory or your clinician.",
+  },
+  {
+    question: "Can I bring my own test kit?",
+    answer:
+      "Yes. We regularly prepare samples for UK, European and international laboratories, including Functional DX, Regenerus, Cyrex, Genova, ArminLabs and Nordic Lab. Bring the complete kit and the requisition form.",
+  },
+  {
+    question: "How much does a private blood draw cost?",
+    answer:
+      "Adults from £80, children under 16 from £120, and £10 per tube if the sample needs centrifuging. Mobile visits are priced separately on request.",
+  },
+  {
+    question: "Do I need an appointment?",
+    answer:
+      "We offer a walk-in service, but appointments are given priority. Without one, waits can reach 45 minutes or more. Please book if your kit needs centrifuging, a courier collection or a child's appointment.",
+    draft: "walk-in wording",
+  },
+  {
+    question: "How long does it take?",
+    answer:
+      "Most appointments take 15–30 minutes, depending on the number of tubes, paperwork checks and whether the sample needs centrifuging.",
+    draft: "appointment length",
+  },
+  {
+    question: "Do you take blood from children?",
+    answer:
+      "Yes. We look after children with a gentle, unhurried approach. Tell us your child's age when you book so we can plan the time and the right equipment. A favourite toy, book or tablet helps. Please follow our guidance on numbing cream before you arrive.",
+  },
+  {
+    question: "Do you offer mobile or home blood draws?",
+    answer:
+      "Yes, on request. We cover the Teddington and Twickenham areas, and mobile visits are priced separately. Call or WhatsApp us with your postcode and kit details. Some tests need immediate processing on site and are better done at the clinic.",
+    draft: "other areas covered",
+  },
+  {
+    question: "Do I need to fast?",
+    answer:
+      "Only if your test instructions say so. Plain water is fine, and it helps. Never stop prescribed medication unless your doctor tells you to.",
+  },
+  {
+    question: "Who gives me my results?",
+    answer:
+      "The laboratory that analyses your sample, or the clinician who ordered the test. We do not analyse or interpret results; we make sure the sample is collected, handled and prepared correctly.",
+  },
+];
+
+const faqItems: TreatmentFaq[] = faqSource.map((f) => ({
+  question: f.question,
+  answer: f.answer + (f.draft ? draftNote(f.draft) : ""),
+}));
+
+const guides: { slug: string; title: string; blurb: string }[] = [
+  { slug: "private-phlebotomy-london-blood-collection", title: "Private Phlebotomy at YourHealthFirst Clinic", blurb: "Your guide to blood collection" },
+  { slug: "how-to-prepare-for-a-blood-test", title: "How to prepare for a blood test", blurb: "A patient's guide" },
+  { slug: "blood-tests-adults-children-london", title: "Blood tests for adults and children", blurb: "What to expect" },
+  { slug: "what-to-expect-home-phlebotomy-visit", title: "What to expect during a home phlebotomy visit", blurb: "A patient's guide" },
+  { slug: "manage-anxiety-during-blood-collection", title: "Tips for managing anxiety during blood collection", blurb: "Practical techniques for nervous patients" },
+  { slug: "why-book-private-phlebotomy-london", title: "Why book a private phlebotomy service in London?", blurb: "The advantages of a private appointment" },
+];
+
+const sofiaChecklist: string[] = [
+  "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
+  "Mobile visits: price, minimum notice, which areas besides Teddington and Twickenham, and the furthest distance.",
+  "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
+  "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
+  "Registration wording: may we say Sofia is a registered phlebotomist, with her National Phlebotomist Register number?",
+  "Preparation: adults 2 litres of water across the day, or 500ml shortly before? Children's numbing cream: 30 minutes (page) or 60 minutes (guide)?",
+  "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
+  "The guides say \"same-day and same-week appointments\" and \"zero waiting time\". Can we promise this?",
+  "Laboratory list: add Doctor's Data, which a guide names but this page does not?",
+  "Should centrifuging for other clinics and practitioners have its own page?",
+];
+
+/* ---------------------------------------------------------------- helpers */
+
+function SectionBars({ children, light }: { children: ReactNode; light?: boolean }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="h-[3px] w-12 rounded-full bg-tan" />
+      <h2
+        className={`font-display text-[30px] font-bold leading-[36px] tracking-[-1px] uppercase lg:text-[36px] lg:leading-[42px] ${
+          light ? "text-cream" : "text-forest"
+        }`}
+      >
+        {children}
+      </h2>
+    </div>
+  );
+}
+
+const primaryBtn =
+  "inline-flex h-14 items-center gap-3 rounded-[10px] bg-tan px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-forest uppercase transition-opacity hover:opacity-90";
+const ghostBtn =
+  "inline-flex h-14 items-center gap-3 rounded-[10px] border border-white/35 px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-white uppercase transition-colors hover:border-tan hover:text-tan";
+const card =
+  "rounded-[20px] border border-tan/25 bg-white/70 p-7 shadow-sm backdrop-blur-sm";
+const creamBg =
+  "relative w-full overflow-hidden bg-[linear-gradient(135deg,#faf4ea_0%,#f0e0c8_100%)] px-5";
+
+const quickFacts: { icon: IconName; label: string; value: string; sub: string }[] = [
+  { icon: "user", label: "Who", value: "Adults and children", sub: "" },
+  { icon: "target", label: "Price", value: "Adults from £80", sub: "Children under 16 from £120 · Centrifuging £10 per tube" },
+  { icon: "pin", label: "Where", value: "2 Wimpole Street, W1G 0EB", sub: "Near Oxford Circus and Bond Street" },
+  { icon: "truck", label: "Mobile visits", value: "On request", sub: "Priced separately" },
+  { icon: "phone", label: "Book", value: "0207 225 3582", sub: "WhatsApp 07818 474041" },
+];
+
+/* ------------------------------------------------------------------- page */
+
+export default async function PhlebotomyEnglish() {
+  const sanitySettings = await sanityFetch<Record<string, unknown> | null>({
+    query: SITE_SETTINGS_QUERY,
+    tags: ["siteSettings"],
+  });
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqSource.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+
+  const beforeYouCome: ReactNode[] = [
+    <>Read all the instructions in your kit. Check whether the laboratory asks you to fast or to come at a certain time of day.</>,
+    <>
+      Drink plenty of plain water. It makes veins easier to find and helps you avoid dizziness.{" "}
+      <Confirm note="Sofia to confirm">Adults: at least 2 litres across the day; children: at least 1 litre.</Confirm>
+    </>,
+    <>Avoid coffee, tea, juice, fizzy and sugary drinks unless your kit allows them. They can change your results.</>,
+    <>Fast only if your kit says so. If you fast, you can still drink plain water.</>,
+    <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
+    <>
+      For children:{" "}
+      <Confirm note="Sofia to confirm timing">apply numbing cream to both arms 30 minutes before you arrive</Confirm>.
+    </>,
+  ];
+
+  const toBring: string[] = [
+    "The complete test kit, including every tube and the requisition form. We cannot proceed without the form.",
+    "The return packaging supplied by the laboratory.",
+    "Photo ID if your laboratory asks for it.",
+  ];
+
+  const priceRows: { label: string; price: string; confirm?: boolean }[] = [
+    { label: "Blood draw, adults", price: "From £80" },
+    { label: "Blood draw, children under 16", price: "From £120" },
+    { label: "Centrifuging, per tube", price: "£10" },
+    { label: "Mobile visit", price: "Priced separately, on request", confirm: true },
+  ];
+
+  return (
+    <div className="flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <Header sanitySettings={sanitySettings} />
+
+      {/* Hero */}
+      <section className="relative w-full bg-[linear-gradient(90deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] pt-[111px]">
+        <div className="mx-auto max-w-[1400px] px-5 pb-[110px] pt-[70px] lg:pb-[130px] lg:pt-[90px]">
+          <div className="flex flex-col gap-4">
+            {SHOW_DRAFT_MARKERS && (
+              <div className="w-fit rounded-full border border-[#ffbe02]/60 bg-[#ffbe02]/15 px-4 py-2 text-[13px] font-semibold text-[#ffe08a]">
+                Draft for approval. This version is not on the live website.
+              </div>
+            )}
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/treatments"
+                className="font-nav text-[13px] tracking-[1px] text-white/40 uppercase transition-colors hover:text-tan"
+              >
+                Treatments
+              </Link>
+              <span className="text-white/30">/</span>
+              <span className="font-nav text-[13px] tracking-[1px] text-tan/70 uppercase">
+                Phlebotomy &amp; Health Tests
+              </span>
+            </div>
+            <h1 className="font-display text-[38px] leading-[42px] font-bold tracking-[-1px] text-cream uppercase lg:text-[58px] lg:leading-[64px]">
+              Private Phlebotomy in London
+            </h1>
+            <p className="max-w-[640px] font-serif text-[20px] leading-[30px] text-white/75 italic lg:text-[22px] lg:leading-[32px]">
+              Blood draws and sample centrifugation for adults and children, at 2 Wimpole Street in the Harley Street medical district.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href={PHONE_TEL} className={primaryBtn}>
+                <Icon name="phone" className="h-4 w-4" />
+                Call 0207 225 3582
+              </a>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                <Icon name="chat" className="h-4 w-4" />
+                WhatsApp
+              </a>
+              <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                <Icon name="pin" className="h-4 w-4" />
+                Get directions
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-tan/40 to-transparent" />
+      </section>
+
+      {/* Quick facts */}
+      <section className="relative z-10 w-full px-5">
+        <div className="mx-auto -mt-[60px] max-w-[1400px]">
+          <div className="grid grid-cols-1 overflow-hidden rounded-[20px] border border-tan/30 bg-white shadow-xl sm:grid-cols-2 lg:grid-cols-5">
+            {quickFacts.map((f) => (
+              <div key={f.label} className="flex items-start gap-4 border-b border-tan/20 p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+                  <Icon name={f.icon} className="h-5 w-5" />
+                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="font-nav text-[12px] font-semibold tracking-[2px] text-tan uppercase">{f.label}</span>
+                  <span className="font-subheading text-[15px] font-semibold leading-[21px] text-forest">{f.value}</span>
+                  {f.sub ? <span className="text-[13px] leading-[19px] text-body-text">{f.sub}</span> : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Intro */}
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[0.5fr_1.5fr] lg:gap-16">
+            <div className="relative w-full max-w-[380px]">
+              <div className="pointer-events-none absolute -left-2 sm:-left-4 -top-2 sm:-top-4 h-full w-full rounded-[18px] border border-tan/40" />
+              <div className="relative w-full overflow-hidden rounded-[14px] shadow-md" style={{ aspectRatio: "3/4" }}>
+                <Image
+                  src="/images/treatments/phlebotomy/blood-draw.jpg"
+                  alt="A phlebotomist taking a blood sample from a patient's arm"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-6 xl:flex-row xl:gap-10">
+              <div className="flex flex-1 flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-display text-[28px] font-bold leading-[34px] tracking-[-1px] text-forest lg:text-[34px] lg:leading-[40px]">
+                    {"A calm, careful blood draw, prepared to your laboratory's instructions"}
+                  </h2>
+                  <span className="h-[3px] w-16 rounded-full bg-tan" />
+                </div>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  Since 2014, YourHealthFirst Clinic has provided private blood draws for adults and children, and prepared samples for specialist laboratories. If you have a test kit from a private or international laboratory, bring it to us. We take the sample, centrifuge it on site when your kit requires it, and prepare it for the courier or post.
+                </p>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  We collect and prepare the sample. Your laboratory or the clinician who ordered the test analyses it and gives you the results.
+                </p>
+              </div>
+              <div className="flex h-fit w-full shrink-0 flex-col items-center gap-4 rounded-[14px] border border-tan/30 bg-cream px-6 py-8 text-center shadow-sm xl:w-[280px]">
+                <div className="relative h-24 w-full">
+                  <Image src="/images/treatments/phlebotomy/npr-logo.png" alt="National Phlebotomist Register" fill className="object-contain" />
+                </div>
+                <span className="text-[16px] font-semibold leading-[22px] text-forest">
+                  <Confirm note="Sofia to confirm registration wording and number">National Phlebotomist Register</Confirm>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who it is for */}
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="pointer-events-none absolute -right-[10%] bottom-[-20%] h-[500px] w-[500px] rounded-full bg-white/40 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <SectionBars>Is private phlebotomy right for you?</SectionBars>
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {whoFor.map((w) => (
+              <div key={w.text} className={`${card} flex flex-col items-start gap-4`}>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                  <Icon name={w.icon} className="h-5 w-5" />
+                </span>
+                <p className="text-[15px] leading-[24px] text-body-text">{w.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How an appointment works */}
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <SectionBars>How an appointment works</SectionBars>
+          <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {steps.map((s, i) => (
+              <div key={s.title} className="flex gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tan font-nav text-[14px] font-semibold text-white shadow-sm">
+                  {i + 1}
+                </span>
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-subheading text-[15px] font-semibold tracking-[1px] text-forest uppercase">{s.title}</h3>
+                  <p className="text-[15px] leading-[24px] text-body-text">{s.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-10 text-[15px] leading-[24px] text-body-text">
+            Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>.
+          </p>
+        </div>
+      </section>
+
+      {/* Centrifugation, dark band */}
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-tan/8 blur-[100px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[80px] lg:py-[100px]">
+          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3">
+                <span className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">Centrifugation</span>
+                <span className="h-px w-16 bg-tan/40" />
+              </div>
+              <h2 className="font-display text-[32px] font-bold leading-[38px] tracking-[-1px] text-cream uppercase lg:text-[42px] lg:leading-[48px]">
+                Why centrifugation matters
+              </h2>
+              <p className="text-[15px] leading-[25px] text-white/70">
+                Centrifugation spins the blood at controlled speed so that the red cells and the plasma or serum separate. Many delicate biomarkers, such as hormones and specialist antibodies, break down if whole blood sits too long, which can give incorrect results or a rejected sample.
+              </p>
+              <p className="text-[15px] leading-[25px] text-white/70">
+                We centrifuge on site, with calibrated equipment, when your laboratory&apos;s instructions require it. Not every test needs it; some need whole blood. Check your kit, or ask us and we will tell you.
+              </p>
+              <div className="flex flex-col gap-3">
+                <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Laboratories we work with</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {labs.map((l) => (
+                    <li key={l} className="rounded-full border border-tan/40 px-3.5 py-1.5 text-[13px] text-white/85">
+                      {l}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[14px] leading-[22px] text-white/60">
+                  Among others. If your laboratory is not on this list, send us the kit instructions before you book and we will confirm we can process it.
+                </p>
+              </div>
+            </div>
+
+            <div className="relative mx-auto w-full max-w-[440px]">
+              <div className="pointer-events-none absolute -right-2 sm:-right-8 -top-2 sm:-top-8 h-full w-full rounded-full border border-tan/30" />
+              <div className="relative w-full overflow-hidden rounded-[24px] shadow-xl" style={{ aspectRatio: "4/5" }}>
+                <Image
+                  src="/images/treatments/phlebotomy/centrifuge-machine.jpg"
+                  alt="Blood sample being placed in the centrifuge at YourHealthFirst Clinic"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span className="absolute -left-2 sm:-left-6 -top-2 sm:-top-6 flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-tan text-forest shadow-lg">
+                <Icon name="drop" className="h-5 w-5 sm:h-7 sm:w-7" />
+              </span>
+              <span className="absolute -right-2 sm:-right-6 -bottom-2 sm:-bottom-6 flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-tan text-forest shadow-lg">
+                <Icon name="tubes" className="h-5 w-5 sm:h-7 sm:w-7" />
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile visits and prices */}
+      <section className="w-full px-5">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-14 py-[70px] lg:grid-cols-2 lg:gap-20 lg:py-[90px]">
+          <div className="flex flex-col gap-5">
+            <div className="flex items-center gap-4">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                <Icon name="truck" className="h-6 w-6" />
+              </span>
+              <SectionBars>Mobile visits</SectionBars>
+            </div>
+            <p className="text-[16px] leading-[27px] text-body-text">
+              {"Can't come to Wimpole Street? We can travel to you. Mobile visits are available on request, including the Teddington and Twickenham areas"}
+              {SHOW_DRAFT_MARKERS ? (
+                <>
+                  {" "}
+                  <Confirm note="Sofia to confirm other areas and the furthest distance">and other areas</Confirm>
+                </>
+              ) : null}
+              . They are priced separately from clinic appointments, so please call or WhatsApp us with your postcode and kit details and we will confirm availability and cost.
+            </p>
+            <p className="text-[16px] leading-[27px] text-body-text">
+              Tests that must be processed immediately on site, for example by centrifuge or freezer, are better done at the clinic.
+            </p>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex h-14 w-fit items-center gap-3 rounded-[10px] bg-forest px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-white uppercase transition-opacity hover:opacity-90"
+            >
+              <Icon name="chat" className="h-4 w-4" />
+              Ask about a mobile visit
+            </a>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <SectionBars>Our prices</SectionBars>
+            <div className="overflow-hidden rounded-[20px] border border-tan/30 bg-cream shadow-sm">
+              {priceRows.map((r) => (
+                <div key={r.label} className="flex items-center justify-between gap-6 border-b border-tan/25 px-6 py-5 last:border-b-0">
+                  <span className="text-[15px] leading-[22px] text-body-text">{r.label}</span>
+                  <span className="text-right font-subheading text-[16px] font-semibold text-forest">
+                    {r.confirm ? <Confirm>{r.price}</Confirm> : r.price}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="text-[14px] leading-[22px] text-body-text">
+              The laboratory charges for the test itself separately. See our full{" "}
+              <Link href="/price-list" className="text-tan underline-offset-4 hover:underline">
+                price list
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Preparing and sending your kit */}
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -right-[10%] -top-[10%] h-[450px] w-[450px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="pointer-events-none absolute -left-[10%] bottom-[-15%] h-[450px] w-[450px] rounded-full bg-white/40 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <SectionBars>Preparing for your appointment and sending your kit</SectionBars>
+
+          <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className={card}>
+              <h3 className="font-display text-[20px] font-bold leading-[24px] text-forest uppercase">Before you come</h3>
+              <span className="mt-3 block h-[2px] w-8 rounded-full bg-tan/60" />
+              <ul className="mt-5 flex flex-col gap-3">
+                {beforeYouCome.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-[15px] leading-[24px] text-body-text">
+                    <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-tan text-white">
+                      <Icon name="check" className="h-3 w-3" />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              <div className={card}>
+                <h3 className="font-display text-[20px] font-bold leading-[24px] text-forest uppercase">What to bring</h3>
+                <span className="mt-3 block h-[2px] w-8 rounded-full bg-tan/60" />
+                <ul className="mt-5 flex flex-col gap-3">
+                  {toBring.map((t) => (
+                    <li key={t} className="flex items-start gap-3 text-[15px] leading-[24px] text-body-text">
+                      <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-tan text-white">
+                        <Icon name="check" className="h-3 w-3" />
+                      </span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className={`${card} flex items-start gap-4`}>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+                  <Icon name="truck" className="h-5 w-5" />
+                </span>
+                <p className="text-[15px] leading-[24px] text-body-text">
+                  If your test needs a courier, book a <strong className="font-semibold text-forest">morning appointment, Monday to Thursday</strong>, and arrange collection from the clinic the same day between 3pm and 5pm. If your form requires it, we can freeze the sample and hold it at the clinic until the courier collects it.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className={`${card} mt-6 flex flex-col gap-6`}>
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+                <Icon name="box" className="h-5 w-5" />
+              </span>
+              <p className="text-[15px] leading-[24px] text-body-text">
+                Your kit gives you up to four ways to send the sample. Which one you use depends on the laboratory.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {postage.map((o) => (
+                <div key={o.title} className="flex flex-col gap-3 rounded-[14px] bg-white p-6 shadow-sm">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+                    <Icon name={o.icon} className="h-5 w-5" />
+                  </span>
+                  <h3 className="font-subheading text-[14px] font-semibold tracking-[0.5px] text-forest uppercase">{o.title}</h3>
+                  <p className="text-[13px] leading-[20px] text-body-text">{o.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section id="faqs" className="w-full px-5">
+        <div className="mx-auto max-w-[900px] py-[80px] lg:py-[100px]">
+          <h2 className="text-center font-subheading text-[26px] font-medium leading-[32px] tracking-[-1px] text-forest uppercase lg:text-[32px] lg:leading-[38px]">
+            Frequently asked questions
+          </h2>
+          <p className="mx-auto mt-3 max-w-[520px] text-center text-[15px] leading-[24px] text-body-text">
+            Everything you need to know about private blood draws at YourHealthFirst Clinic.
+          </p>
+          <div className="mt-10">
+            <TreatmentFaqAccordion items={faqItems} />
+          </div>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section className="w-full border-t border-black/8 bg-cream px-5">
+        <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <SectionBars>Read before your appointment</SectionBars>
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {guides.map((g) => (
+              <Link
+                key={g.slug}
+                href={`/blog/${g.slug}`}
+                className="group flex flex-col gap-2 rounded-[14px] border border-tan/25 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+              >
+                <span className="font-subheading text-[15px] font-semibold leading-[22px] text-forest transition-colors group-hover:text-tan">
+                  {g.title}
+                </span>
+                <span className="text-[14px] leading-[21px] text-body-text">{g.blurb}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Find us and book */}
+      <section className="relative w-full overflow-hidden bg-forest px-5">
+        <div className="pointer-events-none absolute -right-[8%] -top-[30%] h-[460px] w-[460px] rounded-full bg-tan/10 blur-[110px]" />
+        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-12 py-[70px] lg:grid-cols-[1.3fr_0.7fr] lg:gap-20 lg:py-[90px]">
+          <div className="flex flex-col gap-5">
+            <SectionBars light>YourHealthFirst Clinic, 2 Wimpole Street</SectionBars>
+            <p className="max-w-[560px] text-[16px] leading-[27px] text-white/75">
+              London W1G 0EB, in the Harley Street medical district. A few minutes&apos; walk from Oxford Circus and Bond Street stations.
+            </p>
+            <p className="max-w-[560px] text-[16px] leading-[27px] text-white/75">
+              Tell us your laboratory, whether your kit needs centrifuging or a courier, and whether the appointment is for a child or a mobile visit.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-3">
+              <a href={PHONE_TEL} className={primaryBtn}>
+                <Icon name="phone" className="h-4 w-4" />
+                Call 0207 225 3582
+              </a>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                <Icon name="chat" className="h-4 w-4" />
+                WhatsApp
+              </a>
+              <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                <Icon name="pin" className="h-4 w-4" />
+                Directions
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-col gap-3 rounded-[20px] border border-white/15 bg-white/5 p-7">
+            <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">Opening hours</h3>
+            <p className="text-[15px] leading-[26px] text-white/80">
+              <Confirm note="Sofia to confirm hours">
+                Monday to Friday: 10am to 6:30pm
+                <br />
+                Saturday: 12pm to 4pm
+                <br />
+                Sunday and out of hours: by appointment only
+              </Confirm>
+            </p>
+            <p className="text-[14px] leading-[22px] text-white/60">info@yourhealthfirst.uk</p>
+          </div>
+        </div>
+      </section>
+
+      {/* For Sofia only */}
+      {SHOW_DRAFT_MARKERS && (
+        <section className="w-full px-5">
+          <div className="mx-auto max-w-[1000px] py-[60px]">
+            <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
+              <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
+                For Sofia only. Removed before this page goes live
+              </p>
+              <h2 className="mt-2 font-display text-[26px] font-bold leading-[32px] tracking-[-0.5px] text-forest">
+                Please confirm these before we publish
+              </h2>
+              <ol className="mt-6 flex flex-col gap-3">
+                {sofiaChecklist.map((q, i) => (
+                  <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
+                    <span className="w-6 shrink-0 font-semibold text-forest">{i + 1}.</span>
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Footer sanitySettings={sanitySettings} />
+    </div>
+  );
+}

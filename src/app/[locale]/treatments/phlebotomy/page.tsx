@@ -12,6 +12,7 @@ import { PHLEBOTOMY_PAGE_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries
 import { getSanityAttribute } from "@/sanity/lib/dataAttribute";
 import { urlFor } from "@/sanity/lib/image";
 import { seoMeta } from "@/data/seoMeta";
+import PhlebotomyEnglish from "@/components/phlebotomy/PhlebotomyEnglish";
 
 export async function generateMetadata({
   params,
@@ -172,7 +173,7 @@ function Icon({ name, className }: { name: string; className?: string }) {
   }
 }
 
-export default async function PhlebotomyPage({
+async function LegacyPhlebotomyPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -696,4 +697,12 @@ export default async function PhlebotomyPage({
       <Footer sanitySettings={sanitySettings} />
     </div>
   );
+}
+
+export default async function PhlebotomyPage(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await props.params;
+  if (locale === "en") return <PhlebotomyEnglish />;
+  return LegacyPhlebotomyPage(props);
 }
