@@ -45,13 +45,13 @@ const whoFor: { icon: IconName; text: string }[] = [
   { icon: "shield", text: "You are nervous about needles or have difficult veins. Tell us when you book and we will plan extra time." },
 ];
 
-const steps: { title: string; text: string }[] = [
-  { title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
-  { title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
-  { title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
-  { title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
-  { title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
-  { title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
+const steps: { icon: IconName; title: string; text: string }[] = [
+  { icon: "phone", title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
+  { icon: "clipboard", title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
+  { icon: "pin", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
+  { icon: "drop", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
+  { icon: "tubes", title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
+  { icon: "box", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
 ];
 
 const labs = [
@@ -359,16 +359,43 @@ export default async function PhlebotomyEnglish() {
         <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-tan/15 blur-[110px]" />
         <div className="pointer-events-none absolute -right-[10%] bottom-[-20%] h-[500px] w-[500px] rounded-full bg-white/40 blur-[110px]" />
         <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
-          <SectionBars>Is private phlebotomy right for you?</SectionBars>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {whoFor.map((w) => (
-              <div key={w.text} className={`${card} flex flex-col items-start gap-4`}>
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
-                  <Icon name={w.icon} className="h-5 w-5" />
-                </span>
-                <p className="text-[15px] leading-[24px] text-body-text">{w.text}</p>
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10">
+            <div className="relative flex flex-col justify-between gap-10 overflow-hidden rounded-[24px] bg-forest p-9 shadow-lg lg:p-12">
+              <div className="pointer-events-none absolute -right-[20%] -top-[20%] h-[340px] w-[340px] rounded-full bg-tan/15 blur-[90px]" />
+              <div className="relative flex flex-col gap-5">
+                <div className="flex items-center gap-3">
+                  <span className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">Who it is for</span>
+                  <span className="h-px w-12 bg-tan/40" />
+                </div>
+                <h2 className="font-display text-[30px] font-bold leading-[36px] tracking-[-1px] text-cream uppercase lg:text-[38px] lg:leading-[44px]">
+                  Is private phlebotomy right for you?
+                </h2>
+                <p className="text-[15px] leading-[25px] text-white/70">
+                  If any of these sound like you, we can help. When you book, tell us your laboratory, and whether your kit needs centrifuging or a courier.
+                </p>
               </div>
-            ))}
+              <div className="relative flex flex-wrap gap-3">
+                <a href={PHONE_TEL} className={primaryBtn}>
+                  <Icon name="phone" className="h-4 w-4" />
+                  Call us
+                </a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                  <Icon name="chat" className="h-4 w-4" />
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <ul className="flex flex-col overflow-hidden rounded-[24px] border border-tan/25 bg-white/70 shadow-sm backdrop-blur-sm">
+              {whoFor.map((w) => (
+                <li key={w.text} className="flex flex-1 items-center gap-5 border-b border-tan/25 px-7 py-6 last:border-b-0 lg:px-9">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                    <Icon name={w.icon} className="h-6 w-6" />
+                  </span>
+                  <p className="text-[16px] leading-[26px] text-body-text">{w.text}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -376,23 +403,34 @@ export default async function PhlebotomyEnglish() {
       {/* How an appointment works */}
       <section className="w-full px-5">
         <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
-          <SectionBars>How an appointment works</SectionBars>
-          <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col items-start justify-between gap-5 lg:flex-row lg:items-end">
+            <SectionBars>How an appointment works</SectionBars>
+            <p className="inline-flex items-center gap-3 rounded-full border border-tan/40 bg-cream px-5 py-3 text-[14px] leading-[20px] text-body-text">
+              <Icon name="calendar" className="h-4 w-4 shrink-0 text-tan" />
+              <span>
+                Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>
+              </span>
+            </p>
+          </div>
+          <ol className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {steps.map((s, i) => (
-              <div key={s.title} className="flex gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tan font-nav text-[14px] font-semibold text-white shadow-sm">
+              <li key={s.title} className="relative overflow-hidden rounded-[20px] border border-tan/25 bg-[#faf4ea] p-8">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-1 -top-5 select-none font-display text-[120px] font-bold leading-none text-tan/20"
+                >
                   {i + 1}
                 </span>
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-subheading text-[15px] font-semibold tracking-[1px] text-forest uppercase">{s.title}</h3>
-                  <p className="text-[15px] leading-[24px] text-body-text">{s.text}</p>
-                </div>
-              </div>
+                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                  <Icon name={s.icon} className="h-6 w-6" />
+                </span>
+                <h3 className="relative mt-5 font-subheading text-[15px] font-semibold tracking-[1px] text-forest uppercase">
+                  {s.title}
+                </h3>
+                <p className="relative mt-2 text-[15px] leading-[24px] text-body-text">{s.text}</p>
+              </li>
             ))}
-          </div>
-          <p className="mt-10 text-[15px] leading-[24px] text-body-text">
-            Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>.
-          </p>
+          </ol>
         </div>
       </section>
 
