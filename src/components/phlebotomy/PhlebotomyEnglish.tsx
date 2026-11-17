@@ -207,25 +207,25 @@ export default async function PhlebotomyEnglish() {
     })),
   };
 
-  const beforeYouCome: ReactNode[] = [
-    <>Read all the instructions in your kit. Check whether the laboratory asks you to fast or to come at a certain time of day.</>,
+  const priorItems: ReactNode[] = [
+    <>Please make sure you have received your test kit and read all the enclosed instructions before your appointment. Check whether the laboratory asks you to fast or to come at a certain time of day.</>,
+    <>When you book, tell us which laboratory your kit is from, whether it needs centrifuging or a courier, and, for a child, their age.</>,
+  ];
+
+  const onDaySteps: ReactNode[] = [
+    <>Please drink plenty of water, and bring all the information in your test kit, as these provide vital information needed for the test to proceed and produce viable results.</>,
+    <>Bring your test kit and all of its contents. Private blood test kits contain a requisition form (the test cannot proceed if you do not have your requisition form). Check the contents of your test kit.</>,
     <>
-      Drink plenty of plain water. It makes veins easier to find and helps you avoid dizziness.{" "}
-      <Confirm note="Sofia to confirm">Adults: at least 2 litres across the day; children: at least 1 litre.</Confirm>
+      Stay well-hydrated with plain water to make your veins plump and easier to find{" "}
+      <Confirm note="Sofia to confirm">(for adults at minimum 2L, and kids minimum 1L)</Confirm>.
     </>,
-    <>Avoid coffee, tea, juice, fizzy and sugary drinks unless your kit allows them. They can change your results.</>,
-    <>Fast only if your kit says so. If you fast, you can still drink plain water.</>,
+    <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements: for some tests, you may need to fast and can only drink water.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
     <>
       For children:{" "}
-      <Confirm note="Sofia to confirm timing">apply numbing cream to both arms 30 minutes before you arrive</Confirm>.
+      <Confirm note="Sofia to confirm timing">please apply numbing cream to both arms 30 minutes before arrival</Confirm>.
     </>,
-  ];
-
-  const toBring: string[] = [
-    "The complete test kit, including every tube and the requisition form. We cannot proceed without the form.",
-    "The return packaging supplied by the laboratory.",
-    "Photo ID if your laboratory asks for it.",
+    <>Bring the return packaging supplied by the laboratory, and photo ID if your laboratory asks for it.</>,
   ];
 
   const priceRows: { label: string; price: string; confirm?: boolean }[] = [
@@ -396,6 +396,90 @@ export default async function PhlebotomyEnglish() {
         </div>
       </section>
 
+      {/* Prior to your appointment + On the day: same box design as the original page */}
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(135deg,#faf4ea_0%,#f0e0c8_100%)] px-5">
+        <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="pointer-events-none absolute -right-[10%] bottom-[-20%] h-[500px] w-[500px] rounded-full bg-white/40 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <div className="relative overflow-hidden rounded-[24px] border border-tan/25 bg-white/70 shadow-lg backdrop-blur-sm">
+            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[36%] lg:block">
+              <Image
+                src="/images/treatments/phlebotomy/hero-banner.jpg"
+                alt=""
+                fill
+                className="object-cover object-[70%_50%] opacity-90"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,#faf4ea_0%,rgba(250,244,234,0.55)_45%,rgba(250,244,234,0)_100%)]" />
+            </div>
+
+            <div className="relative flex flex-col gap-10 p-8 lg:max-w-[66%] lg:p-12">
+              {/* Prior */}
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                    <Icon name="clipboard" className="h-6 w-6" />
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <span className="h-[3px] w-12 rounded-full bg-tan" />
+                    <h3 className="font-display text-[26px] font-bold leading-[30px] tracking-[-0.5px] text-forest uppercase lg:text-[30px] lg:leading-[34px]">
+                      Prior to your appointment
+                    </h3>
+                  </div>
+                </div>
+                {priorItems.map((item, i) => (
+                  <div key={i} className="flex gap-4">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-tan font-nav text-[13px] font-semibold text-white">
+                      {i + 1}
+                    </span>
+                    <p className="text-[15px] leading-[24px] text-body-text">{item}</p>
+                  </div>
+                ))}
+                <div className="flex items-start gap-3 rounded-[12px] bg-white/80 p-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-tan/20 text-tan">
+                    <Icon name="phone" className="h-4 w-4" />
+                  </span>
+                  <p className="text-[13px] leading-[21px] text-body-text">
+                    To arrange your clinic appointment, please contact us on{" "}
+                    <strong className="text-tan">0207 225 3582</strong> or via WhatsApp on{" "}
+                    <strong className="text-tan">07818 474041</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <span className="h-px w-full bg-tan/30" />
+
+              {/* On the day */}
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-tan text-white shadow-sm">
+                    <Icon name="calendar" className="h-6 w-6" />
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <span className="h-[3px] w-12 rounded-full bg-tan" />
+                    <h3 className="font-display text-[26px] font-bold leading-[30px] tracking-[-0.5px] text-forest uppercase lg:text-[30px] lg:leading-[34px]">
+                      On the day of appointment
+                    </h3>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  {onDaySteps.map((step, i) => (
+                    <div key={i} className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-tan font-nav text-[13px] font-semibold text-white">
+                          {i + 1}
+                        </span>
+                        {i < onDaySteps.length - 1 && <span className="my-1 w-px flex-1 bg-tan/30" />}
+                      </div>
+                      <p className="pb-5 text-[15px] leading-[24px] text-body-text">{step}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Centrifugation, dark band */}
       <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
         <div className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-tan/8 blur-[100px]" />
@@ -513,48 +597,15 @@ export default async function PhlebotomyEnglish() {
         <div className="pointer-events-none absolute -right-[10%] -top-[10%] h-[450px] w-[450px] rounded-full bg-tan/15 blur-[110px]" />
         <div className="pointer-events-none absolute -left-[10%] bottom-[-15%] h-[450px] w-[450px] rounded-full bg-white/40 blur-[110px]" />
         <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
-          <SectionBars>Preparing for your appointment and sending your kit</SectionBars>
+          <SectionBars>Sending your kit</SectionBars>
 
-          <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <div className={card}>
-              <h3 className="font-display text-[20px] font-bold leading-[24px] text-forest uppercase">Before you come</h3>
-              <span className="mt-3 block h-[2px] w-8 rounded-full bg-tan/60" />
-              <ul className="mt-5 flex flex-col gap-3">
-                {beforeYouCome.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[15px] leading-[24px] text-body-text">
-                    <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-tan text-white">
-                      <Icon name="check" className="h-3 w-3" />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex flex-col gap-6">
-              <div className={card}>
-                <h3 className="font-display text-[20px] font-bold leading-[24px] text-forest uppercase">What to bring</h3>
-                <span className="mt-3 block h-[2px] w-8 rounded-full bg-tan/60" />
-                <ul className="mt-5 flex flex-col gap-3">
-                  {toBring.map((t) => (
-                    <li key={t} className="flex items-start gap-3 text-[15px] leading-[24px] text-body-text">
-                      <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-tan text-white">
-                        <Icon name="check" className="h-3 w-3" />
-                      </span>
-                      <span>{t}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className={`${card} flex items-start gap-4`}>
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
-                  <Icon name="truck" className="h-5 w-5" />
-                </span>
-                <p className="text-[15px] leading-[24px] text-body-text">
-                  If your test needs a courier, book a <strong className="font-semibold text-forest">morning appointment, Monday to Thursday</strong>, and arrange collection from the clinic the same day between 3pm and 5pm. If your form requires it, we can freeze the sample and hold it at the clinic until the courier collects it.
-                </p>
-              </div>
-            </div>
+          <div className={`${card} mt-10 flex items-start gap-4`}>
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-tan/15 text-tan">
+              <Icon name="truck" className="h-5 w-5" />
+            </span>
+            <p className="text-[15px] leading-[24px] text-body-text">
+              If your test needs a courier, book a <strong className="font-semibold text-forest">morning appointment, Monday to Thursday</strong>, and arrange collection from the clinic the same day between 3pm and 5pm. If your form requires it, we can freeze the sample and hold it at the clinic until the courier collects it.
+            </p>
           </div>
 
           <div className={`${card} mt-6 flex flex-col gap-6`}>
