@@ -234,6 +234,11 @@
 @keyframes phl-drive { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes phl-arrow { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-2.5px); opacity: 0.5; } }
 
+.phl-step.is-played .phl-zoom { animation: phl-zoom 7s ease-out both; }
+.phl-float { animation: phl-float 4.5s ease-in-out infinite; }
+@keyframes phl-zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes phl-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
 @media (prefers-reduced-motion: reduce) {
-  .phl-step * { animation: none !important; transition: none !important; }
+  .phl-step *, .phl-float { animation: none !important; transition: none !important; }
 }

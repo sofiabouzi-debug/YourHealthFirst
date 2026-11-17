@@ -648,31 +648,49 @@ export default async function PhlebotomyEnglish() {
       <section className="w-full border-t border-black/8 bg-cream px-5">
         <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <SectionBars>Read before your appointment</SectionBars>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.map((g, i) => {
-              const a = ACCENTS[i % ACCENTS.length];
-              return (
-                <Link
-                  key={g.slug}
-                  href={`/blog/${g.slug}`}
-                  className="group flex items-center gap-4 rounded-[16px] border p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  style={{ background: a.tint, borderColor: a.line, borderLeft: `4px solid ${a.grad[0]}` }}
-                >
-                  <span
-                    className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full shadow-sm transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: accentGradient(a), color: a.ink }}
+          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.75fr_1.25fr]">
+            <div className="group relative min-h-[260px] overflow-hidden rounded-[24px] shadow-lg lg:min-h-full">
+              <Image
+                src="/images/treatments/phlebotomy/preparation-flatlay.jpg"
+                alt="A glass of water, a notebook and pen, a folded towel and two blood collection tubes laid out on a table"
+                fill
+                sizes="(min-width: 1024px) 35vw, 100vw"
+                className="object-cover object-[78%_50%] transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/60 via-transparent to-transparent" />
+              <div className="phl-float absolute bottom-5 left-5 flex items-center gap-3 rounded-full border border-white/40 bg-white/85 py-2 pr-5 pl-2 shadow-lg backdrop-blur-md">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: accentGradient(ACCENTS[0]), color: ACCENTS[0].ink }}>
+                  <Icon name="clipboard" className="h-5 w-5" />
+                </span>
+                <span className="font-subheading text-[13px] font-semibold tracking-[0.5px] text-forest">Six short guides</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 content-start gap-4 sm:grid-cols-2">
+              {guides.map((g, i) => {
+                const a = ACCENTS[i % ACCENTS.length];
+                return (
+                  <Link
+                    key={g.slug}
+                    href={`/blog/${g.slug}`}
+                    className="group flex items-center gap-4 rounded-[16px] border p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    style={{ background: a.tint, borderColor: a.line, borderLeft: `4px solid ${a.grad[0]}` }}
                   >
-                    <Icon name={guideIcons[i % guideIcons.length]} className="h-6 w-6" />
-                  </span>
-                  <span className="flex min-w-0 flex-col gap-0.5">
-                    <span className="font-subheading text-[15px] font-semibold leading-[21px]" style={{ color: a.text }}>
-                      {g.title}
+                    <span
+                      className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full shadow-sm transition-transform duration-300 group-hover:scale-110"
+                      style={{ background: accentGradient(a), color: a.ink }}
+                    >
+                      <Icon name={guideIcons[i % guideIcons.length]} className="h-6 w-6" />
                     </span>
-                    <span className="text-[13px] leading-[19px] text-body-text">{g.blurb}</span>
-                  </span>
-                </Link>
-              );
-            })}
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <span className="font-subheading text-[15px] font-semibold leading-[21px]" style={{ color: a.text }}>
+                        {g.title}
+                      </span>
+                      <span className="text-[13px] leading-[19px] text-body-text">{g.blurb}</span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
