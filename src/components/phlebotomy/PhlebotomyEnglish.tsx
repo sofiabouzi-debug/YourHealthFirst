@@ -759,7 +759,46 @@ export default async function PhlebotomyEnglish() {
       {/* For Sofia only */}
       {SHOW_DRAFT_MARKERS && (
         <section className="w-full px-5">
-          <div className="mx-auto max-w-[1000px] py-[60px]">
+          <div className="mx-auto flex max-w-[1000px] flex-col gap-8 py-[60px]">
+            <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
+              <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
+                For Sofia only. Removed before this page goes live
+              </p>
+              <h2 className="mt-2 font-display text-[26px] font-bold leading-[32px] tracking-[-0.5px] text-forest">
+                Why this page should work better in Google
+              </h2>
+              <p className="mt-4 text-[15px] leading-[24px] text-body-text">
+                The old page was titled &ldquo;Phlebotomy (Blood Drawn) &amp; Centrifugal&rdquo;, which is not how people search. In Google Search Console it was shown 104 times, clicked 3 times, and averaged position 37, which is about page four. The new page is written around what people actually type and what they need to know before they book.
+              </p>
+              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-[#8a6200] uppercase">What it is written to be found for</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
+                    <li>Private phlebotomy London, private blood draw London, private blood tests London</li>
+                    <li>Blood test near Harley Street, Wimpole Street, Oxford Circus and Bond Street</li>
+                    <li>Blood sample centrifugation London (about 50 searches a month, the only figure Google gives us)</li>
+                    <li>Mobile or home blood draw (Teddington and Twickenham), and children&apos;s blood tests</li>
+                    <li>Taking blood for a private laboratory kit, and posting it by DHL, FedEx or UPS</li>
+                    <li>How to prepare for a blood test, and needle fear</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-[#8a6200] uppercase">What is better than before</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
+                    <li>A clear main heading that matches the search: &ldquo;Private Phlebotomy in London&rdquo;</li>
+                    <li>It says who the service is for, so the right people recognise themselves</li>
+                    <li>Prices are on the page, which competitors already do and patients look for</li>
+                    <li>Address, nearby stations, hours, directions and mobile visits are all there</li>
+                    <li>Nine common questions answered, set up so Google can show them directly</li>
+                    <li>Six guides linked from the page, and clear steps with photos that keep people reading</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="mt-6 text-[14px] leading-[22px] text-body-text">
+                <strong className="font-semibold text-forest">What we cannot promise:</strong> a ranking. Google decides that, and the competition in London is strong. We will not change the page title or description yet, only review them with you on 27 November. After the page is live we will check Google Search Console after 4 to 6 weeks and show you what changed. Please also confirm the facts highlighted in yellow, because wrong opening hours or wording would cost trust.
+              </p>
+            </div>
+
             <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
               <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
                 For Sofia only. Removed before this page goes live
