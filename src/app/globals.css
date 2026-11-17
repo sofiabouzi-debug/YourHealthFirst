@@ -157,7 +157,6 @@
   }
 }
 
-
 /* ---- Phlebotomy page: appointment step icons ------------------------------------------------
    Each step icon has one small moving part. The "before" states only apply once the page has
    switched animation on (.phl-ready), so without JavaScript every icon shows its finished state. */
