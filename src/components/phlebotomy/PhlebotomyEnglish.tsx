@@ -8,6 +8,7 @@ import type { TreatmentFaq } from "@/data/treatments";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { Icon, type IconName } from "./icons";
+import AppointmentSteps, { type JourneyStep } from "./AppointmentSteps";
 
 /**
  * DRAFT SWITCH. While true the page shows the "draft for approval" banner, highlights every
@@ -45,13 +46,13 @@ const whoFor: { icon: IconName; text: string }[] = [
   { icon: "shield", text: "You are nervous about needles or have difficult veins. Tell us when you book and we will plan extra time." },
 ];
 
-const steps: { icon: IconName; title: string; text: string }[] = [
-  { icon: "phone", title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
-  { icon: "clipboard", title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
-  { icon: "pin", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
-  { icon: "drop", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
-  { icon: "tubes", title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
-  { icon: "box", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
+const steps: JourneyStep[] = [
+  { icon: "book", title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
+  { icon: "prepare", title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
+  { icon: "arrive", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
+  { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
+  { icon: "centrifuge", title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
+  { icon: "dispatch", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
 ];
 
 const labs = [
@@ -400,39 +401,19 @@ export default async function PhlebotomyEnglish() {
         </div>
       </section>
 
-      {/* How an appointment works */}
-      <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
-          <div className="flex flex-col items-start justify-between gap-5 lg:flex-row lg:items-end">
-            <SectionBars>How an appointment works</SectionBars>
-            <p className="inline-flex items-center gap-3 rounded-full border border-tan/40 bg-cream px-5 py-3 text-[14px] leading-[20px] text-body-text">
-              <Icon name="calendar" className="h-4 w-4 shrink-0 text-tan" />
-              <span>
-                Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>
-              </span>
-            </p>
-          </div>
-          <ol className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {steps.map((s, i) => (
-              <li key={s.title} className="relative overflow-hidden rounded-[20px] border border-tan/25 bg-[#faf4ea] p-8">
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-1 -top-5 select-none font-display text-[120px] font-bold leading-none text-tan/20"
-                >
-                  {i + 1}
-                </span>
-                <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-tan text-white shadow-sm">
-                  <Icon name={s.icon} className="h-6 w-6" />
-                </span>
-                <h3 className="relative mt-5 font-subheading text-[15px] font-semibold tracking-[1px] text-forest uppercase">
-                  {s.title}
-                </h3>
-                <p className="relative mt-2 text-[15px] leading-[24px] text-body-text">{s.text}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* How an appointment works: rail that fills while scrolling, animated step icons */}
+      <AppointmentSteps
+        steps={steps}
+        phoneHref={PHONE_TEL}
+        note={
+          <>
+            <Icon name="calendar" className="h-4 w-4 shrink-0 text-tan" />
+            <span>
+              Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>
+            </span>
+          </>
+        }
+      />
 
       {/* Prior to your appointment + On the day: same box design as the original page */}
       <section className="relative w-full overflow-hidden bg-[linear-gradient(135deg,#faf4ea_0%,#f0e0c8_100%)] px-5">

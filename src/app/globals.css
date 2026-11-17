@@ -155,4 +155,63 @@
     overflow-x: hidden;
     position: relative;
   }
-}
+}
+
+
+/* ---- Phlebotomy page: appointment step icons ------------------------------------------------
+   Each step icon has one small moving part. The "before" states only apply once the page has
+   switched animation on (.phl-ready), so without JavaScript every icon shows its finished state. */
+.phl-ico { overflow: visible; }
+.phl-ico .phl-phone,
+.phl-ico .phl-pin,
+.phl-ico .phl-fill,
+.phl-ico .phl-drop,
+.phl-ico .phl-rotor,
+.phl-ico .phl-ripple { transform-box: fill-box; }
+.phl-ico .phl-phone { transform-origin: 50% 60%; }
+.phl-ico .phl-fill { transform-origin: 50% 100%; }
+.phl-ico .phl-rotor { transform-origin: 50% 50%; }
+.phl-ico .phl-ripple { transform-origin: 50% 50%; opacity: 0.4; }
+.phl-ico .phl-lid { transform-box: view-box; transform-origin: 4px 10.5px; }
+.phl-ico .phl-wave { opacity: 0; }
+.phl-ico .phl-tick { stroke-dasharray: 14; stroke-dashoffset: 0; }
+
+.phl-ready .phl-step:not(.is-played) .phl-tick { stroke-dashoffset: 14; }
+.phl-ready .phl-step:not(.is-played) .phl-pin { opacity: 0; }
+.phl-ready .phl-step:not(.is-played) .phl-fill { transform: scaleY(0); }
+.phl-ready .phl-step:not(.is-played) .phl-lid { transform: rotate(-30deg); }
+
+.phl-step.is-played .phl-phone { animation: phl-ring 1s ease-in-out 0.2s 2; }
+.phl-step.is-played .phl-wave { animation: phl-wave 1.1s ease-out 0.35s 2; }
+.phl-step.is-played .phl-wave.w2 { animation-delay: 0.55s; }
+.phl-step.is-played .phl-tick { animation: phl-draw 0.7s ease 0.35s both; }
+.phl-step.is-played .phl-pin { animation: phl-pin-drop 0.75s cubic-bezier(0.3, 1.5, 0.5, 1) 0.15s both; }
+.phl-step.is-played .phl-ripple { animation: phl-ripple 1s ease-out 0.55s both; }
+.phl-step.is-played .phl-fill { animation: phl-fill 1.1s ease 0.7s both; }
+.phl-step.is-played .phl-drop { animation: phl-fall 0.7s ease-in 0.1s 2 both; }
+.phl-step.is-played .phl-rotor { animation: phl-spin 1.6s cubic-bezier(0.45, 0.05, 0.3, 1) 0.2s 2; }
+.phl-step.is-played .phl-lid { animation: phl-lid 0.85s cubic-bezier(0.3, 1.4, 0.5, 1) 0.2s both; }
+
+@keyframes phl-ring {
+  0%, 75%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-14deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-9deg); }
+  60% { transform: rotate(6deg); }
+}
+@keyframes phl-wave { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes phl-draw { from { stroke-dashoffset: 14; } to { stroke-dashoffset: 0; } }
+@keyframes phl-pin-drop { from { opacity: 0; transform: translateY(-9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes phl-ripple { from { transform: scale(0.3); opacity: 0.8; } to { transform: scale(1); opacity: 0.4; } }
+@keyframes phl-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes phl-fall {
+  0% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(9px); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+@keyframes phl-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes phl-lid { from { transform: rotate(-30deg); } to { transform: rotate(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .phl-step * { animation: none !important; transition: none !important; }
+}
