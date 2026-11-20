@@ -113,8 +113,8 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
     question: "Do you offer mobile or home blood draws?",
     answer:
-      "Yes, on request. We cover the Teddington and Twickenham areas, and mobile visits are priced separately. Call or WhatsApp us with your postcode and kit details. Some tests need immediate processing on site and are better done at the clinic.",
-    draft: "other areas covered",
+      "Yes, on request. Mobile visits are priced separately. Call or WhatsApp us with your postcode and kit details. Some tests need immediate processing on site and are better done at the clinic.",
+    draft: "price and the furthest distance",
   },
   {
     question: "Do I need to fast?",
@@ -146,7 +146,7 @@ const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat",
 
 const sofiaChecklist: string[] = [
   "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
-  "Mobile visits: price, minimum notice, which areas besides Teddington and Twickenham, and the furthest distance.",
+  "Mobile visits: price, minimum notice, and the furthest distance. We no longer name any areas on the page.",
   "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
   "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
   "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
@@ -613,14 +613,8 @@ export default async function PhlebotomyEnglish() {
               <SectionBars>Mobile visits</SectionBars>
             </div>
             <p className="text-[16px] leading-[27px] text-body-text">
-              {"Can't come to Wimpole Street? We can travel to you. Mobile visits are available on request, including the Teddington and Twickenham areas"}
-              {SHOW_DRAFT_MARKERS ? (
-                <>
-                  {" "}
-                  <Confirm note="Sofia to confirm other areas and the furthest distance">and other areas</Confirm>
-                </>
-              ) : null}
-              . They are priced separately from clinic appointments, so please call or WhatsApp us with your postcode and kit details and we will confirm availability and cost.
+              {"Can't come to Wimpole Street? We can travel to you. Mobile visits are available on request."}{" "}
+              They are priced separately from clinic appointments, so please call or WhatsApp us with your postcode and kit details and we will confirm availability and cost.
             </p>
             <p className="text-[16px] leading-[27px] text-body-text">
               Tests that must be processed immediately on site, for example by centrifuge or freezer, are better done at the clinic.
@@ -819,7 +813,7 @@ export default async function PhlebotomyEnglish() {
                     <li>Private phlebotomy London, private blood draw London, private blood tests London</li>
                     <li>Blood test near Harley Street, Wimpole Street, Oxford Circus and Bond Street</li>
                     <li>Blood sample centrifugation London (about 50 searches a month, the only figure Google gives us)</li>
-                    <li>Mobile or home blood draw (Teddington and Twickenham), and children&apos;s blood tests</li>
+                    <li>Mobile or home blood draw, and children&apos;s blood tests</li>
                     <li>Taking blood for a private laboratory kit, and posting it by DHL, FedEx or UPS</li>
                     <li>How to prepare for a blood test, and needle fear</li>
                   </ul>
