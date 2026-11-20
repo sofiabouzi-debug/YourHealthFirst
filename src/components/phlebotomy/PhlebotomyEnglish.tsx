@@ -22,6 +22,7 @@ import WhyItMatters from "./WhyItMatters";
 const SHOW_DRAFT_MARKERS = true;
 
 const PHONE_TEL = "tel:+442072253582";
+const EMAIL_HREF = "mailto:info@yourhealthfirst.uk?subject=Phlebotomy%20appointment";
 const WHATSAPP_URL = "https://wa.me/447818474041";
 const DIRECTIONS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=2+Wimpole+Street+London+W1G+0EB";
@@ -50,10 +51,10 @@ const whoFor: { icon: IconName; text: string }[] = [
 ];
 
 const steps: JourneyStep[] = [
-  { icon: "book", title: "Book", text: "Call, WhatsApp or email us. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
-  { icon: "prepare", title: "Prepare", text: "Read your kit instructions, drink plenty of plain water, and only fast if the kit says so. See the preparation guide below." },
+  { icon: "book", title: "Book", text: "Email us (preferred), or call or WhatsApp. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
+  { icon: "prepare", title: "Prepare", text: "Read your kit instructions. Drink plain water: 1 to 1.5 litres for adults, at least 500 ml for children. Some tests need fasting and some do not, so only fast if your kit says so." },
   { icon: "arrive", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
-  { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment. You can lie down if you prefer." },
+  { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment." },
   { icon: "centrifuge", title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
   { icon: "dispatch", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
 ];
@@ -146,8 +147,8 @@ const sofiaChecklist: string[] = [
   "Mobile visits: price, minimum notice, which areas besides Teddington and Twickenham, and the furthest distance.",
   "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
   "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
-  "Registration wording: may we say Sofia is a registered phlebotomist, with her National Phlebotomist Register number?",
-  "Preparation: adults 2 litres of water across the day, or 500ml shortly before? Children's numbing cream: 30 minutes (page) or 60 minutes (guide)?",
+  "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
+  "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right? Children's numbing cream: 30 minutes (page) or 60 minutes (guide)?",
   "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
   "The guides say \"same-day and same-week appointments\" and \"zero waiting time\". Can we promise this?",
   "Laboratory list: add Doctor's Data, which a guide names but this page does not?",
@@ -214,9 +215,9 @@ export default async function PhlebotomyEnglish() {
     <>Bring your test kit and all of its contents. Private blood test kits contain a requisition form (the test cannot proceed if you do not have your requisition form). Check the contents of your test kit.</>,
     <>
       Stay well-hydrated with plain water to make your veins plump and easier to find{" "}
-      <Confirm note="Sofia to confirm">(for adults at minimum 2L, and kids minimum 1L)</Confirm>.
+      <Confirm note="Sofia to confirm: the old page said 2L and 1L">(adults 1 to 1.5 litres, children at least 500 ml)</Confirm>.
     </>,
-    <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements: for some tests, you may need to fast and can only drink water.</>,
+    <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements: some tests need fasting (water only) and some do not, so follow your kit instructions.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
     <>Bring the return packaging supplied by the laboratory, and photo ID if your laboratory asks for it.</>,
   ];
@@ -266,7 +267,11 @@ export default async function PhlebotomyEnglish() {
               Blood draws and sample centrifugation for adults and children, at 2 Wimpole Street in the Harley Street medical district.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a href={PHONE_TEL} className={primaryBtn}>
+              <a href={EMAIL_HREF} className={primaryBtn}>
+                <Icon name="mail" className="h-4 w-4" />
+                Email to book
+              </a>
+              <a href={PHONE_TEL} className={ghostBtn}>
                 <Icon name="phone" className="h-4 w-4" />
                 Call 0207 225 3582
               </a>
@@ -364,8 +369,9 @@ export default async function PhlebotomyEnglish() {
                   <Image src="/images/treatments/phlebotomy/npr-logo.png" alt="National Phlebotomist Register" fill className="object-contain" />
                 </div>
                 <span className="text-[16px] font-semibold leading-[22px] text-forest">
-                  <Confirm note="Sofia to confirm registration wording and number">National Phlebotomist Register</Confirm>
+                  National Phlebotomist Register
                 </span>
+                <span className="text-[14px] leading-[21px] text-body-text">Our phlebotomist is a registered member.</span>
               </div>
             </div>
           </div>
@@ -393,7 +399,11 @@ export default async function PhlebotomyEnglish() {
                 </p>
               </div>
               <div className="relative flex flex-wrap gap-3">
-                <a href={PHONE_TEL} className={primaryBtn}>
+                <a href={EMAIL_HREF} className={primaryBtn}>
+                  <Icon name="mail" className="h-4 w-4" />
+                  Email us
+                </a>
+                <a href={PHONE_TEL} className={ghostBtn}>
                   <Icon name="phone" className="h-4 w-4" />
                   Call us
                 </a>
@@ -427,7 +437,7 @@ export default async function PhlebotomyEnglish() {
       {/* How an appointment works: rail that fills while scrolling, animated step icons */}
       <AppointmentSteps
         steps={steps}
-        phoneHref={PHONE_TEL}
+        bookHref={EMAIL_HREF}
         note={
           <>
             <Icon name="calendar" className="h-4 w-4 shrink-0 text-tan" />
@@ -736,8 +746,9 @@ export default async function PhlebotomyEnglish() {
             <p className="max-w-[620px] text-[16px] leading-[26px] text-white/75">
               London W1G 0EB, in the Harley Street medical district. A few minutes&apos; walk from Oxford Circus and Bond Street stations. Tell us your laboratory, whether your kit needs centrifuging or a courier, and whether the appointment is for a child or a mobile visit.
             </p>
-            <div className="mt-1 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-1 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {[
+                { href: EMAIL_HREF, icon: "mail" as IconName, label: "Email (preferred)", value: "info@yourhealthfirst.uk", a: ACCENTS[0], ext: false },
                 { href: PHONE_TEL, icon: "phone" as IconName, label: "Call", value: "0207 225 3582", a: ACCENTS[1], ext: false },
                 { href: WHATSAPP_URL, icon: "chat" as IconName, label: "WhatsApp", value: "07818 474041", a: ACCENTS[5], ext: true },
                 { href: DIRECTIONS_URL, icon: "pin" as IconName, label: "Directions", value: "Open in Maps", a: ACCENTS[2], ext: true },

@@ -14,6 +14,7 @@ export type IconName =
   | "phone"
   | "tubes"
   | "chat"
+  | "mail"
   | "check";
 
 /** Soft second tone: the same colour as the outline, at low opacity, so each icon reads as duotone. */
@@ -155,6 +156,14 @@ export function Icon({ name, className }: { name: IconName; className?: string }
           <path d="M4 5h16v11H9l-5 4V5Z" {...duo} />
           <path d="M4 5h16v11H9l-5 4V5Z" />
           <path d="M8 9.5h8M8 12.5h5" />
+        </svg>
+      );
+    case "mail":
+      return (
+        <svg className={className} {...common}>
+          <rect x="3" y="5.5" width="18" height="13" rx="2" {...duo} />
+          <rect x="3" y="5.5" width="18" height="13" rx="2" />
+          <path d="m4 7.5 8 6 8-6" />
         </svg>
       );
     case "check":

@@ -17,11 +17,11 @@ export type JourneyStep = { icon: StepIconName; title: string; text: string };
 export default function AppointmentSteps({
   steps,
   note,
-  phoneHref,
+  bookHref,
 }: {
   steps: JourneyStep[];
   note: ReactNode;
-  phoneHref: string;
+  bookHref: string;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -78,11 +78,11 @@ export default function AppointmentSteps({
               {note}
             </p>
             <a
-              href={phoneHref}
+              href={bookHref}
               className="inline-flex h-12 items-center gap-3 rounded-[10px] bg-forest px-6 font-nav text-[13px] font-semibold tracking-[0.5px] text-white uppercase transition-opacity hover:opacity-90"
             >
-              <Icon name="phone" className="h-4 w-4" />
-              Call us to book
+              <Icon name="mail" className="h-4 w-4" />
+              Email to book
             </a>
           </div>
         </div>
