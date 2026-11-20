@@ -143,7 +143,6 @@ const guides: { slug: string; title: string; blurb: string }[] = [
 const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat", "check"];
 
 const sofiaChecklist: string[] = [
-  "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
   "Mobile visits: minimum notice and the furthest distance. We no longer name any areas on the page.",
   "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
   "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
@@ -765,22 +764,22 @@ export default async function PhlebotomyEnglish() {
             <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">Opening hours</h3>
             <ul className="flex flex-col gap-3 text-[15px] leading-[22px] text-white/85">
               {[
-                { day: "Monday to Friday", time: "10am to 6:30pm", c: ACCENTS[1].grad[0] },
-                { day: "Saturday", time: "12pm to 4pm", c: ACCENTS[5].grad[0] },
-                { day: "Sunday and out of hours", time: "By appointment only", c: ACCENTS[2].grad[0] },
+                { day: "Monday to Friday", time: "10am to 6pm", note: "", c: ACCENTS[1].grad[0] },
+                { day: "Saturday", time: "12pm to 4pm", note: "Emergency or doctor's appointments only", c: ACCENTS[5].grad[0] },
+                { day: "Sunday and out of hours", time: "By appointment only", note: "", c: ACCENTS[2].grad[0] },
               ].map((h) => (
                 <li key={h.day} className="flex items-center gap-3 border-t border-white/10 pt-3 first:border-t-0 first:pt-0">
                   <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: h.c }} />
                   <span className="flex flex-1 flex-wrap items-baseline justify-between gap-x-3">
-                    <span>{h.day}</span>
-                    <span className="font-medium text-white">
-                      <Confirm>{h.time}</Confirm>
+                    <span className="flex flex-col">
+                      <span>{h.day}</span>
+                      {h.note ? <span className="text-[13px] leading-[18px] text-white/60">{h.note}</span> : null}
                     </span>
+                    <span className="font-medium text-white">{h.time}</span>
                   </span>
                 </li>
               ))}
             </ul>
-            {SHOW_DRAFT_MARKERS && <p className="text-[12px] font-semibold text-[#ffd45c]">[Sofia to confirm hours]</p>}
             <p className="text-[14px] leading-[22px] text-white/60">info@yourhealthfirst.uk</p>
           </div>
         </div>
