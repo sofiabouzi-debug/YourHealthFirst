@@ -42,7 +42,7 @@ const draftNote = (text: string) => (SHOW_DRAFT_MARKERS ? ` [Sofia to confirm: $
 /* ---------------------------------------------------------------- content */
 
 const whoFor: { icon: IconName; text: string }[] = [
-  { icon: "clipboard", text: "You have a blood test kit from a private, NHS or international laboratory and need a practitioner to take the sample." },
+  { icon: "clipboard", text: "You have a blood test kit from a private or international laboratory and need a practitioner to take the sample." },
   { icon: "user", text: "A doctor, consultant or therapist has asked you to arrange an independent blood draw." },
   { icon: "tubes", text: "Your kit says the sample must be centrifuged before it is sent, and you need a clinic that can do it." },
   { icon: "child", text: "Your child needs a blood test and you want a calm, unhurried appointment." },
