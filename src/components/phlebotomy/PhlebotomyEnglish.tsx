@@ -11,6 +11,7 @@ import { Icon, type IconName } from "./icons";
 import AppointmentSteps, { type JourneyStep } from "./AppointmentSteps";
 import { ACCENTS, accentGradient } from "./accents";
 import KitSending from "./KitSending";
+import WhyItMatters from "./WhyItMatters";
 
 /**
  * DRAFT SWITCH. While true the page shows the "draft for approval" banner, highlights every
@@ -217,10 +218,6 @@ export default async function PhlebotomyEnglish() {
     </>,
     <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements: for some tests, you may need to fast and can only drink water.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
-    <>
-      For children:{" "}
-      <Confirm note="Sofia to confirm timing">please apply numbing cream to both arms 30 minutes before arrival</Confirm>.
-    </>,
     <>Bring the return packaging supplied by the laboratory, and photo ID if your laboratory asks for it.</>,
   ];
 
@@ -505,6 +502,21 @@ export default async function PhlebotomyEnglish() {
           </div>
         </div>
       </section>
+
+      {/* Why it matters + children and courier rules: restored from the original page */}
+      <WhyItMatters
+        kids={
+          <>
+            For kids: please apply numbing cream in both arms{" "}
+            <Confirm note="Sofia to confirm timing">30 minutes before arrival</Confirm>.
+          </>
+        }
+        courier={
+          <>
+            If your test requires a courier, please book a morning appointment (Monday to Thursday) and arrange for the courier to pick up from YourHealthFirst Clinic the same day between 3pm and 5pm.
+          </>
+        }
+      />
 
       {/* Centrifugation, dark band */}
       <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">

@@ -13,7 +13,10 @@ export type StepIconName =
   | "post"
   | "dropoff"
   | "truck"
-  | "pickup";
+  | "pickup"
+  | "hydrate"
+  | "accuracy"
+  | "norepeat";
 
 const duo = { fill: "currentColor", fillOpacity: 0.22, stroke: "none" } as const;
 
@@ -142,6 +145,34 @@ export function StepIcon({ name, className }: { name: StepIconName; className?: 
             <path d="M5 11h14v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z" {...duo} />
             <path d="M5 11h14v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1ZM12 11v10M8.5 11l3.5 3 3.5-3" />
           </g>
+        </svg>
+      );
+    case "hydrate":
+      return (
+        <svg className={cls} {...common}>
+          <g className="phl-hop">
+            <path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3Z" {...duo} />
+            <path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3Z" />
+            <path d="M9 14a3.2 3.2 0 0 0 2.4 3" strokeWidth={1.4} />
+          </g>
+        </svg>
+      );
+    case "accuracy":
+      return (
+        <svg className={cls} {...common}>
+          <circle className="phl-ripple" cx="12" cy="12" r="10.4" strokeWidth={1.2} />
+          <circle cx="12" cy="12" r="8" {...duo} />
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="12" cy="12" r="4.2" />
+          <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "norepeat":
+      return (
+        <svg className={cls} {...common}>
+          <circle cx="12" cy="12" r="9" {...duo} />
+          <circle cx="12" cy="12" r="9" />
+          <path className="phl-tick" pathLength={14} d="M5.7 5.7 18.3 18.3" strokeWidth={2.2} />
         </svg>
       );
     default:
