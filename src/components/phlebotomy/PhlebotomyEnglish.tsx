@@ -52,7 +52,7 @@ const whoFor: { icon: IconName; text: string }[] = [
 
 const steps: JourneyStep[] = [
   { icon: "book", title: "Book", text: "Email us (preferred), or call or WhatsApp. Tell us which laboratory your kit is from and whether it needs centrifuging or a courier. If the appointment is for a child, tell us their age." },
-  { icon: "prepare", title: "Prepare", text: "Read your kit instructions. Drink plain water: 1 to 1.5 litres for adults, at least 500 ml for children. Some tests need fasting and some do not, so only fast if your kit says so." },
+  { icon: "prepare", title: "Prepare", text: "Read your kit instructions. Drink plain water: 1 to 1.5 litres for adults, at least 500 ml for children. Fasting depends on your requisition form: some tests need it and some do not." },
   { icon: "arrive", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
   { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment." },
   { icon: "centrifuge", title: "Preparation", text: "We check that all forms are fully filled in, centrifuge the tubes if your kit requires it, and pack them to the laboratory's instructions." },
@@ -117,7 +117,7 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
     question: "Do I need to fast?",
     answer:
-      "Only if your test instructions say so. Plain water is fine, and it helps. Never stop prescribed medication unless your doctor tells you to.",
+      "Only if your requisition form says so. Plain water is fine, and it helps. Never stop prescribed medication unless your doctor tells you to.",
   },
   {
     question: "Who gives me my results?",
@@ -211,13 +211,13 @@ export default async function PhlebotomyEnglish() {
   ];
 
   const onDaySteps: ReactNode[] = [
-    <>Please drink plenty of water, and bring all the information in your test kit, as these provide vital information needed for the test to proceed and produce viable results.</>,
+    <>Please drink plenty of water (adults 1 to 1.5 litres, children at least 500 ml), and bring all the information in your test kit, as these provide vital information needed for the test to proceed and produce viable results.</>,
     <>Bring your test kit and all of its contents. Private blood test kits contain a requisition form (the test cannot proceed if you do not have your requisition form). Check the contents of your test kit.</>,
     <>
       Stay well-hydrated with plain water to make your veins plump and easier to find{" "}
       <Confirm note="Sofia to confirm: the old page said 2L and 1L">(adults 1 to 1.5 litres, children at least 500 ml)</Confirm>.
     </>,
-    <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements: some tests need fasting (water only) and some do not, so follow your kit instructions.</>,
+    <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements according to your requisition form: some tests need fasting (water only) and some do not.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
     <>Bring the return packaging supplied by the laboratory, and photo ID if your laboratory asks for it.</>,
   ];
