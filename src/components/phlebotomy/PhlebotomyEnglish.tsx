@@ -617,7 +617,7 @@ export default async function PhlebotomyEnglish() {
               They are priced separately from clinic appointments, so please call or WhatsApp us with your postcode and kit details and we will confirm availability and cost.
             </p>
             <p className="text-[16px] leading-[27px] text-body-text">
-              Tests that must be processed immediately on site, for example by centrifuge or freezer, are better done at the clinic.
+              Tests that must be processed immediately on site are better done at the clinic.
             </p>
             <a
               href={WHATSAPP_URL}
