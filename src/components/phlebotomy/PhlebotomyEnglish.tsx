@@ -148,7 +148,7 @@ const sofiaChecklist: string[] = [
   "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
   "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
   "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
-  "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right? Children's numbing cream: 30 minutes (page) or 60 minutes (guide)?",
+  "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
   "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
   "The guides say \"same-day and same-week appointments\" and \"zero waiting time\". Can we promise this?",
   "Laboratory list: add Doctor's Data, which a guide names but this page does not?",
@@ -219,7 +219,7 @@ export default async function PhlebotomyEnglish() {
     </>,
     <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements according to your requisition form: some tests need fasting (water only) and some do not.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
-    <>Bring the return packaging supplied by the laboratory, and photo ID if your laboratory asks for it.</>,
+    <>Bring the return packaging supplied by the laboratory.</>,
   ];
 
   const priceRows: { label: string; price: string; confirm?: boolean }[] = [
@@ -536,8 +536,7 @@ export default async function PhlebotomyEnglish() {
       <WhyItMatters
         kids={
           <>
-            For kids: please apply numbing cream in both arms{" "}
-            <Confirm note="Sofia to confirm timing">30 minutes before arrival</Confirm>.
+            For kids: please apply numbing cream in both arms 30 minutes before arrival.
           </>
         }
         courier={
