@@ -55,7 +55,7 @@ const steps: JourneyStep[] = [
   { icon: "prepare", title: "Prepare", text: "Read your kit instructions. Drink plain water: 1 to 1.5 litres for adults, at least 500 ml for children. Some tests need fasting and some do not, so only fast if your kit says so." },
   { icon: "arrive", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
   { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment." },
-  { icon: "centrifuge", title: "Preparation", text: "We label the tubes, centrifuge them if your kit requires it, and pack them to the laboratory's instructions." },
+  { icon: "centrifuge", title: "Preparation", text: "We check that all forms are fully filled in, centrifuge the tubes if your kit requires it, and pack them to the laboratory's instructions." },
   { icon: "dispatch", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
 ];
 
@@ -184,7 +184,7 @@ const quickFacts: { icon: IconName; label: string; value: string; sub: string }[
   { icon: "target", label: "Price", value: "Adults from £80", sub: "Children under 16 from £120 · Centrifuging £10 per tube" },
   { icon: "pin", label: "Where", value: "2 Wimpole Street, W1G 0EB", sub: "Near Oxford Circus and Bond Street" },
   { icon: "truck", label: "Mobile visits", value: "On request", sub: "Priced separately" },
-  { icon: "phone", label: "Book", value: "0207 225 3582", sub: "WhatsApp 07818 474041" },
+  { icon: "mail", label: "Book", value: "info@yourhealthfirst.uk", sub: "Or call 0207 225 3582" },
 ];
 
 /* ------------------------------------------------------------------- page */
@@ -491,9 +491,9 @@ export default async function PhlebotomyEnglish() {
                     <Icon name="phone" className="h-4 w-4" />
                   </span>
                   <p className="text-[13px] leading-[21px] text-body-text">
-                    To arrange your clinic appointment, please contact us on{" "}
-                    <strong className="text-tan">0207 225 3582</strong> or via WhatsApp on{" "}
-                    <strong className="text-tan">07818 474041</strong>.
+                    To arrange appointments, please email us with your contact details at{" "}
+                    <a href={EMAIL_HREF} className="font-bold text-tan hover:underline">info@yourhealthfirst.uk</a>, or call us on{" "}
+                    <a href={PHONE_TEL} className="font-bold text-tan hover:underline">0207 225 3582</a>.
                   </p>
                 </div>
               </div>
