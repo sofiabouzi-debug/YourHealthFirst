@@ -72,6 +72,8 @@ const labs = [
   "Key Clinic",
   "RGCC International",
   "Religen USA",
+  "Doctor's Data",
+  "Vibrant",
 ];
 
 /** `answer` is clean text (also used for the FAQ search markup). `draft` is shown only while drafting. */
@@ -151,7 +153,6 @@ const sofiaChecklist: string[] = [
   "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
   "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
   "The guides say \"same-day and same-week appointments\" and \"zero waiting time\". Can we promise this?",
-  "Laboratory list: add Doctor's Data, which a guide names but this page does not?",
   "Should centrifuging for other clinics and practitioners have its own page?",
 ];
 
@@ -353,7 +354,7 @@ export default async function PhlebotomyEnglish() {
                 <p className="text-[16px] leading-[27px] text-body-text">
                   We offer our services to different labs like{" "}
                   <strong className="font-semibold text-forest">
-                    Functional DX, Regenerus Labs, Cyrex, Genova, ArminLabs, Nordic Lab, Alletess Medical Laboratory, FRAT, Viva Health, Key Clinic, RGCC International and Religen USA
+                    Functional DX, Regenerus Labs, Cyrex, Genova, ArminLabs, Nordic Lab, Alletess Medical Laboratory, FRAT, Viva Health, Key Clinic, RGCC International, Religen USA, Doctor&apos;s Data and Vibrant
                   </strong>
                   , among others.
                 </p>
