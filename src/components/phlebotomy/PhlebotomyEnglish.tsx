@@ -79,9 +79,9 @@ const labs = [
 /** `answer` is clean text (also used for the FAQ search markup). `draft` is shown only while drafting. */
 const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
-    question: "Do I need a referral or a doctor's request?",
+    question: "Do I need a referral?",
     answer:
-      "Yes. We only take the blood sample, so you need a referral or test request from your doctor, together with your test kit and its requisition form if the laboratory sent one. We collect and prepare the sample. Your doctor or laboratory analyses it and gives you the results.",
+      "Yes. We only take the blood sample, so you need a referral from a private laboratory, which comes with its requisition form. Bring both with your test kit. We collect and prepare the sample, and the laboratory analyses it and gives you the results.",
   },
   {
     question: "Can I bring my own test kit?",
@@ -97,13 +97,11 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
     question: "Do I need an appointment?",
     answer:
       "We offer a walk-in service, but appointments are given priority. Without one, waits can reach 45 minutes or more. Please book if your kit needs centrifuging, a courier collection or a child's appointment.",
-    draft: "walk-in wording",
   },
   {
     question: "How long does it take?",
     answer:
       "Most appointments take 15–30 minutes, depending on the number of tubes, paperwork checks and whether the sample needs centrifuging.",
-    draft: "appointment length",
   },
   {
     question: "Do you take blood from children?",
@@ -147,8 +145,6 @@ const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat",
 const sofiaChecklist: string[] = [
   "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
   "Mobile visits: minimum notice and the furthest distance. We no longer name any areas on the page.",
-  "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
-  "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
   "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
   "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
   "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
@@ -344,9 +340,7 @@ export default async function PhlebotomyEnglish() {
                   YourHealthFirst Clinic has been offering private blood draws and centrifugal since 2014.
                 </p>
                 <p className="text-[16px] leading-[27px] text-body-text">
-                  <Confirm note="Sofia to confirm walk-in wording">
-                    YHF offers a &apos;walk-in&apos; service, however it is advised to book an appointment as patients of our clinic are given priority. Waiting times during clinical hours can reach up to 45 minutes or more if an appointment is not booked.
-                  </Confirm>
+                  YHF offers a &apos;walk-in&apos; service, however it is advised to book an appointment as patients of our clinic are given priority. Waiting times during clinical hours can reach up to 45 minutes or more if an appointment is not booked.
                 </p>
                 <p className="text-[16px] leading-[27px] text-body-text">
                   At YourHealthFirst Clinic we offer phlebotomy service to both adults and children.
@@ -443,7 +437,7 @@ export default async function PhlebotomyEnglish() {
           <>
             <Icon name="calendar" className="h-4 w-4 shrink-0 text-tan" />
             <span>
-              Most appointments take <Confirm note="Sofia to confirm">15–30 minutes</Confirm>
+              Most appointments take 15–30 minutes
             </span>
           </>
         }
