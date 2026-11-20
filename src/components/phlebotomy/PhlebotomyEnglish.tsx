@@ -81,7 +81,7 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
     question: "Do I need a referral or a doctor's request?",
     answer:
-      "Not if you already have a private laboratory test kit with its requisition form. You can book directly with us. If you do not have a kit yet, call us first: we collect and prepare the sample, and the test itself is ordered from a laboratory or your clinician.",
+      "Yes. We only take the blood sample, so you need a referral or test request from your doctor, together with your test kit and its requisition form if the laboratory sent one. We collect and prepare the sample. Your doctor or laboratory analyses it and gives you the results.",
   },
   {
     question: "Can I bring my own test kit?",
@@ -146,7 +146,7 @@ const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat",
 
 const sofiaChecklist: string[] = [
   "Which opening hours are correct? This page says Mon–Fri 10am–6:30pm and Sat 12–4pm; other pages say 10am–6pm and 9am–6pm.",
-  "Mobile visits: price, minimum notice, and the furthest distance. We no longer name any areas on the page.",
+  "Mobile visits: minimum notice and the furthest distance. We no longer name any areas on the page.",
   "Appointment length: 15–30 minutes (guides) or 10–15 minutes (older site data)?",
   "Walk-ins: the current page says walk-ins are accepted with waits of 45 minutes or more; the guides say booking is strongly recommended with zero waiting. Which should we say?",
   "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
@@ -227,7 +227,7 @@ export default async function PhlebotomyEnglish() {
     { label: "Blood draw, adults", price: "From £80" },
     { label: "Blood draw, children under 16", price: "From £120" },
     { label: "Centrifuging, per tube", price: "£10" },
-    { label: "Mobile visit", price: "Priced separately, on request", confirm: true },
+    { label: "Mobile visit", price: "Priced separately, on request" },
   ];
 
   return (

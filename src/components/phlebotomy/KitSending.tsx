@@ -109,6 +109,9 @@ export default function KitSending() {
         <p className="text-[15px] leading-[24px] text-body-text">
           Your kit gives you up to four ways to send the sample. Which one you use depends on the laboratory.
         </p>
+        <p className="-mt-2 text-[15px] leading-[24px] font-semibold text-forest">
+          Please read the instructions inside your kit.
+        </p>
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {options.map((o, i) => {
             const a = ACCENTS[o.accent];
