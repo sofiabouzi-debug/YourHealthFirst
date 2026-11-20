@@ -143,12 +143,12 @@ const guides: { slug: string; title: string; blurb: string }[] = [
 const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat", "check"];
 
 const sofiaChecklist: string[] = [
-  "Mobile visits: minimum notice and the furthest distance. We no longer name any areas on the page.",
-  "Registration: we say you are registered with the National Phlebotomist Register. Please send your registration number if you want it shown.",
-  "Preparation: the old page said adults 2 litres and children 1 litre of water. This draft says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
-  "Do we post samples for patients, or only hold them (frozen if required) for courier collection?",
-  "The guides say \"same-day and same-week appointments\" and \"zero waiting time\". Can we promise this?",
-  "Should centrifuging for other clinics and practitioners have its own page?",
+  "Water before the appointment: the old page said adults 2 litres and children 1 litre. This page says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
+  "Mobile visits: how much notice do you need, and what is the furthest distance you travel?",
+  "Samples: do you post them for patients, or only hold them (frozen if needed) for courier collection?",
+  "Appointments: some of your guides say same-day appointments and zero waiting. Can we say that on this page?",
+  "Registration: do you want your registration number shown next to the National Phlebotomist Register logo?",
+  "Centrifuging for other clinics and practitioners: should it have its own page?",
 ];
 
 /* ---------------------------------------------------------------- helpers */
