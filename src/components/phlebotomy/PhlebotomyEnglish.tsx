@@ -333,11 +333,30 @@ export default async function PhlebotomyEnglish() {
                   </h2>
                   <span className="h-[3px] w-16 rounded-full bg-tan" />
                 </div>
+                {/* The first five paragraphs are the original wording from the live page, kept in full. */}
                 <p className="text-[16px] leading-[27px] text-body-text">
-                  Since 2014, YourHealthFirst Clinic has provided private blood draws for adults and children, and prepared samples for specialist laboratories. If you have a test kit from a private or international laboratory, bring it to us. We take the sample, centrifuge it on site when your kit requires it, and prepare it for the courier or post.
+                  YourHealthFirst Clinic has been offering private blood draws and centrifugal since 2014.
                 </p>
                 <p className="text-[16px] leading-[27px] text-body-text">
-                  We collect and prepare the sample. Your laboratory or the clinician who ordered the test analyses it and gives you the results.
+                  <Confirm note="Sofia to confirm walk-in wording">
+                    YHF offers a &apos;walk-in&apos; service, however it is advised to book an appointment as patients of our clinic are given priority. Waiting times during clinical hours can reach up to 45 minutes or more if an appointment is not booked.
+                  </Confirm>
+                </p>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  At YourHealthFirst Clinic we offer phlebotomy service to both adults and children.
+                </p>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  We offer our services to different labs like{" "}
+                  <strong className="font-semibold text-forest">
+                    Functional DX, Regenerus Labs, Cyrex, Genova, ArminLabs, Nordic Lab, Alletess Medical Laboratory, FRAT, Viva Health, Key Clinic, RGCC International and Religen USA
+                  </strong>
+                  , among others.
+                </p>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  For some cases, as per requisition form, we can also freeze the sample and keep it in the clinic until it is collected by DHL if needed.
+                </p>
+                <p className="text-[16px] leading-[27px] text-body-text">
+                  If you have a test kit from a private or international laboratory, bring it to us. We take the sample, centrifuge it on site when your kit requires it, and prepare it for the courier or post. Your laboratory or the clinician who ordered the test analyses it and gives you the results.
                 </p>
               </div>
               <div className="flex h-fit w-full shrink-0 flex-col items-center gap-4 rounded-[14px] border border-tan/30 bg-cream px-6 py-8 text-center shadow-sm xl:w-[280px]">
