@@ -313,7 +313,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
       {/* Main content: the layout of the current page (photo rows on the left, Key Facts and Book cards on the right) */}
       <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] py-[60px] lg:py-[80px]">
+        <div className="mx-auto max-w-[1400px] pt-[60px] pb-[48px] lg:pt-[80px] lg:pb-[56px]">
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
             {/* Main text */}
             <div className="flex flex-col gap-8 lg:flex-1">
@@ -439,8 +439,9 @@ export default async function AntiWrinkleEnglish(props: Props) {
       </section>
 
       {/* Key benefits: all the existing points */}
-      <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[420px] w-[420px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <SectionBars>{t("keyBenefits")}</SectionBars>
           <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((b, i) => {
@@ -466,12 +467,11 @@ export default async function AntiWrinkleEnglish(props: Props) {
       </section>
 
       {/* Areas and prices (new) */}
-      <section className={creamBg}>
-        <div className="pointer-events-none absolute -right-[10%] -top-[10%] h-[450px] w-[450px] rounded-full bg-tan/15 blur-[110px]" />
-        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <SectionBars>Areas and prices</SectionBars>
-            <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/40 bg-white/70 px-5 py-3 text-[14px] leading-[20px] text-body-text">
+            <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/40 bg-cream px-5 py-3 text-[14px] leading-[20px] text-body-text">
               <Icon name="chat" className="h-4 w-4 shrink-0 text-tan" />
               <span>
                 Consultation <strong className="font-semibold text-forest">{consultationPrice}</strong>. Treatment is priced per area.
@@ -484,7 +484,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
               return (
                 <div
                   key={g.title}
-                  className="flex flex-col gap-4 rounded-[18px] border bg-white/80 p-6 shadow-sm"
+                  className="flex flex-col gap-4 rounded-[18px] border bg-white p-6 shadow-md"
                   style={{ borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
                 >
                   <div className="flex items-center gap-3">
