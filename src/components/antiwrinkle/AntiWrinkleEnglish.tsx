@@ -191,6 +191,16 @@ const extraFaqs: TreatmentFaq[] = [
     answer:
       "2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations.",
   },
+  {
+    question: "Where can I have anti-wrinkle injections in London?",
+    answer:
+      "At YourHealthFirst Clinic, 2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations, and you can book by email, phone or WhatsApp.",
+  },
+  {
+    question: "Can I see before and after photos of anti-wrinkle injections?",
+    answer:
+      "Yes. Our gallery shows real before and after results from patients treated at YourHealthFirst Clinic in London. Every face is different, so your own results will vary, and Sofia will explain what is realistic for you at your consultation.",
+  },
 ];
 
 const benefitIcons: IconName[] = ["check", "shield", "target", "user", "bolt", "calendar"];
@@ -263,7 +273,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
   const galleryImages = gallery
     ? Array.from({ length: Math.min(6, gallery.count) }, (_, i) => ({
         src: `${gallery.folder}/${gallery.prefix}-${i + 1}.${gallery.ext}`,
-        alt: `${title} before & after — result ${i + 1}`,
+        alt: `${title} before and after in London — result ${i + 1}`,
       }))
     : [];
 
@@ -512,7 +522,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
         <div className="pointer-events-none absolute -left-[8%] bottom-[-25%] h-[420px] w-[420px] rounded-full bg-tan/25 blur-[110px]" />
         <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <SectionBars>Areas and prices</SectionBars>
+            <SectionBars>Anti-wrinkle prices in London</SectionBars>
             <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/50 bg-white/70 px-5 py-3 text-[14px] leading-[20px] text-body-text">
               <Icon name="chat" className="h-4 w-4 shrink-0 text-tan" />
               <span>
@@ -580,7 +590,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
       {/* How treatment works (new) */}
       <TreatmentSteps
-        title="How treatment works"
+        title="How anti-wrinkle treatment works in London"
         steps={steps}
         note={<>The injections take about 10 to 15 minutes</>}
         bookHref={EMAIL_HREF}
@@ -613,7 +623,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
             <div className="flex flex-col gap-1.5">
               <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Your practitioner</h3>
               <p className="text-[15px] leading-[24px] text-white/85">
-                Sofia Bouzian, founder of YourHealthFirst Clinic. Sofia carries out your consultation and prescribes where treatment is suitable.
+                Sofia Bouzian, founder of YourHealthFirst Clinic in Harley Street, London. Sofia carries out your consultation and prescribes where treatment is suitable.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
@@ -679,6 +689,9 @@ export default async function AntiWrinkleEnglish(props: Props) {
             </h2>
             <p className="mx-auto mt-3 max-w-[520px] text-center text-[15px] leading-[24px] text-body-text">
               Real before &amp; after results from patients treated at YourHealthFirst Clinic.
+            </p>
+            <p className="mx-auto mt-2 max-w-[640px] text-center text-[14px] leading-[22px] text-body-text/80">
+              Anti-wrinkle injections before and after: results from our clinic at 2 Wimpole Street, London.
             </p>
             <div className="mx-auto mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {galleryImages.map((g) => (
