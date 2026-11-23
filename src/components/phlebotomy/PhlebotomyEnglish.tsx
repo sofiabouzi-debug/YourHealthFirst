@@ -19,7 +19,7 @@ import WhyItMatters from "./WhyItMatters";
  * Set to false before this page goes to the live site: the banner, highlights and checklist
  * disappear and the fallback wording is shown as normal text.
  */
-const SHOW_DRAFT_MARKERS = true;
+const SHOW_DRAFT_MARKERS = false;
 
 const PHONE_TEL = "tel:+442072253582";
 const EMAIL_HREF = "mailto:info@yourhealthfirst.uk?subject=Phlebotomy%20appointment";
