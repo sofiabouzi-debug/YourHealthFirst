@@ -8,10 +8,10 @@ import { ACCENTS, accentGradient } from "./accents";
 type Option = { icon: StepIconName; title: string; tag: string; text: string; accent: number };
 
 const options: Option[] = [
-  { icon: "post", title: "Post Office", tag: "Walk it in", text: "The nearest branch is less than a 10-minute walk from the clinic.", accent: 3 },
-  { icon: "dropoff", title: "UPS", tag: "Drop-off point", text: "A UPS drop-off point is 5 minutes from the clinic.", accent: 4 },
-  { icon: "truck", title: "DHL", tag: "Collection", text: "Once we confirm your appointment, call DHL and ask them to collect from your home or the clinic between 3pm and 5pm.", accent: 1 },
-  { icon: "pickup", title: "FedEx", tag: "Collection", text: "Once we confirm your appointment, call FedEx and ask them to collect from your home or the clinic between 3pm and 5pm.", accent: 0 },
+  { icon: "post", title: "Post Office", tag: "Walk it in", text: "The nearest one from the clinic is less than a 10 minute walk from the clinic.", accent: 3 },
+  { icon: "dropoff", title: "UPS", tag: "Drop-off point", text: "UPS dropping location just 5 minutes from the clinic.", accent: 4 },
+  { icon: "truck", title: "DHL", tag: "Collection", text: "Once we have confirmed your appointment, please call DHL and ask them to come and collect the kit from your home address or our clinic, between 3pm and 5pm.", accent: 1 },
+  { icon: "pickup", title: "FedEx", tag: "Collection", text: "Once we have confirmed your appointment, please call FedEx and ask them to come and collect the kit from your home address or our clinic, between 3pm and 5pm.", accent: 0 },
 ];
 
 /**
@@ -111,6 +111,9 @@ export default function KitSending() {
         </p>
         <p className="-mt-2 text-[15px] leading-[24px] font-semibold text-forest">
           Please read the instructions inside your kit.
+        </p>
+        <p className="-mt-2 text-[15px] leading-[24px] text-body-text">
+          Postage — inside your test kit you will find 4 options, depending on the laboratory you are using you will have to choose one of them:
         </p>
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {options.map((o, i) => {

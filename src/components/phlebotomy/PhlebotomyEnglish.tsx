@@ -84,9 +84,9 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
       "Yes. We only take the blood sample, so you need a referral from a private laboratory, which comes with its requisition form. Bring both with your test kit. We collect and prepare the sample, and the laboratory analyses it and gives you the results.",
   },
   {
-    question: "Can I bring my own test kit?",
+    question: "Can I bring my own blood test kit?",
     answer:
-      "Yes. We regularly prepare samples for UK, European and international laboratories, including Functional DX, Regenerus, Cyrex, Genova, ArminLabs and Nordic Lab. Bring the complete kit and the requisition form.",
+      "Yes, we regularly draw blood for external test kits from private laboratories and hospitals. We regularly prepare samples for UK, European and international laboratories, including Functional DX, Regenerus, Cyrex, Genova, ArminLabs and Nordic Lab. Bring the complete kit and the requisition form.",
   },
   {
     question: "How much does a private blood draw cost?",
@@ -104,9 +104,9 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
       "Most appointments take 15–30 minutes, depending on the number of tubes, paperwork checks and whether the sample needs centrifuging.",
   },
   {
-    question: "Do you take blood from children?",
+    question: "Do you offer paediatric phlebotomy?",
     answer:
-      "Yes. We look after children with a gentle, unhurried approach. Tell us your child's age when you book so we can plan the time and the right equipment. A favourite toy, book or tablet helps. Please follow our guidance on numbing cream before you arrive.",
+      "Yes, we are fully certified and experienced in gentle blood draws for both adults and children. We look after children with a gentle, unhurried approach. Tell us your child's age when you book so we can plan the time and the right equipment. A favourite toy, book or tablet helps. Please follow our guidance on numbing cream before you arrive.",
   },
   {
     question: "Do you offer mobile or home blood draws?",
@@ -194,7 +194,7 @@ export default async function PhlebotomyEnglish() {
   };
 
   const priorItems: ReactNode[] = [
-    <>Please make sure you have received your test kit and read all the enclosed instructions before your appointment. Check whether the laboratory asks you to fast or to come at a certain time of day.</>,
+    <>Please ensure you have received your test kit and carefully read all enclosed instructions before attending your appointment. Check whether the laboratory asks you to fast or to come at a certain time of day.</>,
     <>When you book, tell us which laboratory your kit is from, whether it needs centrifuging or a courier, and, for a child, their age.</>,
   ];
 
@@ -254,6 +254,25 @@ export default async function PhlebotomyEnglish() {
             <p className="max-w-[640px] font-serif text-[20px] leading-[30px] text-white/75 italic lg:text-[22px] lg:leading-[32px]">
               Blood draws and sample centrifugation for adults and children, at 2 Wimpole Street in the Harley Street medical district.
             </p>
+            {/* Original wording from the previous page, kept in full */}
+            <p className="font-nav text-[13px] font-semibold tracking-[2px] text-tan uppercase">Private Phlebotomy &amp; Centrifuge Services</p>
+            <p className="max-w-[560px] font-serif text-[18px] leading-[28px] text-white/70 italic">
+              Professional blood draw for adults and children in central London since 2014
+            </p>
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {[
+                { icon: "user" as IconName, label: "Private Service" },
+                { icon: "shield" as IconName, label: "Professional Care" },
+                { icon: "bolt" as IconName, label: "Fast & Convenient" },
+              ].map((b) => (
+                <div key={b.label} className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 text-tan">
+                    <Icon name={b.icon} className="h-5 w-5" />
+                  </span>
+                  <span className="font-nav text-[16px] font-semibold tracking-[0.3px] text-white">{b.label}</span>
+                </div>
+              ))}
+            </div>
             <div className="mt-4 flex flex-wrap gap-3">
               <a href={EMAIL_HREF} className={primaryBtn}>
                 <Icon name="mail" className="h-4 w-4" />
@@ -551,6 +570,25 @@ export default async function PhlebotomyEnglish() {
               <p className="text-[15px] leading-[25px] text-white/70">
                 We centrifuge on site, with calibrated equipment, when your laboratory&apos;s instructions require it. Not every test needs it; some need whole blood. Check your kit, or ask us and we will tell you.
               </p>
+              <div className="flex flex-col gap-4 border-t border-white/10 pt-6">
+                <h3 className="font-display text-[22px] font-bold leading-[28px] text-cream">
+                  Spinning Science: <span className="text-tan">Unveiling the Power of Centrifugation</span>
+                </h3>
+                <p className="text-[15px] leading-[25px] text-white/70">
+                  At YHF, we specifically work with venous blood draws that have been centrifuged to ensure the biomarkers are safeguarded and to maintain complete accuracy within our complex and comprehensive reports.
+                </p>
+                <p className="text-[15px] leading-[25px] text-white/70">
+                  Centrifugation is a method of separating solids from liquids using rotational forces (spun). When blood is centrifuged, the red cell portion and plasma are separated, leaving the delicate biomarkers stable and intact, and suitable for transportation to the lab. Without centrifuging, many of the biomarkers become unstable and deteriorate over time, which can result in incorrect results.
+                </p>
+                <a
+                  href="https://www.webmd.com/a-to-z-guides/what-is-phlebotomy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-12 w-fit items-center gap-3 rounded-[10px] bg-tan px-6 font-nav text-[13px] font-semibold tracking-[0.5px] text-forest uppercase transition-opacity hover:opacity-90"
+                >
+                  Read More About Phlebotomy
+                </a>
+              </div>
               <div className="flex flex-col gap-3">
                 <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Laboratories we work with</h3>
                 <ul className="flex flex-wrap gap-2">
@@ -656,7 +694,7 @@ export default async function PhlebotomyEnglish() {
             Frequently asked questions
           </h2>
           <p className="mx-auto mt-3 max-w-[520px] text-center text-[15px] leading-[24px] text-body-text">
-            Everything you need to know about private blood draws at YourHealthFirst Clinic.
+            Everything you need to know about phlebotomy at YourHealthFirst Clinic.
           </p>
           <div className="mt-10">
             <TreatmentFaqAccordion items={faqItems} />
@@ -772,7 +810,20 @@ export default async function PhlebotomyEnglish() {
                 </li>
               ))}
             </ul>
-            <p className="text-[14px] leading-[22px] text-white/60">info@yourhealthfirst.uk</p>
+            <div className="flex flex-col gap-1.5 border-t border-white/10 pt-4">
+              <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Get an Appointment</h3>
+              <p className="text-[14px] leading-[22px] text-white/80">
+                By phone: 0207 225 3582 / 078 1847 4041
+                <br />
+                By email: info@yourhealthfirst.uk
+              </p>
+            </div>
+            <div className="flex flex-col gap-1.5 border-t border-white/10 pt-4">
+              <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Our Prices</h3>
+              <Link href="/price-list" className="text-[14px] text-tan underline-offset-4 hover:underline">
+                Check Our Price List
+              </Link>
+            </div>
           </div>
         </div>
       </section>
