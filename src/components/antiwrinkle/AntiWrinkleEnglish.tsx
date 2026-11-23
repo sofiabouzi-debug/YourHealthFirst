@@ -180,7 +180,7 @@ const extraFaqs: TreatmentFaq[] = [
   },
   {
     question: "Who carries out the treatment?",
-    answer: `Sofia Bouzian carries out your consultation and your treatment, and prescribes where it is suitable.${draftNote("title and registration wording")}`,
+    answer: `Sofia Bouzian, Aesthetic Practitioner & Clinical Director, carries out your consultation and your treatment. Prescribing is done by a registered prescriber.${draftNote("the prescriber's name, regulator and registration number")}`,
   },
   {
     question: "What is the difference between Botox and anti-wrinkle injections?",
@@ -622,12 +622,17 @@ export default async function AntiWrinkleEnglish(props: Props) {
             </div>
             <div className="flex flex-col gap-1.5">
               <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Your practitioner</h3>
-              <p className="text-[15px] leading-[24px] text-white/85">
-                Sofia Bouzian, founder of YourHealthFirst Clinic in Harley Street, London. Sofia carries out your consultation and prescribes where treatment is suitable.
+              <p className="font-subheading text-[16px] font-semibold text-cream">Sofia Bouzian</p>
+              <p className="text-[14px] leading-[22px] text-tan">Aesthetic Practitioner &amp; Clinical Director</p>
+              <p className="text-[14px] leading-[22px] text-white/75">
+                Master of Science (MSc), Postgraduate Diploma (PGDip), and a Level 7 Qualification in Aesthetic Medicine. Founder of YourHealthFirst Clinic in Harley Street, London.
+              </p>
+              <p className="text-[14px] leading-[22px] text-white/85">
+                Sofia carries out your consultation and treatment. Prescribing is done by a registered prescriber.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
-                    <Confirm note="Sofia to confirm title and registration wording" />
+                    <Confirm note="Sofia to confirm the prescriber's name, regulator and registration number" />
                   </>
                 ) : null}
               </p>
@@ -821,7 +826,46 @@ export default async function AntiWrinkleEnglish(props: Props) {
       {/* For Sofia only */}
       {SHOW_DRAFT_MARKERS && (
         <section className="w-full px-5">
-          <div className="mx-auto max-w-[1000px] py-[60px]">
+          <div className="mx-auto flex max-w-[1000px] flex-col gap-8 py-[60px]">
+            <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
+              <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
+                For Sofia only. Removed before this page goes live
+              </p>
+              <h2 className="mt-2 font-display text-[26px] font-bold leading-[32px] tracking-[-0.5px] text-forest">
+                Why this page should work better in Google
+              </h2>
+              <p className="mt-4 text-[15px] leading-[24px] text-body-text">
+                In Google Search Console the current page was shown 1,206 times, clicked 0 times, and averaged position 69, which is about page seven. The new page keeps every word of the current page and adds what people look for before they book.
+              </p>
+              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-[#8a6200] uppercase">What it is written to be found for</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
+                    <li>Anti-wrinkle injections London (and Harley Street, Wimpole Street, near Oxford Circus and Bond Street)</li>
+                    <li>Anti-wrinkle injections cost, price and how much</li>
+                    <li>Forehead lines, frown lines, crow&apos;s feet, brow lift and bunny lines</li>
+                    <li>Jaw slimming, teeth grinding, gummy smile, neck bands and excessive sweating</li>
+                    <li>How long they last, side effects, aftercare and how often you can have them</li>
+                    <li>Before and after photos, and Botox compared with anti-wrinkle injections</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-[#8a6200] uppercase">What is better than the current page</h3>
+                  <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
+                    <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
+                    <li>All your prices are on the page, with the consultation fee, instead of one &ldquo;from&rdquo; figure</li>
+                    <li>Twenty-two questions answered, set up so Google can show them directly (the current page has none set up)</li>
+                    <li>How treatment works, aftercare and the 12-week gap, so people know what to expect</li>
+                    <li>Six before and after photos instead of three, and easy ways to book by email, phone or WhatsApp</li>
+                    <li>Twice the content, with all of your own words still there</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="mt-6 text-[14px] leading-[22px] text-body-text">
+                <strong className="font-semibold text-forest">What we cannot promise:</strong> a ranking. Google decides that, and London is a competitive market. We are not changing the page title or description yet, only reviewing them with you on 27 November. After the page is live we will check Google Search Console after 4 to 6 weeks and show you what changed. Please read the page again and tell us anything that is wrong, especially the wording in yellow.
+              </p>
+            </div>
+
             <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
               <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
                 For Sofia only. Removed before this page goes live
@@ -831,7 +875,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
               </h2>
               <ol className="mt-6 flex flex-col gap-3">
                 {[
-                  "How should we write your title and registration on this page (for example your regulator and registration number)?",
+                  "Who is the registered prescriber for the anti-wrinkle injections? Please send their name, regulator (for example GMC, NMC or GDC) and registration number, so we can show it on this page.",
                   "The word Botox: it stays in the existing text and in the question about the difference between Botox and anti-wrinkle injections. Are you happy with this, and with using \"anti-wrinkle injections\" everywhere else?",
                   "The quote in \"A natural result\" is taken from the blog post \"Anti-Wrinkle Injections — Everything You Need to Know\" (16 March 2023). Is it yours, and are you happy for it to be used here?",
                 ].map((q, i) => (
