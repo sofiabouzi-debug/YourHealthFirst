@@ -246,6 +246,20 @@ export default async function AntiWrinkleEnglish(props: Props) {
     paras: body.slice(i * perRow, (i + 1) * perRow),
   }));
 
+  const facts: { label: string; value: string; sub?: string; icon: IconName }[] = [
+    { label: t("results"), value: results, icon: "calendar" },
+    { label: t("startingFrom"), value: priceFrom ?? "", icon: "target" },
+    { label: t("location"), value: "2 Wimpole Street, London W1G 0EB", icon: "pin" },
+    { label: "Appointment", value: "About 10 to 15 minutes", sub: "For the injections", icon: "check" },
+  ];
+
+  const popular = [
+    { label: "Frown", key: "Frown" },
+    { label: "Crow's feet", key: "Crow's feet" },
+    { label: "Forehead", key: "Forehead" },
+    { label: "3 areas (to choose, Face)", key: "3 areas (to choose, Face)" },
+  ];
+
   const galleryImages = gallery
     ? Array.from({ length: Math.min(6, gallery.count) }, (_, i) => ({
         src: `${gallery.folder}/${gallery.prefix}-${i + 1}.${gallery.ext}`,
@@ -263,7 +277,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
       {/* Hero */}
       <section className="relative w-full bg-[linear-gradient(90deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] pt-[111px]">
-        <div className="mx-auto max-w-[1400px] px-5 py-[70px] lg:py-[90px]">
+        <div className="mx-auto max-w-[1400px] px-5 pb-[110px] pt-[70px] lg:pb-[130px] lg:pt-[90px]">
           <div className="flex flex-col gap-4">
             {SHOW_DRAFT_MARKERS && (
               <div className="w-fit rounded-full border border-[#ffbe02]/60 bg-[#ffbe02]/15 px-4 py-2 text-[13px] font-semibold text-[#ffe08a]">
@@ -311,9 +325,35 @@ export default async function AntiWrinkleEnglish(props: Props) {
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-tan/40 to-transparent" />
       </section>
 
+      {/* Key facts */}
+      <section className="relative z-10 w-full px-5">
+        <div className="mx-auto -mt-[60px] max-w-[1400px]">
+          <div className="grid grid-cols-1 overflow-hidden rounded-[20px] border border-tan/30 bg-white shadow-xl sm:grid-cols-2 lg:grid-cols-4">
+            <div className="border-b border-tan/20 px-6 pt-4 pb-2 sm:col-span-2 lg:col-span-4">
+              <h2 className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">{t("keyFacts")}</h2>
+            </div>
+            {facts.map((f, i) => (
+              <div key={f.label} className="flex items-start gap-4 border-b border-tan/20 p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm"
+                  style={{ background: accentGradient(ACCENTS[i % ACCENTS.length]), color: ACCENTS[i % ACCENTS.length].ink }}
+                >
+                  <Icon name={f.icon} className="h-5 w-5" />
+                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="font-nav text-[12px] font-semibold tracking-[2px] text-tan uppercase">{f.label}</span>
+                  <span className="font-subheading text-[15px] font-semibold leading-[21px] text-forest">{f.value}</span>
+                  {f.sub ? <span className="text-[13px] leading-[19px] text-body-text">{f.sub}</span> : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Main content: the layout of the current page (photo rows on the left, Key Facts and Book cards on the right) */}
       <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] pt-[60px] pb-[48px] lg:pt-[80px] lg:pb-[56px]">
+        <div className="mx-auto max-w-[1400px] pt-[48px] pb-[48px] lg:pt-[56px] lg:pb-[56px]">
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
             {/* Main text */}
             <div className="flex flex-col gap-8 lg:flex-1">
@@ -379,32 +419,32 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
             {/* Sidebar */}
             <div className="flex flex-col gap-6 lg:w-[340px] lg:shrink-0">
-              <div className="rounded-[12px] bg-cream p-6">
-                <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-forest uppercase">{t("keyFacts")}</h3>
-                <div className="mt-5 flex flex-col gap-4">
-                  <div className="border-b border-black/10 pb-4">
-                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("results")}</p>
-                    <p className="mt-1 text-[15px] leading-[22px] text-forest">{results}</p>
-                  </div>
-                  {priceFrom && (
-                    <div className="border-b border-black/10 pb-4">
-                      <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("startingFrom")}</p>
-                      <p
-                        className="mt-1 font-subheading text-[18px] font-semibold text-tan"
-                        data-sanity={getSanityAttribute(docId, "treatment", "priceFrom")}
-                      >
-                        {priceFrom}
-                      </p>
-                    </div>
-                  )}
-                  <div className="border-b border-black/10 pb-4">
-                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("location")}</p>
-                    <p className="mt-1 text-[15px] leading-[22px] text-forest">2 Wimpole Street, London W1G 0EB</p>
-                  </div>
-                  <div>
-                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">Appointment</p>
-                    <p className="mt-1 text-[15px] leading-[22px] text-forest">The injections take about 10 to 15 minutes</p>
-                  </div>
+              <div className="overflow-hidden rounded-[12px] bg-cream">
+                <div className="relative h-[150px] w-full">
+                  <Image
+                    src="/images/treatments/anti-wrinkles/consultation-corner.jpg"
+                    alt="A calm consultation corner at YourHealthFirst Clinic with an armchair by a Harley Street window"
+                    fill
+                    sizes="340px"
+                    className="object-cover object-[25%_50%]"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(122,98,72,0.15)_0%,rgba(58,44,26,0.85)_100%)]" />
+                  <h3 className="absolute bottom-3 left-5 font-subheading text-[14px] font-semibold tracking-[2px] text-cream uppercase">
+                    Popular areas
+                  </h3>
+                </div>
+                <div className="p-6 pt-4">
+                  <ul className="flex flex-col">
+                    {popular.map((r) => (
+                      <li key={r.label} className="flex items-baseline justify-between gap-3 border-b border-black/10 py-2.5 last:border-b-0">
+                        <span className="text-[14px] leading-[20px] text-body-text">{r.label}</span>
+                        <span className="shrink-0 font-subheading text-[16px] font-semibold text-forest">{priceOf(r.key)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="#prices" className="mt-3 inline-block text-[14px] text-tan underline-offset-4 hover:underline">
+                    See all areas and prices
+                  </a>
                 </div>
               </div>
 
@@ -467,7 +507,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
       </section>
 
       {/* Areas and prices (new) */}
-      <section className="w-full px-5">
+      <section id="prices" className="w-full px-5">
         <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <SectionBars>Areas and prices</SectionBars>
@@ -530,8 +570,9 @@ export default async function AntiWrinkleEnglish(props: Props) {
       />
 
       {/* Natural result and your practitioner (new) */}
-      <section className="w-full bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
-        <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10 py-[56px] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:py-[72px]">
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
+        <Image src="/images/treatments/anti-wrinkles/linen-texture.jpg" alt="" fill sizes="100vw" className="object-cover opacity-[0.16]" />
+        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10 py-[56px] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:py-[72px]">
           <div className="flex flex-col gap-5">
             <span className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">A natural result</span>
             <blockquote className="font-serif text-[26px] leading-[36px] text-cream italic lg:text-[32px] lg:leading-[44px]">
