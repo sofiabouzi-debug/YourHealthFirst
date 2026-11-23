@@ -81,6 +81,12 @@ export default function ContactForm() {
     }
 
     if (response.ok) {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "generate_lead", {
+          form_name: "contact_form",
+          page_path: window.location.pathname,
+        });
+      }
       setIsSuccess(true);
       formElement.reset();
       try {

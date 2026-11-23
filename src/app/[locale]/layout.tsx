@@ -48,6 +48,7 @@ const playfairSC = Playfair_Display_SC({
 import StructuredData from "@/components/StructuredData";
 import CookieBanner from "@/components/CookieBanner";
 import GoogleAnalyticsLoader from "@/components/GoogleAnalyticsLoader";
+import LeadTracking from "@/components/LeadTracking";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.yourhealthfirst.uk";
 
@@ -186,6 +187,7 @@ export default async function RootLayout({
           <WhatsAppFloat />
           <CookieBanner />
           <GoogleAnalyticsLoader id={GA_MEASUREMENT_ID} />
+          <LeadTracking />
           {draft.isEnabled && <VisualEditing />}
         </NextIntlClientProvider>
       </body>
