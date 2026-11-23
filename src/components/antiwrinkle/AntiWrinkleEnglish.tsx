@@ -507,11 +507,13 @@ export default async function AntiWrinkleEnglish(props: Props) {
       </section>
 
       {/* Areas and prices (new) */}
-      <section id="prices" className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+      <section id="prices" className="relative w-full overflow-hidden bg-[linear-gradient(135deg,#f1e2c8_0%,#e3cba2_100%)] px-5">
+        <div className="pointer-events-none absolute -right-[8%] -top-[20%] h-[460px] w-[460px] rounded-full bg-white/40 blur-[110px]" />
+        <div className="pointer-events-none absolute -left-[8%] bottom-[-25%] h-[420px] w-[420px] rounded-full bg-tan/25 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <SectionBars>Areas and prices</SectionBars>
-            <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/40 bg-cream px-5 py-3 text-[14px] leading-[20px] text-body-text">
+            <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/50 bg-white/70 px-5 py-3 text-[14px] leading-[20px] text-body-text">
               <Icon name="chat" className="h-4 w-4 shrink-0 text-tan" />
               <span>
                 Consultation <strong className="font-semibold text-forest">{consultationPrice}</strong>. Treatment is priced per area.
@@ -549,6 +551,22 @@ export default async function AntiWrinkleEnglish(props: Props) {
                 </div>
               );
             })}
+            <div className="flex flex-col justify-between gap-5 rounded-[18px] bg-[linear-gradient(135deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] p-6 shadow-md">
+              <div className="flex flex-col gap-2">
+                <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] text-cream uppercase">Start with a consultation</h3>
+                <p className="font-subheading text-[28px] font-semibold text-white">{consultationPrice}</p>
+                <p className="text-[14px] leading-[22px] text-white/80">
+                  Sofia reviews your medical history, assesses your face and agrees the right dose and placement with you.
+                </p>
+              </div>
+              <a
+                href={EMAIL_HREF}
+                className="flex h-12 items-center justify-center gap-2 rounded-[8px] bg-tan font-nav text-[14px] font-semibold tracking-[-0.3px] text-forest transition-opacity hover:opacity-90"
+              >
+                <Icon name="mail" className="h-4 w-4" />
+                Email to book
+              </a>
+            </div>
           </div>
           <p className="mt-6 text-[14px] leading-[22px] text-body-text">
             See our full{" "}
