@@ -56,7 +56,7 @@ const steps: JourneyStep[] = [
   { icon: "arrive", title: "Arrive", text: "Bring the whole kit, including the requisition form. The test cannot go ahead without it." },
   { icon: "draw", title: "Blood draw", text: "A registered phlebotomist takes the sample with sterile single-use equipment." },
   { icon: "centrifuge", title: "Preparation", text: "We check that all forms are fully filled in, centrifuge the tubes if your kit requires it, and pack them to the laboratory's instructions." },
-  { icon: "dispatch", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, and freeze it if your form requires it." },
+  { icon: "dispatch", title: "Dispatch", text: "You send the kit by the courier or post option in your kit. We can hold the sample at the clinic for courier collection, freeze it if your form requires it, and post it for you on request." },
 ];
 
 const labs = [
@@ -96,7 +96,7 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
     question: "Do I need an appointment?",
     answer:
-      "We offer a walk-in service, but appointments are given priority. Without one, waits can reach 45 minutes or more. Please book if your kit needs centrifuging, a courier collection or a child's appointment.",
+      "Walk-in appointments are available, but booked appointments are given priority and waits can reach 45 minutes or more. To book, email us your contact details and we will confirm your appointment by email. Please book if your kit needs centrifuging, a courier collection or a child's appointment.",
   },
   {
     question: "How long does it take?",
@@ -111,8 +111,7 @@ const faqSource: { question: string; answer: string; draft?: string }[] = [
   {
     question: "Do you offer mobile or home blood draws?",
     answer:
-      "Yes, on request. Mobile visits are priced separately. Call or WhatsApp us with your postcode and kit details. Some tests need immediate processing on site and are better done at the clinic.",
-    draft: "price and the furthest distance",
+      "Yes, on request. Mobile visits are priced separately. Please call us with your postcode and kit details, and we will tell you the availability, notice and cost. Some tests need immediate processing on site and are better done at the clinic.",
   },
   {
     question: "Do I need to fast?",
@@ -142,14 +141,7 @@ const guides: { slug: string; title: string; blurb: string }[] = [
 
 const guideIcons: IconName[] = ["shield", "clipboard", "child", "truck", "chat", "check"];
 
-const sofiaChecklist: string[] = [
-  "Water before the appointment: the old page said adults 2 litres and children 1 litre. This page says adults 1 to 1.5 litres and children at least 500 ml. Which is right?",
-  "Mobile visits: how much notice do you need, and what is the furthest distance you travel?",
-  "Samples: do you post them for patients, or only hold them (frozen if needed) for courier collection?",
-  "Appointments: some of your guides say same-day appointments and zero waiting. Can we say that on this page?",
-  "Registration: do you want your registration number shown next to the National Phlebotomist Register logo?",
-  "Centrifuging for other clinics and practitioners: should it have its own page?",
-];
+const sofiaChecklist: string[] = [];
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -211,7 +203,7 @@ export default async function PhlebotomyEnglish() {
     <>Bring your test kit and all of its contents. Private blood test kits contain a requisition form (the test cannot proceed if you do not have your requisition form). Check the contents of your test kit.</>,
     <>
       Stay well-hydrated with plain water to make your veins plump and easier to find{" "}
-      <Confirm note="Sofia to confirm: the old page said 2L and 1L">(adults 1 to 1.5 litres, children at least 500 ml)</Confirm>.
+      (adults 1 to 1.5 litres, children at least 500 ml).
     </>,
     <>Avoid other liquids: don&apos;t drink coffee, tea, juice, soda, or other sugary drinks, as they can interfere with test results. Confirm fasting requirements according to your requisition form: some tests need fasting (water only) and some do not.</>,
     <>Do not stop or change any prescribed medication unless your doctor tells you to.</>,
@@ -607,7 +599,7 @@ export default async function PhlebotomyEnglish() {
             </div>
             <p className="text-[16px] leading-[27px] text-body-text">
               {"Can't come to Wimpole Street? We can travel to you. Mobile visits are available on request."}{" "}
-              They are priced separately from clinic appointments, so please call or WhatsApp us with your postcode and kit details and we will confirm availability and cost.
+              They are priced separately from clinic appointments, so please call us with your postcode and kit details and we will tell you the availability, notice and cost.
             </p>
             <p className="text-[16px] leading-[27px] text-body-text">
               Tests that must be processed immediately on site are better done at the clinic.
@@ -824,10 +816,11 @@ export default async function PhlebotomyEnglish() {
                 </div>
               </div>
               <p className="mt-6 text-[14px] leading-[22px] text-body-text">
-                <strong className="font-semibold text-forest">What we cannot promise:</strong> a ranking. Google decides that, and the competition in London is strong. We will not change the page title or description yet, only review them with you on 27 November. After the page is live we will check Google Search Console after 4 to 6 weeks and show you what changed. Please also confirm the facts highlighted in yellow, because wrong opening hours or wording would cost trust.
+                <strong className="font-semibold text-forest">What we cannot promise:</strong> a ranking. Google decides that, and the competition in London is strong. We will not change the page title or description yet, only review them with you on 27 November. After the page is live we will check Google Search Console after 4 to 6 weeks and show you what changed. Please read the page once more and tell us anything that is wrong, because a wrong fact would cost trust.
               </p>
             </div>
 
+            {sofiaChecklist.length > 0 && (
             <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
               <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
                 For Sofia only. Removed before this page goes live
@@ -844,6 +837,7 @@ export default async function PhlebotomyEnglish() {
                 ))}
               </ol>
             </div>
+            )}
           </div>
         </section>
       )}
