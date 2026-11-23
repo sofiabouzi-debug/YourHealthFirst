@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { getSanityAttribute } from "@/sanity/lib/dataAttribute";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
@@ -237,16 +238,13 @@ export default async function AntiWrinkleEnglish(props: Props) {
   const extraSections = codeFaqs.flatMap((f) => f.sections ?? []);
 
   // body paragraphs are shown in order, three groups, each beside one of the existing photos
-  // the existing paragraphs, in their original order, in three groups; each group sits beside one photo
-  const groups: string[][] = [[intro, body[0]], [body[1], body[2]], body.slice(3)].map((g) => g.filter(Boolean));
-  const rowImages = bodyImages.slice(0, 3);
-
-  const facts: { label: string; value: string; sub?: string; icon: IconName }[] = [
-    { label: t("results"), value: results, icon: "calendar" },
-    { label: t("startingFrom"), value: priceFrom ?? "", icon: "target" },
-    { label: t("location"), value: "2 Wimpole Street, London W1G 0EB", icon: "pin" },
-    { label: "Appointment", value: "About 10 to 15 minutes", sub: "For the injections", icon: "check" },
-  ];
+  // Old page layout, kept: each existing photo gets its own row with a share of the existing paragraphs
+  const imgCount = Math.max(bodyImages.length, 1);
+  const perRow = Math.ceil(body.length / imgCount);
+  const rows = bodyImages.map((img, i) => ({
+    img,
+    paras: body.slice(i * perRow, (i + 1) * perRow),
+  }));
 
   const galleryImages = gallery
     ? Array.from({ length: Math.min(6, gallery.count) }, (_, i) => ({
@@ -265,7 +263,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
       {/* Hero */}
       <section className="relative w-full bg-[linear-gradient(90deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] pt-[111px]">
-        <div className="mx-auto max-w-[1400px] px-5 pb-[110px] pt-[70px] lg:pb-[130px] lg:pt-[90px]">
+        <div className="mx-auto max-w-[1400px] px-5 py-[70px] lg:py-[90px]">
           <div className="flex flex-col gap-4">
             {SHOW_DRAFT_MARKERS && (
               <div className="w-fit rounded-full border border-[#ffbe02]/60 bg-[#ffbe02]/15 px-4 py-2 text-[13px] font-semibold text-[#ffe08a]">
@@ -313,148 +311,130 @@ export default async function AntiWrinkleEnglish(props: Props) {
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-tan/40 to-transparent" />
       </section>
 
-      {/* Key facts */}
-      <section className="relative z-10 w-full px-5">
-        <div className="mx-auto -mt-[60px] max-w-[1400px]">
-          <div className="grid grid-cols-1 overflow-hidden rounded-[20px] border border-tan/30 bg-white shadow-xl sm:grid-cols-2 lg:grid-cols-4">
-            <div className="border-b border-tan/20 px-6 pt-4 pb-2 sm:col-span-2 lg:col-span-4">
-              <h2 className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">{t("keyFacts")}</h2>
-            </div>
-            {facts.map((f, i) => (
-              <div key={f.label} className="flex items-start gap-4 border-b border-tan/20 p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm"
-                  style={{ background: accentGradient(ACCENTS[i % ACCENTS.length]), color: ACCENTS[i % ACCENTS.length].ink }}
-                >
-                  <Icon name={f.icon} className="h-5 w-5" />
-                </span>
-                <div className="flex flex-col gap-1">
-                  <span className="font-nav text-[12px] font-semibold tracking-[2px] text-tan uppercase">{f.label}</span>
-                  <span className="font-subheading text-[15px] font-semibold leading-[21px] text-forest">{f.value}</span>
-                  {f.sub ? <span className="text-[13px] leading-[19px] text-body-text">{f.sub}</span> : null}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Introduction and body: all existing paragraphs in order; the three existing photos alternate left and right */}
+      {/* Main content: the layout of the current page (photo rows on the left, Key Facts and Book cards on the right) */}
       <section className="w-full px-5">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-8 py-[48px] lg:gap-10 lg:py-[64px]">
-          {groups.map((paras, gi) => {
-            const img = rowImages[gi];
-            const imageRight = gi % 2 === 1;
-            return (
-              <div
-                key={gi}
-                className={`grid grid-cols-1 items-center gap-6 lg:gap-10 ${
-                  imageRight ? "lg:grid-cols-[1fr_360px]" : "lg:grid-cols-[360px_1fr]"
-                }`}
+        <div className="mx-auto max-w-[1400px] py-[60px] lg:py-[80px]">
+          <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
+            {/* Main text */}
+            <div className="flex flex-col gap-8 lg:flex-1">
+              <p
+                className="text-[18px] leading-[30px] font-medium tracking-[-0.3px] text-forest"
+                data-sanity={getSanityAttribute(docId, "treatment", "intro")}
               >
-                <div className={`relative w-full max-w-[420px] justify-self-center lg:max-w-none ${imageRight ? "lg:order-2" : ""}`}>
-                  <div className="relative w-full overflow-hidden rounded-[12px] shadow-md" style={{ aspectRatio: "4/3" }}>
-                    {img ? (
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes="(min-width: 1024px) 360px, 90vw"
-                        className="object-cover"
-                        style={{ objectPosition: img.position ?? "50% 50%" }}
-                      />
-                    ) : null}
+                {intro}
+              </p>
+              <div className="flex flex-col gap-10">
+                {rows.map((row, i) => {
+                  const isLast = i === rows.length - 1;
+                  return (
+                    <div
+                      key={row.img.src}
+                      className={`flex flex-col items-start gap-6 sm:flex-row sm:items-stretch sm:gap-8 ${
+                        i % 2 === 1 ? "sm:flex-row-reverse" : ""
+                      }`}
+                    >
+                      <div className="relative aspect-[4/5] w-full max-w-[280px] shrink-0 overflow-hidden rounded-[14px] border border-black/8 shadow-md sm:aspect-auto sm:min-h-[200px] sm:w-[260px]">
+                        <Image
+                          src={row.img.src}
+                          alt={row.img.alt}
+                          fill
+                          sizes="(min-width: 640px) 260px, 280px"
+                          className="object-cover"
+                          style={row.img.position ? { objectPosition: row.img.position } : undefined}
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col gap-5">
+                        {row.paras.map((para, j) => (
+                          <p key={j} className="text-[16px] leading-[27px] tracking-[-0.2px] text-body-text">
+                            {para}
+                          </p>
+                        ))}
+                        {isLast && (
+                          <div className={`flex flex-col gap-4 ${row.paras.length ? "mt-2" : ""}`}>
+                            <h2 className="font-subheading text-[20px] leading-[26px] font-semibold tracking-[-0.8px] text-forest uppercase">
+                              {t("suitableFor")}
+                            </h2>
+                            <ul className="flex flex-col gap-3">
+                              {suitableFor.map((item) => (
+                                <li key={item} className="flex items-start gap-3">
+                                  <span className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-tan" />
+                                  <span className="text-[16px] leading-[26px] tracking-[-0.2px] text-body-text">{item}</span>
+                                </li>
+                              ))}
+                              {whoForExtra.map((w) => (
+                                <li key={w.text} className="flex items-start gap-3">
+                                  <span className="mt-[8px] h-[6px] w-[6px] shrink-0 rounded-full bg-tan" />
+                                  <span className="text-[16px] leading-[26px] tracking-[-0.2px] text-body-text">{w.text}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="flex flex-col gap-6 lg:w-[340px] lg:shrink-0">
+              <div className="rounded-[12px] bg-cream p-6">
+                <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-forest uppercase">{t("keyFacts")}</h3>
+                <div className="mt-5 flex flex-col gap-4">
+                  <div className="border-b border-black/10 pb-4">
+                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("results")}</p>
+                    <p className="mt-1 text-[15px] leading-[22px] text-forest">{results}</p>
+                  </div>
+                  {priceFrom && (
+                    <div className="border-b border-black/10 pb-4">
+                      <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("startingFrom")}</p>
+                      <p
+                        className="mt-1 font-subheading text-[18px] font-semibold text-tan"
+                        data-sanity={getSanityAttribute(docId, "treatment", "priceFrom")}
+                      >
+                        {priceFrom}
+                      </p>
+                    </div>
+                  )}
+                  <div className="border-b border-black/10 pb-4">
+                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">{t("location")}</p>
+                    <p className="mt-1 text-[15px] leading-[22px] text-forest">2 Wimpole Street, London W1G 0EB</p>
+                  </div>
+                  <div>
+                    <p className="text-[12px] tracking-[1.5px] text-body-text/60 uppercase">Appointment</p>
+                    <p className="mt-1 text-[15px] leading-[22px] text-forest">The injections take about 10 to 15 minutes</p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-4">
-                  {paras.map((p, pi) =>
-                    gi === 0 && pi === 0 ? (
-                      <p key={pi} className="text-[18px] leading-[29px] font-medium tracking-[-0.3px] text-forest">
-                        {p}
-                      </p>
-                    ) : (
-                      <p key={pi} className="text-[16px] leading-[26px] text-body-text">
-                        {p}
-                      </p>
-                    ),
-                  )}
-                </div>
               </div>
-            );
-          })}
-        </div>
-      </section>
 
-      {/* Suitable for: the four existing points first, then new ones (same layout as the phlebotomy page) */}
-      <section className={creamBg}>
-        <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-tan/15 blur-[110px]" />
-        <div className="pointer-events-none absolute -right-[10%] bottom-[-20%] h-[500px] w-[500px] rounded-full bg-white/40 blur-[110px]" />
-        <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
-          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10">
-            <div className="relative flex flex-col justify-between gap-10 overflow-hidden rounded-[24px] bg-forest p-9 shadow-lg lg:p-12">
-              <div className="pointer-events-none absolute -right-[20%] -top-[20%] h-[340px] w-[340px] rounded-full bg-tan/15 blur-[90px]" />
-              <div className="relative flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <span className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">Who it is for</span>
-                  <span className="h-px w-12 bg-tan/40" />
+              <div className="rounded-[12px] bg-[linear-gradient(135deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] p-6">
+                <h3 className="font-subheading text-[15px] font-semibold tracking-[1px] text-cream uppercase">{t("bookTitle")}</h3>
+                <p className="mt-2 text-[14px] leading-[22px] text-white/60">{t("bookDesc")}</p>
+                <div className="mt-5 flex flex-col gap-3">
+                  <a
+                    href={EMAIL_HREF}
+                    className="flex h-12 items-center justify-center gap-2 rounded-[8px] bg-tan font-nav text-[14px] font-semibold tracking-[-0.3px] text-forest transition-opacity hover:opacity-90"
+                  >
+                    <Icon name="mail" className="h-4 w-4" />
+                    Email to book
+                  </a>
+                  <a
+                    href={PHONE_TEL}
+                    className="flex h-12 items-center justify-center rounded-[8px] bg-tan font-nav text-[14px] font-semibold tracking-[-0.3px] text-forest transition-opacity hover:opacity-90"
+                  >
+                    {t("call")}
+                  </a>
+                  <a
+                    href={`/${locale}/contact-us`}
+                    className="flex h-12 items-center justify-center rounded-[8px] border border-white/40 font-nav text-[14px] font-semibold tracking-[-0.3px] text-cream transition-colors hover:border-tan hover:text-tan"
+                  >
+                    {t("sendEnquiry")}
+                  </a>
                 </div>
-                <h2 className="font-display text-[30px] font-bold leading-[36px] tracking-[-1px] text-cream uppercase lg:text-[38px] lg:leading-[44px]">
-                  {t("suitableFor")}
-                </h2>
-                <p className="text-[15px] leading-[25px] text-white/70">
-                  If any of these sound like you, we can help. Sofia will confirm suitability at your consultation.
-                </p>
-              </div>
-              <div className="relative flex flex-wrap gap-3">
-                <a href={EMAIL_HREF} className={primaryBtn}>
-                  <Icon name="mail" className="h-4 w-4" />
-                  Email us
-                </a>
-                <a href={PHONE_TEL} className={ghostBtn}>
-                  <Icon name="phone" className="h-4 w-4" />
-                  Call us
-                </a>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
-                  <Icon name="chat" className="h-4 w-4" />
-                  WhatsApp
-                </a>
               </div>
             </div>
-
-            <ul className="flex flex-col overflow-hidden rounded-[24px] border border-tan/25 bg-white/70 shadow-sm backdrop-blur-sm">
-              {suitableFor.map((sf, i) => (
-                <li key={sf} className="flex flex-1 items-center gap-5 border-b border-tan/25 px-7 py-6 last:border-b-0 lg:px-9">
-                  <span
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full shadow-md"
-                    style={{ background: accentGradient(ACCENTS[i % ACCENTS.length]), color: ACCENTS[i % ACCENTS.length].ink }}
-                  >
-                    <Icon name={(["user", "target", "child", "drop"] as IconName[])[i % 4]} className="h-7 w-7" />
-                  </span>
-                  <p className="text-[16px] leading-[26px] text-body-text">{sf}</p>
-                </li>
-              ))}
-            </ul>
           </div>
-          <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {whoForExtra.map((w, i) => {
-              const a = ACCENTS[(i + 1) % ACCENTS.length];
-              return (
-                <li
-                  key={w.text}
-                  className="flex items-start gap-3 rounded-[16px] border p-4"
-                  style={{ background: a.tint, borderColor: a.line }}
-                >
-                  <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm"
-                    style={{ background: accentGradient(a), color: a.ink }}
-                  >
-                    <Icon name={w.icon} className="h-5 w-5" />
-                  </span>
-                  <p className="text-[14px] leading-[22px] text-body-text">{w.text}</p>
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </section>
 
@@ -557,7 +537,15 @@ export default async function AntiWrinkleEnglish(props: Props) {
             <blockquote className="font-serif text-[26px] leading-[36px] text-cream italic lg:text-[32px] lg:leading-[44px]">
               The highest artistry in anti-wrinkle treatment is imperceptibility. People should notice that you look well-rested, radiant, and refreshed — never frozen.
             </blockquote>
-            <p className="text-[14px] text-white/60">Sofia Bouzian</p>
+            <p className="text-[14px] text-white/60">
+              Sofia Bouzian
+              {SHOW_DRAFT_MARKERS ? (
+                <>
+                  {" "}
+                  <Confirm note="Sofia to confirm this quote from her blog" />
+                </>
+              ) : null}
+            </p>
           </div>
           <div className="flex items-center gap-5 rounded-[20px] border border-white/15 bg-white/[0.06] p-5">
             <div className="relative h-[110px] w-[110px] shrink-0 overflow-hidden rounded-full border-2 border-tan/60">
@@ -607,34 +595,6 @@ export default async function AntiWrinkleEnglish(props: Props) {
           </div>
         </section>
       )}
-
-      {/* Book a consultation: the existing block, kept as it is */}
-      <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] pb-[56px] lg:pb-[72px]">
-          <div className="relative overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] p-8 lg:p-12">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex max-w-[620px] flex-col gap-2">
-                <h2 className="font-subheading text-[22px] font-semibold tracking-[1px] text-cream uppercase">{t("bookTitle")}</h2>
-                <p className="text-[15px] leading-[24px] text-white/80">{t("bookDesc")}</p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <a href={EMAIL_HREF} className={primaryBtn}>
-                  <Icon name="mail" className="h-4 w-4" />
-                  Email to book
-                </a>
-                <a href={PHONE_TEL} className={ghostBtn}>
-                  <Icon name="phone" className="h-4 w-4" />
-                  {t("call")}
-                </a>
-                <a href={`/${locale}/contact-us`} className={ghostBtn}>
-                  <Icon name="chat" className="h-4 w-4" />
-                  {t("sendEnquiry")}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQs: the existing questions first, then new ones */}
       <section id="faqs" className="w-full bg-cream px-5">
@@ -801,6 +761,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
                 {[
                   "How should we write your title and registration on this page (for example your regulator and registration number)?",
                   "The word Botox: it stays in the existing text and in the question about the difference between Botox and anti-wrinkle injections. Are you happy with this, and with using \"anti-wrinkle injections\" everywhere else?",
+                  "The quote in \"A natural result\" is taken from the blog post \"Anti-Wrinkle Injections — Everything You Need to Know\" (16 March 2023). Is it yours, and are you happy for it to be used here?",
                 ].map((q, i) => (
                   <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
                     <span className="w-6 shrink-0 font-semibold text-forest">{i + 1}.</span>
