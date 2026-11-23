@@ -1,0 +1,805 @@
+import Image from "next/image";
+import type { ReactNode } from "react";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
+import type { TreatmentFaq } from "@/data/treatments";
+import priceListRaw from "@/data/priceList_raw.json";
+import { Icon, type IconName } from "../phlebotomy/icons";
+import { ACCENTS, accentGradient } from "../phlebotomy/accents";
+import TreatmentSteps, { type TreatmentStep } from "./TreatmentSteps";
+
+/**
+ * English anti-wrinkle page.
+ *
+ * Rule for this page: every word of the current live page is kept exactly as it is (the text
+ * comes in through props from the same source the live page uses, so edits made in the content
+ * editor still show), and new content is only ever added around it.
+ *
+ * SHOW_DRAFT_MARKERS: while true, the page shows a draft banner and highlights the wording Sofia
+ * still has to confirm. Set it to false before this page goes to the live site.
+ */
+const SHOW_DRAFT_MARKERS = true;
+
+const PHONE_TEL = "tel:02072253582";
+const WHATSAPP_URL = "https://wa.me/447818474041";
+const EMAIL_HREF = "mailto:info@yourhealthfirst.uk?subject=Anti-wrinkle%20consultation";
+const DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=YourHealthFirst+Clinic+2+Wimpole+Street+London+W1G+0EB";
+
+type Props = {
+  locale: string;
+  docId: string;
+  slug: string;
+  title: string;
+  tagline?: string;
+  intro: string;
+  body: string[];
+  benefits: string[];
+  suitableFor: string[];
+  faqs: TreatmentFaq[];
+  codeFaqs: TreatmentFaq[];
+  priceFrom?: string;
+  results: string;
+  category: string;
+  bodyImages: { src: string; alt: string; position?: string }[];
+  gallery?: { folder: string; prefix: string; count: number; ext: string };
+  related: { slug: string; title: string; intro: string }[];
+  sanitySettings: Record<string, unknown> | null;
+};
+
+/* ---------------------------------------------------------------- helpers */
+
+function Confirm({ children, note }: { children?: ReactNode; note?: string }) {
+  if (!SHOW_DRAFT_MARKERS) return <>{children}</>;
+  return (
+    <mark className="rounded-[4px] border border-dashed border-[#d9a400] bg-[#fff3c4] px-1.5 py-0.5 text-[0.95em] text-[#6b4a00]">
+      {children}
+      {note ? <span className="font-semibold"> [{note}]</span> : null}
+    </mark>
+  );
+}
+
+function SectionBars({ children, light }: { children: ReactNode; light?: boolean }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="h-[3px] w-12 rounded-full bg-tan" />
+      <h2
+        className={`font-display text-[30px] font-bold leading-[36px] tracking-[-1px] uppercase lg:text-[36px] lg:leading-[42px] ${
+          light ? "text-cream" : "text-forest"
+        }`}
+      >
+        {children}
+      </h2>
+    </div>
+  );
+}
+
+const primaryBtn =
+  "inline-flex h-14 items-center gap-3 rounded-[10px] bg-tan px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-forest uppercase transition-opacity hover:opacity-90";
+const ghostBtn =
+  "inline-flex h-14 items-center gap-3 rounded-[10px] border border-white/35 px-7 font-nav text-[14px] font-semibold tracking-[0.5px] text-white uppercase transition-colors hover:border-tan hover:text-tan";
+const creamBg = "relative w-full overflow-hidden bg-[linear-gradient(135deg,#faf4ea_0%,#f0e0c8_100%)] px-5";
+
+const draftNote = (text: string) => (SHOW_DRAFT_MARKERS ? ` [Sofia to confirm: ${text}]` : "");
+
+/* ------------------------------------------------------------ price table */
+
+type PriceRow = { service: string; price: string };
+type PriceSection = { id: string; items: PriceRow[] };
+const awSection = (priceListRaw as unknown as PriceSection[]).find((s) => s.id === "anti-wrinkle");
+const priceOf = (name: string) => awSection?.items.find((i) => i.service === name)?.price ?? "";
+const consultationPrice = priceOf("Consultation");
+
+const priceGroups: { title: string; icon: IconName; accent: number; rows: { label: string; key: string }[] }[] = [
+  {
+    title: "Upper face",
+    icon: "target",
+    accent: 5,
+    rows: [
+      { label: "Forehead", key: "Forehead" },
+      { label: "Frown", key: "Frown" },
+      { label: "Crow's feet", key: "Crow's feet" },
+      { label: "Brow lift", key: "Brow lift" },
+      { label: "Bunny lines", key: "Bunny lines" },
+    ],
+  },
+  {
+    title: "Jaw and lower face",
+    icon: "user",
+    accent: 2,
+    rows: [
+      { label: "Jawline / Masseter (jaw slimming)", key: "Jawline / Masseter (jaw slimming)" },
+      { label: "Gummy smile", key: "Gummy smile" },
+      { label: "Teeth grinding / Clenching", key: "Teeth grinding / Clenching" },
+      { label: "Nefertiti lift", key: "Nefertiti lift" },
+    ],
+  },
+  {
+    title: "Neck",
+    icon: "shield",
+    accent: 4,
+    rows: [{ label: "Neck lift (platysmal bands)", key: "Neck lift (platysmal bands)" }],
+  },
+  {
+    title: "Packages",
+    icon: "check",
+    accent: 1,
+    rows: [
+      { label: "3 areas (to choose, Face)", key: "3 areas (to choose, Face)" },
+      { label: "4 areas (to choose, Face)", key: "4 areas (to choose, Face)" },
+      { label: "5 areas (to choose, Face)", key: "5 areas (to choose, Face)" },
+    ],
+  },
+  {
+    title: "Excessive sweating (hyperhidrosis)",
+    icon: "drop",
+    accent: 3,
+    rows: [
+      { label: "Under both arms", key: "Hyperhidrosis — under both arms" },
+      { label: "Palms of both hands", key: "Hyperhidrosis — palms of both hands" },
+      { label: "Soles of both feet", key: "Hyperhidrosis — soles of both feet" },
+    ],
+  },
+];
+
+/* ---------------------------------------------------------------- content */
+
+const whoForExtra: { icon: IconName; text: string }[] = [
+  { icon: "target", text: "You have frown lines, forehead lines or crow's feet that stay visible when your face is relaxed." },
+  { icon: "user", text: "You look tired or cross when you are not, because of a heavy brow or deep frown lines." },
+  { icon: "shield", text: "You are new to anti-wrinkle injections and want to talk it through before you decide." },
+  { icon: "check", text: "You want a natural result, where people say you look well rested and not that you have had treatment." },
+];
+
+const steps: TreatmentStep[] = [
+  { icon: "consult", title: "Book", text: "Email us (preferred), or call or WhatsApp. Tell us which areas you would like to look at." },
+  { icon: "assess", title: "Consultation", text: "Sofia reviews your medical history, assesses your face and agrees the right dose and placement with you." },
+  { icon: "inject", title: "Treatment", text: "Fine needles, a few small injections into specific muscles. The injections themselves take about 10 to 15 minutes." },
+  { icon: "aftercare", title: "Aftercare", text: "Stay upright for 4 hours. No intense exercise, heat or alcohol for 24 hours." },
+  { icon: "results", title: "Results", text: "Softening starts within a few days and the full effect shows by about day 14. A top-up can be arranged after 2 weeks." },
+  { icon: "repeat", title: "Maintenance", text: "Results last about 3 to 6 months. You should never have treatment more often than every 12 weeks." },
+];
+
+const extraFaqs: TreatmentFaq[] = [
+  {
+    question: "How much do anti-wrinkle injections cost?",
+    answer: `A consultation is ${consultationPrice}. Treatment is priced per area: from ${priceOf("Bunny lines")} for bunny lines, ${priceOf("Frown")} for frown lines, crow's feet or a brow lift, and ${priceOf("Forehead")} for the forehead. Packages are ${priceOf("3 areas (to choose, Face)")} for three areas, ${priceOf("4 areas (to choose, Face)")} for four and ${priceOf("5 areas (to choose, Face)")} for five. See the price table on this page or our full price list.`,
+  },
+  {
+    question: "How long does the appointment take?",
+    answer:
+      "The injections themselves take about 10 to 15 minutes, so most people go straight back to their day. Your consultation with Sofia comes first, so please allow a little extra time.",
+  },
+  {
+    question: "Do I need a consultation first?",
+    answer: `Yes. Sofia reviews your medical history, assesses your face and agrees the dose and placement with you before any treatment. The consultation is ${consultationPrice}.`,
+  },
+  {
+    question: "Who carries out the treatment?",
+    answer: `Sofia Bouzian carries out your consultation and your treatment, and prescribes where it is suitable.${draftNote("title and registration wording")}`,
+  },
+  {
+    question: "What is the difference between Botox and anti-wrinkle injections?",
+    answer: `"Anti-wrinkle injections" is the general name for treatments that relax the muscles that cause expression lines. Botox is one well-known brand name of botulinum toxin type A, which is a prescription-only medicine. At your consultation Sofia explains what is suitable for you.${draftNote("Botox wording")}`,
+  },
+  {
+    question: "Where are you based?",
+    answer:
+      "2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations.",
+  },
+];
+
+const benefitIcons: IconName[] = ["check", "shield", "target", "user", "bolt", "calendar"];
+
+/* ------------------------------------------------------------------- page */
+
+export default async function AntiWrinkleEnglish(props: Props) {
+  const {
+    locale,
+    docId,
+    slug,
+    title,
+    tagline,
+    intro,
+    body,
+    benefits,
+    suitableFor,
+    faqs,
+    codeFaqs,
+    priceFrom,
+    results,
+    category,
+    bodyImages,
+    gallery,
+    related,
+    sanitySettings,
+  } = props;
+
+  const t = await getTranslations({ locale, namespace: "TreatmentDetail" });
+  const tHeader = await getTranslations({ locale, namespace: "Header" });
+
+  const allFaqs: TreatmentFaq[] = [...faqs, ...extraFaqs];
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allFaqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer.replace(/ \[Sofia to confirm:[^\]]*\]/g, "") },
+    })),
+  };
+
+  // The aftercare and "what to expect over time" lists exist in the page data but are not shown on
+  // the live page; they are added here as new content.
+  const extraSections = codeFaqs.flatMap((f) => f.sections ?? []);
+
+  // body paragraphs are shown in order, three groups, each beside one of the existing photos
+  const groups: string[][] = [[intro, body[0]], [body[1], body[2]], body.slice(3)].map((g) => g.filter(Boolean));
+  const rowImages = bodyImages.slice(0, 3);
+
+  const facts: { label: string; value: string; sub?: string; icon: IconName }[] = [
+    { label: t("results"), value: results, icon: "calendar" },
+    { label: t("startingFrom"), value: priceFrom ?? "", icon: "target" },
+    { label: t("location"), value: "2 Wimpole Street, London W1G 0EB", icon: "pin" },
+    { label: "Consultation", value: consultationPrice, sub: "Before any treatment", icon: "chat" },
+    { label: "Appointment", value: "About 10 to 15 minutes", sub: "For the injections", icon: "check" },
+  ];
+
+  const galleryImages = gallery
+    ? Array.from({ length: Math.min(6, gallery.count) }, (_, i) => ({
+        src: `${gallery.folder}/${gallery.prefix}-${i + 1}.${gallery.ext}`,
+        alt: `${title} before & after — result ${i + 1}`,
+      }))
+    : [];
+
+  return (
+    <div className="flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      />
+      <Header sanitySettings={sanitySettings} />
+
+      {/* Hero */}
+      <section className="relative w-full bg-[linear-gradient(90deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] pt-[111px]">
+        <div className="mx-auto max-w-[1400px] px-5 pt-[70px] pb-[150px] lg:pt-[90px] lg:pb-[170px]">
+          <div className="flex flex-col gap-5">
+            {SHOW_DRAFT_MARKERS && (
+              <p className="w-fit rounded-full border border-[#d9a400] bg-[#fff3c4]/15 px-4 py-2 text-[13px] font-semibold text-[#ffd45c]">
+                Draft for approval. This version is not on the live website.
+              </p>
+            )}
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/treatments"
+                className="font-nav text-[13px] tracking-[1px] text-white/40 uppercase transition-colors hover:text-tan"
+              >
+                {tHeader("treatments")}
+              </Link>
+              <span className="text-white/30">/</span>
+              <span className="font-nav text-[13px] tracking-[1px] text-tan/70 uppercase">{category}</span>
+            </div>
+            <div className="w-fit rounded-full border-[0.8px] border-white/20 px-3 py-2">
+              <p className="text-[13px] font-semibold leading-[20.8px] tracking-[3px] text-tan uppercase">{category}</p>
+            </div>
+            <h1 className="font-display text-[38px] leading-[42px] font-bold tracking-[-1px] text-cream uppercase lg:text-[58px] lg:leading-[64px]">
+              {title} in London
+            </h1>
+            {tagline ? (
+              <p className="max-w-[640px] font-serif text-[20px] leading-[30px] text-white/75 italic lg:text-[22px] lg:leading-[32px]">
+                {tagline}
+              </p>
+            ) : null}
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href={EMAIL_HREF} className={primaryBtn}>
+                <Icon name="mail" className="h-4 w-4" />
+                Email to book
+              </a>
+              <a href={PHONE_TEL} className={ghostBtn}>
+                <Icon name="phone" className="h-4 w-4" />
+                Call 0207 225 3582
+              </a>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={ghostBtn}>
+                <Icon name="chat" className="h-4 w-4" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-tan/40 to-transparent" />
+      </section>
+
+      {/* Key facts */}
+      <section className="relative z-10 -mt-[100px] w-full px-5 lg:-mt-[110px]">
+        <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[20px] bg-white shadow-xl">
+          <div className="border-b border-tan/20 bg-forest px-6 py-3">
+            <h2 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">{t("keyFacts")}</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+            {facts.map((f, i) => (
+              <div key={f.label} className="flex items-start gap-4 border-b border-tan/20 p-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm"
+                  style={{ background: accentGradient(ACCENTS[i % ACCENTS.length]), color: ACCENTS[i % ACCENTS.length].ink }}
+                >
+                  <Icon name={f.icon} className="h-5 w-5" />
+                </span>
+                <div className="flex flex-col gap-1">
+                  <span className="font-nav text-[12px] font-semibold tracking-[2px] text-tan uppercase">{f.label}</span>
+                  <span className="text-[16px] leading-[22px] font-semibold text-forest">{f.value}</span>
+                  {f.sub ? <span className="text-[13px] leading-[19px] text-body-text">{f.sub}</span> : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Introduction and body: all existing paragraphs, each group beside one of the existing photos */}
+      <section className="w-full px-5">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-16 py-[70px] lg:gap-24 lg:py-[90px]">
+          {groups.map((paras, gi) => {
+            const img = rowImages[gi];
+            const reverse = gi % 2 === 1;
+            return (
+              <div
+                key={gi}
+                className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? "lg:[&>div:first-child]:order-2" : ""}`}
+              >
+                <div className="relative mx-auto w-full max-w-[560px]">
+                  <div
+                    className={`pointer-events-none absolute h-full w-full rounded-[18px] border border-tan/40 ${
+                      reverse ? "-right-3 -top-3" : "-left-3 -top-3"
+                    }`}
+                  />
+                  <div className="relative w-full overflow-hidden rounded-[14px] shadow-md" style={{ aspectRatio: "4/3" }}>
+                    {img ? (
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        sizes="(min-width: 1024px) 45vw, 100vw"
+                        className="object-cover"
+                        style={{ objectPosition: img.position ?? "50% 50%" }}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-5">
+                  {paras.map((p, pi) =>
+                    gi === 0 && pi === 0 ? (
+                      <p key={pi} className="text-[18px] leading-[30px] font-medium tracking-[-0.3px] text-forest">
+                        {p}
+                      </p>
+                    ) : (
+                      <p key={pi} className="text-[16px] leading-[27px] text-body-text">
+                        {p}
+                      </p>
+                    ),
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Suitable for: the four existing points first, then new ones */}
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -left-[10%] -top-[20%] h-[500px] w-[500px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-10">
+            <div className="relative flex flex-col justify-start gap-8 overflow-hidden rounded-[24px] bg-[linear-gradient(150deg,#0c2c1d_0%,#173f2b_100%)] p-8 text-white shadow-xl lg:p-10">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-[240px] w-[240px] rounded-full bg-tan/15 blur-[70px]" />
+              <div className="relative flex flex-col gap-4">
+                <h2 className="font-display text-[30px] font-bold leading-[36px] tracking-[-1px] text-cream uppercase lg:text-[38px] lg:leading-[44px]">
+                  {t("suitableFor")}
+                </h2>
+                <p className="text-[15px] leading-[25px] text-white/75">
+                  If any of these sound like you, we can help. Sofia will confirm suitability at your consultation.
+                </p>
+              </div>
+              <div className="relative flex flex-wrap gap-3">
+                <a href={EMAIL_HREF} className={primaryBtn}>
+                  <Icon name="mail" className="h-4 w-4" />
+                  Email us
+                </a>
+                <a href={PHONE_TEL} className={ghostBtn}>
+                  <Icon name="phone" className="h-4 w-4" />
+                  Call us
+                </a>
+              </div>
+            </div>
+            <ul className="flex flex-col overflow-hidden rounded-[24px] border border-tan/25 bg-white/70 shadow-sm backdrop-blur-sm">
+              {suitableFor.map((s, i) => (
+                <li key={s} className="flex items-center gap-4 border-b border-tan/20 p-5 last:border-b-0">
+                  <span
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full shadow-md"
+                    style={{ background: accentGradient(ACCENTS[i % ACCENTS.length]), color: ACCENTS[i % ACCENTS.length].ink }}
+                  >
+                    <Icon name={(["user", "target", "child", "drop"] as IconName[])[i % 4]} className="h-6 w-6" />
+                  </span>
+                  <span className="text-[16px] leading-[25px] text-body-text">{s}</span>
+                </li>
+              ))}
+              {whoForExtra.map((w, i) => (
+                <li key={w.text} className="flex items-center gap-4 border-b border-tan/20 p-5 last:border-b-0">
+                  <span
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full shadow-md"
+                    style={{
+                      background: accentGradient(ACCENTS[(i + suitableFor.length) % ACCENTS.length]),
+                      color: ACCENTS[(i + suitableFor.length) % ACCENTS.length].ink,
+                    }}
+                  >
+                    <Icon name={w.icon} className="h-6 w-6" />
+                  </span>
+                  <span className="text-[16px] leading-[25px] text-body-text">{w.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Key benefits: all the existing points */}
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+          <SectionBars>{t("keyBenefits")}</SectionBars>
+          <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((b, i) => {
+              const a = ACCENTS[i % ACCENTS.length];
+              return (
+                <li
+                  key={b}
+                  className="flex items-start gap-4 rounded-[16px] border p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ background: a.tint, borderColor: a.line, borderLeft: `4px solid ${a.grad[0]}` }}
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm"
+                    style={{ background: accentGradient(a), color: a.ink }}
+                  >
+                    <Icon name={benefitIcons[i % benefitIcons.length]} className="h-5 w-5" />
+                  </span>
+                  <span className="text-[15px] leading-[24px] text-body-text">{b}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+
+      {/* Areas and prices (new) */}
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -right-[10%] -top-[10%] h-[450px] w-[450px] rounded-full bg-tan/15 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <SectionBars>Areas and prices</SectionBars>
+            <p className="inline-flex w-fit items-center gap-3 rounded-full border border-tan/40 bg-white/70 px-5 py-3 text-[14px] leading-[20px] text-body-text">
+              <Icon name="chat" className="h-4 w-4 shrink-0 text-tan" />
+              <span>
+                Consultation <strong className="font-semibold text-forest">{consultationPrice}</strong>. Treatment is priced per area.
+              </span>
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {priceGroups.map((g) => {
+              const a = ACCENTS[g.accent];
+              return (
+                <div
+                  key={g.title}
+                  className="flex flex-col gap-4 rounded-[18px] border bg-white/80 p-6 shadow-sm"
+                  style={{ borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+                      style={{ background: accentGradient(a), color: a.ink }}
+                    >
+                      <Icon name={g.icon} className="h-5 w-5" />
+                    </span>
+                    <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] uppercase" style={{ color: a.text }}>
+                      {g.title}
+                    </h3>
+                  </div>
+                  <ul className="flex flex-col">
+                    {g.rows.map((r) => (
+                      <li key={r.label} className="flex items-baseline justify-between gap-4 border-b border-black/8 py-2.5 last:border-b-0">
+                        <span className="text-[15px] leading-[22px] text-body-text">{r.label}</span>
+                        <span className="shrink-0 font-subheading text-[16px] font-semibold text-forest">{priceOf(r.key)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-6 text-[14px] leading-[22px] text-body-text">
+            See our full{" "}
+            <Link href="/price-list" className="text-tan underline-offset-4 hover:underline">
+              price list
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* How treatment works (new) */}
+      <TreatmentSteps
+        title="How treatment works"
+        steps={steps}
+        note={<>The injections take about 10 to 15 minutes</>}
+        bookHref={EMAIL_HREF}
+        bookLabel="Email to book"
+      />
+
+      {/* Natural result and your practitioner (new) */}
+      <section className="w-full bg-[linear-gradient(120deg,#0c2c1d_0%,#173f2b_100%)] px-5">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10 py-[56px] lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:py-[72px]">
+          <div className="flex flex-col gap-5">
+            <span className="font-nav text-[12px] font-semibold tracking-[3px] text-tan uppercase">A natural result</span>
+            <blockquote className="font-serif text-[26px] leading-[36px] text-cream italic lg:text-[32px] lg:leading-[44px]">
+              The highest artistry in anti-wrinkle treatment is imperceptibility. People should notice that you look well-rested, radiant, and refreshed — never frozen.
+            </blockquote>
+            <p className="text-[14px] text-white/60">Sofia Bouzian</p>
+          </div>
+          <div className="flex items-center gap-5 rounded-[20px] border border-white/15 bg-white/[0.06] p-5">
+            <div className="relative h-[110px] w-[110px] shrink-0 overflow-hidden rounded-full border-2 border-tan/60">
+              <Image src="/images/hero-portrait.jpg" alt="Sofia Bouzian" fill sizes="110px" className="object-cover object-top" />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">Your practitioner</h3>
+              <p className="text-[15px] leading-[24px] text-white/85">
+                Sofia Bouzian, founder of YourHealthFirst Clinic. Sofia carries out your consultation and prescribes where treatment is suitable.
+                {SHOW_DRAFT_MARKERS ? (
+                  <>
+                    {" "}
+                    <Confirm note="Sofia to confirm title and registration wording" />
+                  </>
+                ) : null}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Aftercare and what to expect over time (from the page data, not shown on the live page) */}
+      {extraSections.length > 0 && (
+        <section className="w-full px-5">
+          <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+            <SectionBars>Aftercare and what to expect</SectionBars>
+            <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+              {extraSections.map((sec, i) => {
+                const a = ACCENTS[(i + 2) % ACCENTS.length];
+                return (
+                  <div key={sec.heading} className="flex flex-col gap-4 rounded-[18px] border p-6" style={{ background: a.tint, borderColor: a.line }}>
+                    <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] uppercase" style={{ color: a.text }}>
+                      {sec.heading}
+                    </h3>
+                    <ul className="flex flex-col gap-3">
+                      {sec.points.map((pt) => (
+                        <li key={pt} className="flex items-start gap-2.5 text-[14px] leading-[22px] text-body-text">
+                          <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: a.grad[0] }} />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Book a consultation: the existing block, kept as it is */}
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] pb-[56px] lg:pb-[72px]">
+          <div className="relative overflow-hidden rounded-[24px] bg-[linear-gradient(135deg,#7a6248_0%,#b49b7d_50%,#7a6248_100%)] p-8 lg:p-12">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex max-w-[620px] flex-col gap-2">
+                <h2 className="font-subheading text-[22px] font-semibold tracking-[1px] text-cream uppercase">{t("bookTitle")}</h2>
+                <p className="text-[15px] leading-[24px] text-white/80">{t("bookDesc")}</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a href={EMAIL_HREF} className={primaryBtn}>
+                  <Icon name="mail" className="h-4 w-4" />
+                  Email to book
+                </a>
+                <a href={PHONE_TEL} className={ghostBtn}>
+                  <Icon name="phone" className="h-4 w-4" />
+                  {t("call")}
+                </a>
+                <a href={`/${locale}/contact-us`} className={ghostBtn}>
+                  <Icon name="chat" className="h-4 w-4" />
+                  {t("sendEnquiry")}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs: the existing questions first, then new ones */}
+      <section id="faqs" className="w-full bg-cream px-5">
+        <div className="mx-auto max-w-[900px] py-[80px] lg:py-[100px]">
+          <h2 className="text-center font-subheading text-[26px] font-medium leading-[32px] tracking-[-1px] text-forest uppercase lg:text-[32px] lg:leading-[38px]">
+            {t("faqsTitle")}
+          </h2>
+          <p className="mx-auto mt-3 max-w-[520px] text-center text-[15px] leading-[24px] text-body-text">
+            Everything you need to know about {title.toLowerCase()} at YourHealthFirst Clinic.
+          </p>
+          <div className="mt-10">
+            <TreatmentFaqAccordion items={allFaqs} docId={docId} />
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      {galleryImages.length > 0 && (
+        <section className="w-full px-5">
+          <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[90px]">
+            <h2 className="text-center font-subheading text-[26px] font-medium leading-[32px] tracking-[-1px] text-forest uppercase lg:text-[32px] lg:leading-[38px]">
+              {t("galleryTitle")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-[520px] text-center text-[15px] leading-[24px] text-body-text">
+              Real before &amp; after results from patients treated at YourHealthFirst Clinic.
+            </p>
+            <div className="mx-auto mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {galleryImages.map((g) => (
+                <div
+                  key={g.src}
+                  className="group relative overflow-hidden rounded-[12px] shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className="relative aspect-square w-full">
+                    <Image
+                      src={g.src}
+                      alt={g.alt}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link
+                href={`/gallery?treatment=${slug}`}
+                className="inline-flex h-12 items-center justify-center rounded-[8px] bg-[#a8896a] px-7 font-nav text-[14px] font-semibold tracking-[-0.3px] text-cream transition-opacity hover:opacity-90"
+              >
+                {t("viewGalleryCta")}
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Prices, appointment and opening hours: the existing block, with contact tiles added */}
+      <section className="relative w-full overflow-hidden bg-forest px-5">
+        <div className="pointer-events-none absolute -right-[8%] -top-[30%] h-[460px] w-[460px] rounded-full bg-tan/10 blur-[110px]" />
+        <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 gap-10 py-[56px] lg:grid-cols-[1.35fr_0.65fr] lg:gap-14 lg:py-[72px]">
+          <div className="flex flex-col gap-5">
+            <SectionBars light>YourHealthFirst Clinic, 2 Wimpole Street</SectionBars>
+            <p className="max-w-[620px] text-[16px] leading-[26px] text-white/75">
+              London W1G 0EB, in the Harley Street medical district. A few minutes&apos; walk from Oxford Circus and Bond Street stations.
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {[
+                { href: EMAIL_HREF, icon: "mail" as IconName, label: "Email (preferred)", value: "info@yourhealthfirst.uk", a: ACCENTS[0], ext: false },
+                { href: PHONE_TEL, icon: "phone" as IconName, label: "Call", value: "0207 225 3582", a: ACCENTS[1], ext: false },
+                { href: WHATSAPP_URL, icon: "chat" as IconName, label: "WhatsApp", value: "07818 474041", a: ACCENTS[5], ext: true },
+                { href: DIRECTIONS_URL, icon: "pin" as IconName, label: "Directions", value: "Open in Maps", a: ACCENTS[2], ext: true },
+              ].map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="group flex items-center gap-3 rounded-[16px] border border-white/15 bg-white/[0.06] p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/[0.12]"
+                >
+                  <span
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full shadow-md transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: accentGradient(c.a), color: c.a.ink }}
+                  >
+                    <Icon name={c.icon} className="h-5 w-5" />
+                  </span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="font-subheading text-[12px] font-semibold tracking-[1.5px] text-tan uppercase">{c.label}</span>
+                    <span className="text-[14px] font-medium text-white">{c.value}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4 rounded-[20px] border border-white/15 bg-white/[0.06] p-6">
+            <div className="flex flex-col gap-2">
+              <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">{t("ourPrices")}</h3>
+              <Link href={`/price-list`} className="text-[14px] text-tan underline-offset-4 hover:underline">
+                {t("checkPriceList")}
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2 border-t border-white/10 pt-4">
+              <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">{t("getAppointment")}</h3>
+              <p className="text-[14px] leading-[22px] text-white/80">
+                By phone: 0207 225 3582 / 078 1847 4041
+                <br />
+                By email: info@yourhealthfirst.uk
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 border-t border-white/10 pt-4">
+              <h3 className="font-subheading text-[14px] font-semibold tracking-[2px] text-tan uppercase">{t("openingHours")}</h3>
+              <p className="text-[14px] leading-[22px] text-white/80">
+                {t("openingWeekdays")}
+                <br />
+                {t("openingSaturday")}
+                <br />
+                {t("openingSunday")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related treatments */}
+      {related.length > 0 && (
+        <section className="w-full bg-cream px-5">
+          <div className="mx-auto max-w-[1400px] py-[70px] lg:py-[80px]">
+            <h2 className="font-subheading text-[28px] font-medium leading-[34px] tracking-[-1.2px] text-forest uppercase">
+              {t("relatedTreatments")}
+            </h2>
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((r, i) => {
+                const a = ACCENTS[(i + 1) % ACCENTS.length];
+                return (
+                  <Link
+                    key={r.slug}
+                    href={`/treatments/${r.slug}`}
+                    className="group flex flex-col gap-3 rounded-[16px] border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    style={{ borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
+                  >
+                    <p className="font-subheading text-[14px] font-semibold tracking-[-0.5px] text-forest uppercase">{r.title}</p>
+                    <p className="line-clamp-3 text-[14px] leading-[22px] text-body-text">{r.intro}</p>
+                    <span className="font-nav text-[13px] font-semibold tracking-[0.5px] text-tan uppercase transition-opacity group-hover:opacity-70">
+                      {t("learnMore")}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* For Sofia only */}
+      {SHOW_DRAFT_MARKERS && (
+        <section className="w-full px-5">
+          <div className="mx-auto max-w-[1000px] py-[60px]">
+            <div className="rounded-[20px] border-2 border-dashed border-[#d9a400] bg-[#fff8dc] p-8">
+              <p className="font-nav text-[12px] font-semibold tracking-[3px] text-[#8a6200] uppercase">
+                For Sofia only. Removed before this page goes live
+              </p>
+              <h2 className="mt-2 font-display text-[26px] font-bold leading-[32px] tracking-[-0.5px] text-forest">
+                Please confirm these before we publish
+              </h2>
+              <ol className="mt-6 flex flex-col gap-3">
+                {[
+                  "How should we write your title and registration on this page (for example your regulator and registration number)?",
+                  "The word Botox: it stays in the existing text and in the question about the difference between Botox and anti-wrinkle injections. Are you happy with this, and with using \"anti-wrinkle injections\" everywhere else?",
+                ].map((q, i) => (
+                  <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
+                    <span className="w-6 shrink-0 font-semibold text-forest">{i + 1}.</span>
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Footer sanitySettings={sanitySettings} />
+    </div>
+  );
+}
