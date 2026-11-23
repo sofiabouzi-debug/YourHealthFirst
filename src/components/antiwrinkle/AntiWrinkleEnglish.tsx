@@ -237,8 +237,9 @@ export default async function AntiWrinkleEnglish(props: Props) {
   const extraSections = codeFaqs.flatMap((f) => f.sections ?? []);
 
   // body paragraphs are shown in order, three groups, each beside one of the existing photos
-  const paragraphs: string[] = [intro, ...body].filter(Boolean);
-  const sideImages = bodyImages.slice(0, 3);
+  // the existing paragraphs, in their original order, in three groups; each group sits beside one photo
+  const groups: string[][] = [[intro, body[0]], [body[1], body[2]], body.slice(3)].map((g) => g.filter(Boolean));
+  const rowImages = bodyImages.slice(0, 3);
 
   const facts: { label: string; value: string; sub?: string; icon: IconName }[] = [
     { label: t("results"), value: results, icon: "calendar" },
@@ -338,42 +339,49 @@ export default async function AntiWrinkleEnglish(props: Props) {
         </div>
       </section>
 
-      {/* Introduction and body: all existing paragraphs in order, with the three existing photos beside them */}
+      {/* Introduction and body: all existing paragraphs in order; the three existing photos alternate left and right */}
       <section className="w-full px-5">
-        <div className="mx-auto max-w-[1400px] py-[48px] lg:py-[64px]">
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_280px] lg:gap-12">
-            <div className="flex flex-col gap-4">
-              {paragraphs.map((p, pi) =>
-                pi === 0 ? (
-                  <p key={pi} className="text-[18px] leading-[29px] font-medium tracking-[-0.3px] text-forest">
-                    {p}
-                  </p>
-                ) : (
-                  <p key={pi} className="text-[16px] leading-[26px] text-body-text">
-                    {p}
-                  </p>
-                ),
-              )}
-            </div>
-            <div className="grid grid-cols-3 gap-3 lg:grid-cols-1 lg:gap-4">
-              {sideImages.map((img) => (
-                <div
-                  key={img.src}
-                  className="relative w-full overflow-hidden rounded-[12px] shadow-md"
-                  style={{ aspectRatio: "16/10" }}
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes="(min-width: 1024px) 280px, 33vw"
-                    className="object-cover"
-                    style={{ objectPosition: img.position ?? "50% 50%" }}
-                  />
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-8 py-[48px] lg:gap-10 lg:py-[64px]">
+          {groups.map((paras, gi) => {
+            const img = rowImages[gi];
+            const imageRight = gi % 2 === 1;
+            return (
+              <div
+                key={gi}
+                className={`grid grid-cols-1 items-center gap-6 lg:gap-10 ${
+                  imageRight ? "lg:grid-cols-[1fr_360px]" : "lg:grid-cols-[360px_1fr]"
+                }`}
+              >
+                <div className={`relative w-full max-w-[420px] justify-self-center lg:max-w-none ${imageRight ? "lg:order-2" : ""}`}>
+                  <div className="relative w-full overflow-hidden rounded-[12px] shadow-md" style={{ aspectRatio: "4/3" }}>
+                    {img ? (
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        sizes="(min-width: 1024px) 360px, 90vw"
+                        className="object-cover"
+                        style={{ objectPosition: img.position ?? "50% 50%" }}
+                      />
+                    ) : null}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+                <div className="flex flex-col gap-4">
+                  {paras.map((p, pi) =>
+                    gi === 0 && pi === 0 ? (
+                      <p key={pi} className="text-[18px] leading-[29px] font-medium tracking-[-0.3px] text-forest">
+                        {p}
+                      </p>
+                    ) : (
+                      <p key={pi} className="text-[16px] leading-[26px] text-body-text">
+                        {p}
+                      </p>
+                    ),
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
