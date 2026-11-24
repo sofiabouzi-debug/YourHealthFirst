@@ -180,7 +180,7 @@ const extraFaqs: TreatmentFaq[] = [
   },
   {
     question: "Who carries out the treatment?",
-    answer: `Sofia Bouzian, Aesthetic Practitioner & Clinical Director, carries out your consultation and your treatment. Prescribing is done by a registered prescriber.${draftNote("the prescriber's name, regulator and registration number")}`,
+    answer: `Sofia Bouzian, Aesthetic Practitioner & Clinical Director, carries out your consultation and your treatment.`,
   },
   {
     question: "What is the difference between Botox and anti-wrinkle injections?",
@@ -938,15 +938,6 @@ export default async function AntiWrinkleEnglish(props: Props) {
               <p className="text-[14px] leading-[22px] text-tan">Aesthetic Practitioner &amp; Clinical Director</p>
               <p className="text-[14px] leading-[22px] text-white/75">
                 Master of Science (MSc), Postgraduate Diploma (PGDip), and a Level 7 Qualification in Aesthetic Medicine. Founder of YourHealthFirst Clinic in Harley Street, London.
-              </p>
-              <p className="text-[14px] leading-[22px] text-white/85">
-                Sofia carries out your consultation and treatment. Prescribing is done by a registered prescriber.
-                {SHOW_DRAFT_MARKERS ? (
-                  <>
-                    {" "}
-                    <Confirm note="Sofia to confirm the prescriber's name, regulator and registration number" />
-                  </>
-                ) : null}
               </p>
             </div>
           </div>
