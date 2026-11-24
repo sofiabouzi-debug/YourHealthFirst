@@ -258,7 +258,8 @@ export default async function AntiWrinkleEnglish(props: Props) {
 
   const facts: { label: string; value: string; sub?: string; icon: IconName }[] = [
     { label: t("results"), value: results, icon: "calendar" },
-    { label: t("startingFrom"), value: priceFrom ?? "", icon: "target" },
+    // Sofia confirmed the starting price is £100 (bunny lines), so it follows the price list, not the old £120
+    { label: t("startingFrom"), value: priceOf("Bunny lines") || priceFrom || "", icon: "target" },
     { label: t("location"), value: "2 Wimpole Street, London W1G 0EB", icon: "pin" },
     { label: "Appointment", value: "About 10 to 15 minutes", sub: "For the injections", icon: "check" },
   ];
