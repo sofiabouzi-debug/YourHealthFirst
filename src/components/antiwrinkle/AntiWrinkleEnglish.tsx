@@ -158,7 +158,7 @@ const whoForExtra: { icon: IconName; text: string }[] = [
 const steps: TreatmentStep[] = [
   { icon: "consult", title: "Book", text: "Email us (preferred), or call or WhatsApp. Tell us which areas you would like to look at." },
   { icon: "assess", title: "Consultation", text: "Sofia reviews your medical history, assesses your face and agrees the right dose and placement with you." },
-  { icon: "inject", title: "Treatment", text: "Fine needles, a few small injections into specific muscles. The injections themselves take about 10 to 15 minutes." },
+  { icon: "inject", title: "Treatment", text: "Fine needles, a few small injections into specific muscles. The appointment takes about 15 to 30 minutes." },
   { icon: "aftercare", title: "Aftercare", text: "Stay upright for 4 hours. No intense exercise, heat or alcohol for 24 hours." },
   { icon: "results", title: "Results", text: "Softening starts within a few days and the full effect shows by about day 14. A top-up can be arranged after 2 weeks." },
   { icon: "repeat", title: "Maintenance", text: "Results last about 3 to 6 months. You should never have treatment more often than every 12 weeks." },
@@ -172,7 +172,7 @@ const extraFaqs: TreatmentFaq[] = [
   {
     question: "How long does the appointment take?",
     answer:
-      "The injections themselves take about 10 to 15 minutes, so most people go straight back to their day. Your consultation with Sofia comes first, so please allow a little extra time.",
+      "Most appointments take about 15 to 30 minutes, so most people go straight back to their day.",
   },
   {
     question: "Do I need a consultation first?",
@@ -261,7 +261,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
     // Sofia confirmed the starting price is £100 (bunny lines), so it follows the price list, not the old £120
     { label: t("startingFrom"), value: priceOf("Bunny lines") || priceFrom || "", icon: "target" },
     { label: t("location"), value: "2 Wimpole Street, London W1G 0EB", icon: "pin" },
-    { label: "Appointment", value: "About 10 to 15 minutes", sub: "For the injections", icon: "check" },
+    { label: "Appointment", value: "About 15 to 30 minutes", sub: "For the appointment", icon: "check" },
   ];
 
   const popular = [
@@ -593,7 +593,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
       <TreatmentSteps
         title="How anti-wrinkle treatment works in London"
         steps={steps}
-        note={<>The injections take about 10 to 15 minutes</>}
+        note={<>The appointment takes about 15 to 30 minutes</>}
         bookHref={EMAIL_HREF}
         bookLabel="Email to book"
       />
