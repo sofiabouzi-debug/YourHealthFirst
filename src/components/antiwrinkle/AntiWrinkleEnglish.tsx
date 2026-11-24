@@ -160,7 +160,7 @@ const steps: TreatmentStep[] = [
   { icon: "assess", title: "Consultation", text: "Sofia reviews your medical history, assesses your face and agrees the right dose and placement with you." },
   { icon: "inject", title: "Treatment", text: "Fine needles, a few small injections into specific muscles. The appointment takes about 15 to 30 minutes." },
   { icon: "aftercare", title: "Aftercare", text: "Stay upright for 4 hours. No intense exercise, heat or alcohol for 24 hours." },
-  { icon: "results", title: "Results", text: "Softening starts within a few days and the full effect shows by about day 14. A top-up can be arranged after 2 weeks." },
+  { icon: "results", title: "Results", text: "Results take about 2 weeks to develop fully. A top-up can be arranged after 2 weeks." },
   { icon: "repeat", title: "Maintenance", text: "Results last about 3 to 6 months. You should never have treatment more often than every 12 weeks." },
 ];
 
@@ -367,7 +367,16 @@ export default async function AntiWrinkleEnglish(props: Props) {
   const t = await getTranslations({ locale, namespace: "TreatmentDetail" });
   const tHeader = await getTranslations({ locale, namespace: "Header" });
 
-  const allFaqs: TreatmentFaq[] = [...faqs, ...extraFaqs];
+  // Sofia's correction (24 Nov): results take about 2 weeks, not 3 to 5 days. The content editor still
+  // holds the old sentence for one question, so it is corrected here until it is changed there.
+  const timingFixed = faqs.map((f) => ({
+    ...f,
+    answer: f.answer.replace(
+      /Most patients begin to see softening within 3\S5 days, with the full effect visible by day 14\./,
+      "Results develop gradually, with the full effect visible after about 2 weeks.",
+    ),
+  }));
+  const allFaqs: TreatmentFaq[] = [...timingFixed, ...extraFaqs];
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
