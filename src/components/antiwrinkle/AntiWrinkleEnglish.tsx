@@ -187,6 +187,29 @@ const extraFaqs: TreatmentFaq[] = [
     answer: `"Anti-wrinkle injections" is the general name for treatments that relax the muscles that cause expression lines. Botox is one well-known brand name of botulinum toxin type A, which is a prescription-only medicine. At your consultation Sofia explains what is suitable for you.${draftNote("Botox wording")}`,
   },
   {
+    question: "What is the Nefertiti lift?",
+    answer: `The Nefertiti lift is a non-surgical treatment that uses carefully placed anti-wrinkle injections to target the platysma, a thin muscle that runs from the lower face down the neck. By relaxing selected areas of it, the treatment may help soften the appearance of vertical neck bands and improve the appearance of jawline definition in suitable patients.${draftNote("please check this description and the wording about the product")}`,
+  },
+  {
+    question: "Is the Nefertiti lift a surgical procedure?",
+    answer: "No. It is a non-surgical injectable treatment and does not involve incisions or surgery. It is not a substitute for a surgical facelift.",
+  },
+  {
+    question: "Does the Nefertiti lift remove a double chin?",
+    answer:
+      "No. The treatment does not remove fat beneath the chin. It mainly targets selected muscle activity, and it may improve the appearance of the jawline in suitable patients.",
+  },
+  {
+    question: "Can it treat loose skin on the neck?",
+    answer:
+      "It may help with the appearance of muscle-related neck bands, but it does not remove excess skin or significantly tighten advanced skin laxity.",
+  },
+  {
+    question: "Is the Nefertiti lift suitable for everyone?",
+    answer:
+      "No. Suitability depends on your anatomy, medical history, muscle activity and expectations, so a consultation is required before treatment.",
+  },
+  {
     question: "Where are you based?",
     answer:
       "2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations.",
@@ -201,6 +224,27 @@ const extraFaqs: TreatmentFaq[] = [
     answer:
       "Yes. Our gallery shows real before and after results from patients treated at YourHealthFirst Clinic in London. Every face is different, so your own results will vary, and Sofia will explain what is realistic for you at your consultation.",
   },
+];
+
+const neckHelps = [
+  "Soften the appearance of prominent vertical neck bands.",
+  "Reduce the visible downward pull of the platysma muscle.",
+  "Improve the appearance of the lower face and jawline.",
+  "Create a smoother-looking transition between the jawline and neck.",
+  "Support a more refreshed and refined lower-face appearance.",
+];
+const neckSuitable = [
+  "You notice visible vertical bands in the neck when speaking or contracting the muscles.",
+  "You have early changes in jawline definition that are linked to platysma activity.",
+  "You prefer a non-surgical approach to lower-face and neck rejuvenation.",
+  "You have realistic expectations about the results of muscle-relaxing treatment.",
+];
+const neckRisks = [
+  "Temporary redness, swelling or bruising, and tenderness at the injection sites.",
+  "Headache.",
+  "Temporary muscle weakness.",
+  "Asymmetry or an altered smile.",
+  "In uncommon cases, neck weakness or difficulty swallowing.",
 ];
 
 const benefitIcons: IconName[] = ["check", "shield", "target", "user", "bolt", "calendar"];
@@ -589,6 +633,60 @@ export default async function AntiWrinkleEnglish(props: Props) {
         </div>
       </section>
 
+      {/* Nefertiti lift and neck bands (new, from Sofia's own notes) */}
+      <section className={creamBg}>
+        <div className="pointer-events-none absolute -right-[10%] -top-[20%] h-[460px] w-[460px] rounded-full bg-white/40 blur-[110px]" />
+        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+          <SectionBars>Nefertiti lift for neck bands and jawline in London</SectionBars>
+          <p className="mt-4 max-w-[860px] text-[16px] leading-[26px] text-body-text">
+            The Nefertiti lift is a non-surgical treatment that uses carefully placed anti-wrinkle injections to target the platysma, a thin muscle that runs from the lower face down the neck. It is named after Queen Nefertiti, known for her elegant neck and defined jawline. By relaxing selected areas of the platysma, it aims to reduce the downward pull around the lower face and neck, and it may help soften the appearance of vertical neck bands and improve the appearance of jawline definition in suitable patients.
+            {SHOW_DRAFT_MARKERS ? (
+              <>
+                {" "}
+                <Confirm note="Sofia to confirm this wording, and which product is used" />
+              </>
+            ) : null}
+          </p>
+          <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            {[
+              { title: "What it may help with", intro: "Depending on your anatomy and individual suitability, treatment may help to:", items: neckHelps, accent: 5 },
+              { title: "Who may be suitable", intro: "It may suit adults where:", items: neckSuitable, accent: 1 },
+              { title: "Risks and side effects", intro: "As with all treatments of this kind, side effects are possible:", items: neckRisks, accent: 3 },
+            ].map((c) => {
+              const a = ACCENTS[c.accent];
+              return (
+                <div
+                  key={c.title}
+                  className="flex flex-col gap-4 rounded-[18px] border bg-white p-6 shadow-md"
+                  style={{ borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
+                >
+                  <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] uppercase" style={{ color: a.text }}>
+                    {c.title}
+                  </h3>
+                  <p className="text-[14px] leading-[22px] text-body-text">{c.intro}</p>
+                  <ul className="flex flex-col gap-2.5">
+                    {c.items.map((it) => (
+                      <li key={it} className="flex items-start gap-2.5 text-[14px] leading-[22px] text-body-text">
+                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: a.grad[0] }} />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <p className="rounded-[16px] border border-tan/40 bg-white/70 p-5 text-[14px] leading-[22px] text-body-text">
+              <strong className="font-semibold text-forest">Please note:</strong> the Nefertiti lift is not a substitute for a surgical facelift. It cannot remove excess skin, reduce fat under the chin or correct significant skin laxity. Results are not immediate. The effect develops over the following days and is usually assessed at around two weeks. Results are temporary.
+            </p>
+            <p className="rounded-[16px] border border-tan/40 bg-white/70 p-5 text-[14px] leading-[22px] text-body-text">
+              The neck contains important muscles that are involved in swallowing, so careful patient selection and detailed knowledge of the anatomy matter in this area. A consultation is essential to assess your face and neck, muscle activity, medical history and expectations. The Nefertiti lift is priced in the table above.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* How treatment works (new) */}
       <TreatmentSteps
         title="How anti-wrinkle treatment works in London"
@@ -855,7 +953,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
                   <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>All your prices are on the page, with the consultation fee, instead of one &ldquo;from&rdquo; figure</li>
-                    <li>Twenty-two questions answered, set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Twenty-seven questions answered, set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, aftercare and the 12-week gap, so people know what to expect</li>
                     <li>Six before and after photos instead of three, and easy ways to book by email, phone or WhatsApp</li>
                     <li>Twice the content, with all of your own words still there</li>
@@ -878,6 +976,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
                 {[
                   "Who is the registered prescriber for the anti-wrinkle injections? Please send their name, regulator (for example GMC, NMC or GDC) and registration number, so we can show it on this page.",
                   "The word Botox: it stays in the existing text and in the question about the difference between Botox and anti-wrinkle injections. Are you happy with this, and with using \"anti-wrinkle injections\" everywhere else?",
+                  "The new section \"Nefertiti lift for neck bands and jawline\" and five new questions are taken from your email. We left out the claims about lifting the jawline. Which product do you use for this treatment, and are you happy for the page to say \"anti-wrinkle injections\" rather than naming the product, because botulinum toxin is a prescription-only medicine?",
                   "The quote in \"A natural result\" is taken from the blog post \"Anti-Wrinkle Injections — Everything You Need to Know\" (16 March 2023). Is it yours, and are you happy for it to be used here?",
                 ].map((q, i) => (
                   <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
