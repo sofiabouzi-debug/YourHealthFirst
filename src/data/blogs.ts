@@ -402,7 +402,7 @@ export const blogPosts: BlogPost[] = [
         heading: "The Harley Street Natural Aesthetic",
         paragraphs: [
           "One of the biggest concerns patients voice is the fear of looking 'frozen' or unnatural. Sofia’s micro-dosing technique ensures that key retaining muscles maintain mobility, preserving warm eye smiles and natural brow inflection.",
-          "Results develop gradually, with the full refined outcome visible after about 2 weeks. Longevity typically ranges between 3 and 5 months, with regular treatments often extending the intervals between top-ups.",
+          "Results develop gradually, with the full refined outcome visible after about 2 weeks. Longevity typically ranges between 4 and 6 months, with regular treatments often extending the intervals between top-ups.",
         ],
       },
     ],

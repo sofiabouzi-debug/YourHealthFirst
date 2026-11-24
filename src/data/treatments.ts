@@ -350,7 +350,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       "Wrinkles are a natural part of the ageing process. With age, our skin gets thinner and drier and we lose elastin. The ability of our skin to protect itself is reduced as we age. Eventually, wrinkles, creases and lines form on our skin.",
       "Continuous muscle contraction is also a major contributor to facial wrinkles. Continuous muscle movement causes 'dynamic wrinkles', which only appear when the muscle is used. Over time, if left untreated, these wrinkles become 'static wrinkles' — meaning they become difficult to remove and, over time, permanently etched into the skin.",
       "Anti-wrinkle treatments work by temporarily preventing muscles from contracting. For the underarms, the injections block the nerves responsible for your sweat glands — only stopping the nerves that are directly injected — reducing the amount of active sweat glands and leaving you feeling more confident and comfortable when you're sweat-free.",
-      "Sofia carries out a thorough assessment at every consultation to ensure the right dose is placed in exactly the right location. Results typically take about 2 weeks to develop fully and last between 3–6 months depending on the area and individual metabolism. With regular treatment, many patients find that results last longer over time.",
+      "Sofia carries out a thorough assessment at every consultation to ensure the right dose is placed in exactly the right location. Results typically take about 2 weeks to develop fully and last between 4–6 months depending on the area and individual metabolism. With regular treatment, many patients find that results last longer over time.",
     ],
     benefits: [
       "Reverses the signs of ageing and dramatically diminishes the appearance of wrinkles",
@@ -371,7 +371,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       "Patients with jaw clenching or teeth grinding",
       "People with hyperhidrosis (excessive sweating)",
     ],
-    results: "Full results after about 2 weeks, lasting 3–6 months",
+    results: "Full results after about 2 weeks, lasting 4–6 months",
     priceFrom: "£120",
     gallery: {
       folder: "/images/gallery/botox",
@@ -418,7 +418,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       {
         question: "How long will it last?",
         answer:
-          "Results generally last 3–6 months depending on the area treated, your muscle strength and your individual metabolism. Areas like hyperhidrosis treatment can last up to 6–9 months.",
+          "Results generally last 4–6 months depending on the area treated, your muscle strength and your individual metabolism. Areas like hyperhidrosis treatment can last up to 6–9 months.",
       },
       {
         question: "What can't I do after the treatment?",

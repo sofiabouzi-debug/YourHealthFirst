@@ -22,7 +22,7 @@ import TreatmentSteps, { type TreatmentStep } from "./TreatmentSteps";
  * SHOW_DRAFT_MARKERS: while true, the page shows a draft banner and highlights the wording Sofia
  * still has to confirm. Set it to false before this page goes to the live site.
  */
-const SHOW_DRAFT_MARKERS = true;
+const SHOW_DRAFT_MARKERS = false;
 
 const PHONE_TEL = "tel:02072253582";
 const WHATSAPP_URL = "https://wa.me/447818474041";
@@ -161,7 +161,7 @@ const steps: TreatmentStep[] = [
   { icon: "inject", title: "Treatment", text: "Fine needles, a few small injections into specific muscles. The appointment takes about 15 to 30 minutes." },
   { icon: "aftercare", title: "Aftercare", text: "Stay upright for 4 hours. No intense exercise, heat or alcohol for 24 hours." },
   { icon: "results", title: "Results", text: "Results take about 2 weeks to develop fully. A top-up can be arranged after 2 weeks." },
-  { icon: "repeat", title: "Maintenance", text: "Results last about 3 to 6 months. You should never have treatment more often than every 12 weeks." },
+  { icon: "repeat", title: "Maintenance", text: "Results last about 4 to 6 months. You should never have treatment more often than every 12 weeks." },
 ];
 
 const extraFaqs: TreatmentFaq[] = [
@@ -374,7 +374,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
     answer: f.answer.replace(
       /Most patients begin to see softening within 3\S5 days, with the full effect visible by day 14\./,
       "Results develop gradually, with the full effect visible after about 2 weeks.",
-    ),
+    ).replace(/Results generally last 3\S6 months/, "Results generally last 4–6 months"),
   }));
   const allFaqs: TreatmentFaq[] = [...timingFixed, ...extraFaqs];
   const faqJsonLd = {
