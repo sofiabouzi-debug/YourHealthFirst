@@ -15,7 +15,14 @@ export type IconName =
   | "tubes"
   | "chat"
   | "mail"
-  | "check";
+  | "check"
+  | "lips"
+  | "eye"
+  | "cheek"
+  | "jaw"
+  | "nose"
+  | "hand"
+  | "undo";
 
 /** Soft second tone: the same colour as the outline, at low opacity, so each icon reads as duotone. */
 const duo = { fill: "currentColor", fillOpacity: 0.22, stroke: "none" } as const;
@@ -170,6 +177,60 @@ export function Icon({ name, className }: { name: IconName; className?: string }
       return (
         <svg className={className} {...common}>
           <path d="m5 12.5 4.5 4.5L19 7.5" />
+        </svg>
+      );
+    case "lips":
+      return (
+        <svg className={className} {...common}>
+          <path d="M3 12c2.2-2.6 5-3.6 9-3.6s6.8 1 9 3.6c-2.2 3.6-5.2 5.2-9 5.2S5.2 15.6 3 12Z" {...duo} />
+          <path d="M3 12c2.2-2.6 5-3.6 9-3.6s6.8 1 9 3.6c-2.2 3.6-5.2 5.2-9 5.2S5.2 15.6 3 12Z" />
+          <path d="M3.5 12.2c3 1.1 5.5 1.4 8.5 1.4s5.5-.3 8.5-1.4" />
+        </svg>
+      );
+    case "eye":
+      return (
+        <svg className={className} {...common}>
+          <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" {...duo} />
+          <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      );
+    case "cheek":
+      return (
+        <svg className={className} {...common}>
+          <circle cx="12" cy="12" r="9" {...duo} />
+          <circle cx="12" cy="12" r="9" />
+          <path d="M7 13.5c1.6 1.8 3.2 2.5 5 2.5s3.4-.7 5-2.5" />
+          <path d="M8.5 9.5v.01M15.5 9.5v.01" />
+        </svg>
+      );
+    case "jaw":
+      return (
+        <svg className={className} {...common}>
+          <path d="M4 7c0 6 1.5 9.5 4.5 11.5 1.2.8 2.2 1 3.5 1s2.3-.2 3.5-1C18.5 16.5 20 13 20 7Z" {...duo} />
+          <path d="M4 7c0 6 1.5 9.5 4.5 11.5 1.2.8 2.2 1 3.5 1s2.3-.2 3.5-1C18.5 16.5 20 13 20 7" />
+          <path d="M9 14.5c1.8 1 4.2 1 6 0" />
+        </svg>
+      );
+    case "nose":
+      return (
+        <svg className={className} {...common}>
+          <path d="M12 3v10c0 1.5-1.8 3-4 3.2 0 1.7 1.6 2.8 4 2.8s4-1.1 4-2.8c-2.2-.2-4-1.7-4-3.2" {...duo} />
+          <path d="M12 3v10c0 1.5-1.8 3-4 3.2 0 1.7 1.6 2.8 4 2.8s4-1.1 4-2.8c-2.2-.2-4-1.7-4-3.2" />
+        </svg>
+      );
+    case "hand":
+      return (
+        <svg className={className} {...common}>
+          <path d="M7 12.5V6.5a1.4 1.4 0 0 1 2.8 0V11M9.8 11V4.5a1.4 1.4 0 0 1 2.8 0V11M12.6 11V5.5a1.4 1.4 0 0 1 2.8 0V12M15.4 12V8.5a1.4 1.4 0 0 1 2.8 0v5.5c0 4-2.6 7-6.2 7-2.6 0-4.4-1.2-5.8-3.5L3.8 13.6a1.4 1.4 0 0 1 2.3-1.6L7 13" />
+        </svg>
+      );
+    case "undo":
+      return (
+        <svg className={className} {...common}>
+          <path d="M9 7H4v5" />
+          <path d="M4.5 11.5A8 8 0 1 1 6 16.5" />
+          <circle cx="12" cy="12.5" r="2" {...duo} />
         </svg>
       );
     default:

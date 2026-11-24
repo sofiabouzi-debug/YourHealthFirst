@@ -6,6 +6,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
+import DermalFillersEnglish from "@/components/dermalfillers/DermalFillersEnglish";
 import { treatmentDetails } from "@/data/treatments";
 import { getLocalizedTreatment } from "@/data/localizedTreatments";
 import { getEnglishTreatmentSeo } from "@/data/seoMeta";
@@ -587,6 +588,40 @@ export default async function TreatmentPage({ params }: Props) {
       )}
     </>
   );
+
+  // English dermal fillers page: new design. Every word of the current page is kept and shown by this
+  // component (it receives the same text the page uses); new content is only ever added around it.
+  if (slug === "dermal-fillers" && locale === "en") {
+    return (
+      <DermalFillersEnglish
+        locale={locale}
+        docId={docId}
+        slug={slug}
+        title={pageTitle}
+        tagline={pageTagline}
+        intro={pageIntro}
+        body={pageBodyParagraphs}
+        benefits={pageBenefits}
+        suitableFor={pageSuitableFor}
+        faqs={pageFaqs}
+        priceFrom={pagePriceFrom}
+        results={treatment.results}
+        category={pageCategory}
+        bodyImages={treatment.bodyImages ?? []}
+        sidebarImage={treatment.sidebarImage}
+        diagramImage={treatment.diagramImage}
+        advantages={treatment.advantages}
+        priceList={treatment.priceList ?? []}
+        gallery={treatment.gallery}
+        related={relatedTreatments.map((tItem) => ({
+          slug: tItem.slug,
+          title: tServices.has(`${tItem.slug}.title`) ? tServices(`${tItem.slug}.title`) : tItem.title,
+          intro: tServices.has(`${tItem.slug}.description`) ? tServices(`${tItem.slug}.description`) : tItem.intro,
+        }))}
+        sanitySettings={sanitySettings}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col">

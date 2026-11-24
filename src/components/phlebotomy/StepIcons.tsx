@@ -16,7 +16,13 @@ export type StepIconName =
   | "pickup"
   | "hydrate"
   | "accuracy"
-  | "norepeat";
+  | "norepeat"
+  | "consult"
+  | "assess"
+  | "inject"
+  | "aftercare"
+  | "results"
+  | "repeat";
 
 const duo = { fill: "currentColor", fillOpacity: 0.22, stroke: "none" } as const;
 
@@ -173,6 +179,73 @@ export function StepIcon({ name, className }: { name: StepIconName; className?: 
           <circle cx="12" cy="12" r="9" {...duo} />
           <circle cx="12" cy="12" r="9" />
           <path className="phl-tick" pathLength={14} d="M5.7 5.7 18.3 18.3" strokeWidth={2.2} />
+        </svg>
+      );
+    case "consult":
+      return (
+        <svg className={cls} {...common}>
+          <path d="M3.5 4.5h11v8H8.5l-3.5 3v-3H3.5v-8Z" {...duo} />
+          <path d="M3.5 4.5h11v8H8.5l-3.5 3v-3H3.5v-8Z" />
+          <g className="phl-pop">
+            <path d="M11.5 10.5h9v6.5H19v2.8l-3.4-2.8h-4.1v-6.5Z" fill="currentColor" fillOpacity={0.35} stroke="none" />
+            <path d="M11.5 10.5h9v6.5H19v2.8l-3.4-2.8h-4.1v-6.5Z" />
+          </g>
+        </svg>
+      );
+    case "assess":
+      return (
+        <svg className={cls} {...common}>
+          <circle cx="10.5" cy="10.5" r="6.5" {...duo} />
+          <circle cx="10.5" cy="10.5" r="6.5" />
+          <path d="M8 9.5v.2M13 9.5v.2" strokeWidth={2.2} />
+          <path d="M8.3 13c.6.7 1.4 1 2.2 1s1.6-.3 2.2-1" />
+          <g className="phl-sway">
+            <circle cx="16.5" cy="16.5" r="3.6" fill="#fff" fillOpacity={0.25} />
+            <path d="m19.2 19.2 2.6 2.6" />
+          </g>
+        </svg>
+      );
+    case "inject":
+      return (
+        <svg className={cls} {...common}>
+          <g transform="rotate(-45 12 12)">
+            <rect x="7" y="9.4" width="9" height="5.2" rx="1" {...duo} />
+            <rect x="7" y="9.4" width="9" height="5.2" rx="1" />
+            <path d="M3 12h4M10 9.4v1.6M12.5 9.4v1.6M14.5 9.4v1.6" />
+            <g className="phl-plunger">
+              <path d="M16 12h3.4M19.4 9.2v5.6" />
+            </g>
+          </g>
+        </svg>
+      );
+    case "aftercare":
+      return (
+        <svg className={cls} {...common}>
+          <path d="M12 3 5 6v5.2c0 4.4 2.9 7.8 7 9.8 4.1-2 7-5.4 7-9.8V6l-7-3Z" {...duo} />
+          <path d="M12 3 5 6v5.2c0 4.4 2.9 7.8 7 9.8 4.1-2 7-5.4 7-9.8V6l-7-3Z" />
+          <path className="phl-tick" pathLength={14} d="m8.8 12.2 2.4 2.4 4.2-4.8" />
+        </svg>
+      );
+    case "results":
+      return (
+        <svg className={cls} {...common}>
+          <g className="phl-twinkle">
+            <path d="M11 3.5 12.9 9l5.5 1.9-5.5 1.9L11 18.3 9.1 12.8 3.6 10.9 9.1 9 11 3.5Z" {...duo} />
+            <path d="M11 3.5 12.9 9l5.5 1.9-5.5 1.9L11 18.3 9.1 12.8 3.6 10.9 9.1 9 11 3.5Z" />
+            <path d="M19 15.2l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" strokeWidth={1.3} />
+          </g>
+        </svg>
+      );
+    case "repeat":
+      return (
+        <svg className={cls} {...common}>
+          <g className="phl-rotor">
+            <path d="M20 12a8 8 0 0 1-13.6 5.7" />
+            <path d="M4 12A8 8 0 0 1 17.6 6.3" />
+            <path d="M17.8 2.8v3.7h-3.7" />
+            <path d="M6.2 21.2v-3.7h3.7" />
+          </g>
+          <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
         </svg>
       );
     default:
