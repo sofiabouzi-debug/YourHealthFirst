@@ -225,6 +225,50 @@ const extraFaqs: TreatmentFaq[] = [
       "For suitable adults, injections can be considered for heavy sweating under the arms or on the palms of both hands. They temporarily reduce the activity of the sweat glands, so the effect wears off and is not a permanent cure. Treating the palms needs particular care because grip strength can be temporarily weaker. Sweating that is new or does not settle should be looked at first, in case there is an underlying cause.",
   },
   {
+    question: "When will I see results from the Nefertiti lift?",
+    answer:
+      "Results are not immediate. The effect develops gradually over the following days, and the outcome is usually assessed at around two weeks. The duration varies between people, and the results are temporary.",
+  },
+  {
+    question: "Is there any downtime after the Nefertiti lift?",
+    answer:
+      "Most people can return to their usual activities shortly after treatment. Temporary redness, swelling, tenderness or bruising around the injection sites can happen. Sofia explains the possible side effects and gives you aftercare advice.",
+  },
+  {
+    question: "Will jaw treatment change my ability to chew?",
+    answer:
+      "A temporary reduction in chewing strength can happen, especially with tougher foods. The treatment plan should aim to avoid weakening the muscles more than necessary.",
+  },
+  {
+    question: "Can anti-wrinkle injections help with jaw pain or TMJ problems?",
+    answer:
+      "Some people notice less muscle-related tension, but the evidence for jaw joint (TMJ) problems is mixed. A proper assessment is important, and dental or specialist care may also be needed.",
+  },
+  {
+    question: "Is jaw treatment permanent?",
+    answer:
+      "No. The effects are temporary. Muscle activity gradually returns, and the slimming effect may reduce over time. Repeat treatment should only be considered after a clinical review.",
+  },
+  {
+    question: "How long does sweating treatment last?",
+    answer:
+      "It varies between people and between treatment areas. Underarm treatment often lasts several months, and the palms may be different. Sofia will talk through realistic expectations at your consultation.",
+  },
+  {
+    question: "Can both underarms be treated in one appointment?",
+    answer: "Yes, both underarms can be assessed and treated in the same appointment if that is clinically appropriate.",
+  },
+  {
+    question: "Can both hands be treated together for sweating?",
+    answer:
+      "Both palms may be treated in one appointment after an assessment. The possible effect on grip strength and hand function is discussed with you beforehand.",
+  },
+  {
+    question: "Does sweating treatment stop sweating permanently?",
+    answer:
+      "No. It temporarily reduces the activity of the sweat glands, and the effect gradually wears off. It does not permanently remove or destroy the sweat glands.",
+  },
+  {
     question: "Where are you based?",
     answer:
       "2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations.",
@@ -1113,7 +1157,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
                   <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>All your prices are on the page, with the consultation fee, instead of one &ldquo;from&rdquo; figure</li>
-                    <li>Thirty questions answered, set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Thirty-nine questions answered, set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, aftercare and the 12-week gap, so people know what to expect</li>
                     <li>Six before and after photos instead of three, and easy ways to book by email, phone or WhatsApp</li>
                     <li>Twice the content, with all of your own words still there</li>
