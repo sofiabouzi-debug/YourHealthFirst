@@ -264,3 +264,20 @@
 @media (prefers-reduced-motion: reduce) {
   .phl-step *, .phl-float { animation: none !important; transition: none !important; }
 }
+
+/* ---- Anti-wrinkle page: Nefertiti lift section ---- */
+.nef-ping { animation: nef-ping 2.4s ease-out infinite; }
+@keyframes nef-ping { 0% { transform: scale(0.5); opacity: 0.85; } 100% { transform: scale(2.4); opacity: 0; } }
+.nef-glow { animation: nef-glow 6s ease-in-out infinite; }
+@keyframes nef-glow { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.06); } }
+@keyframes nef-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+@supports (animation-timeline: view()) {
+  .nef-reveal {
+    animation: nef-rise linear both;
+    animation-timeline: view();
+    animation-range: entry calc(var(--i, 0) * 7%) entry calc(45% + var(--i, 0) * 7%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nef-ping, .nef-glow, .nef-reveal { animation: none !important; }
+}

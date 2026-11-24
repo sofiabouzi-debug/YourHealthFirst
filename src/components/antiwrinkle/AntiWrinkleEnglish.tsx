@@ -634,53 +634,122 @@ export default async function AntiWrinkleEnglish(props: Props) {
       </section>
 
       {/* Nefertiti lift and neck bands (new, from Sofia's own notes) */}
-      <section className={creamBg}>
-        <div className="pointer-events-none absolute -right-[10%] -top-[20%] h-[460px] w-[460px] rounded-full bg-white/40 blur-[110px]" />
-        <div className="relative mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
-          <SectionBars>Nefertiti lift for neck bands and jawline in London</SectionBars>
-          <p className="mt-4 max-w-[860px] text-[16px] leading-[26px] text-body-text">
-            The Nefertiti lift is a non-surgical treatment that uses carefully placed anti-wrinkle injections to target the platysma, a thin muscle that runs from the lower face down the neck. It is named after Queen Nefertiti, known for her elegant neck and defined jawline. By relaxing selected areas of the platysma, it aims to reduce the downward pull around the lower face and neck, and it may help soften the appearance of vertical neck bands and improve the appearance of jawline definition in suitable patients.
-            {SHOW_DRAFT_MARKERS ? (
-              <>
-                {" "}
-                <Confirm note="Sofia to confirm this wording, and which product is used" />
-              </>
-            ) : null}
-          </p>
-          <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
-            {[
-              { title: "What it may help with", intro: "Depending on your anatomy and individual suitability, treatment may help to:", items: neckHelps, accent: 5 },
-              { title: "Who may be suitable", intro: "It may suit adults where:", items: neckSuitable, accent: 1 },
-              { title: "Risks and side effects", intro: "As with all treatments of this kind, side effects are possible:", items: neckRisks, accent: 3 },
-            ].map((c) => {
-              const a = ACCENTS[c.accent];
-              return (
-                <div
-                  key={c.title}
-                  className="flex flex-col gap-4 rounded-[18px] border bg-white p-6 shadow-md"
-                  style={{ borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
-                >
-                  <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] uppercase" style={{ color: a.text }}>
-                    {c.title}
-                  </h3>
-                  <p className="text-[14px] leading-[22px] text-body-text">{c.intro}</p>
-                  <ul className="flex flex-col gap-2.5">
-                    {c.items.map((it) => (
-                      <li key={it} className="flex items-start gap-2.5 text-[14px] leading-[22px] text-body-text">
-                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: a.grad[0] }} />
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
+      <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
+        <Image src="/images/treatments/anti-wrinkles/linen-texture.jpg" alt="" fill sizes="100vw" className="object-cover opacity-[0.14]" />
+        <div className="relative mx-auto max-w-[1400px] py-[64px] lg:py-[88px]">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+            {/* The bust */}
+            <div className="nef-reveal relative mx-auto w-full max-w-[460px]" style={{ ["--i" as string]: 0 }}>
+              <div className="nef-glow pointer-events-none absolute -inset-10 rounded-full bg-[radial-gradient(circle,rgba(255,190,2,0.30)_0%,rgba(255,190,2,0)_65%)]" />
+              <div className="phl-float relative">
+                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-t-[999px] rounded-b-[28px] border border-[#d9b46a]/60 shadow-[0_30px_80px_rgba(0,0,0,0.55)]">
+                  <Image
+                    src="/images/treatments/anti-wrinkles/nefertiti-bust.jpg"
+                    alt="A sculpted bust inspired by Queen Nefertiti, known for her long, elegant neck and defined jawline"
+                    fill
+                    sizes="(min-width: 1024px) 460px, 90vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(36,26,15,0)_55%,rgba(36,26,15,0.55)_100%)]" />
                 </div>
-              );
-            })}
+                {[
+                  { label: "Jawline", x: "66%", y: "55%", side: "right" },
+                  { label: "Platysma", x: "50%", y: "69%", side: "left" },
+                ].map((h) => (
+                  <div key={h.label} className="absolute" style={{ left: h.x, top: h.y }}>
+                    <span className="nef-ping absolute -left-2.5 -top-2.5 h-5 w-5 rounded-full bg-[#ffbe02]/70" />
+                    <span className="absolute -left-[5px] -top-[5px] h-2.5 w-2.5 rounded-full border border-white/80 bg-[#ffbe02]" />
+                    <span
+                      className={`absolute top-[-13px] whitespace-nowrap rounded-full border border-[#d9b46a]/60 bg-[#241a0f]/80 px-3 py-1 font-nav text-[12px] font-semibold tracking-[1px] text-cream uppercase backdrop-blur-sm ${
+                        h.side === "right" ? "left-[16px]" : "right-[16px]"
+                      }`}
+                    >
+                      {h.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Text and what it may help with */}
+            <div className="flex flex-col gap-6">
+              <div className="nef-reveal" style={{ ["--i" as string]: 1 }}>
+                <SectionBars light>Nefertiti lift for neck bands and jawline in London</SectionBars>
+              </div>
+              <p className="nef-reveal max-w-[760px] text-[16px] leading-[27px] text-white/80" style={{ ["--i" as string]: 2 }}>
+                The Nefertiti lift is a non-surgical treatment that uses carefully placed anti-wrinkle injections to target the platysma, a thin muscle that runs from the lower face down the neck. It is named after Queen Nefertiti, known for her elegant neck and defined jawline. By relaxing selected areas of the platysma, it aims to reduce the downward pull around the lower face and neck, and it may help soften the appearance of vertical neck bands and improve the appearance of jawline definition in suitable patients.
+                {SHOW_DRAFT_MARKERS ? (
+                  <>
+                    {" "}
+                    <Confirm note="Sofia to confirm this wording, and which product is used" />
+                  </>
+                ) : null}
+              </p>
+              <div className="nef-reveal rounded-[20px] border border-[#d9b46a]/35 bg-white/[0.06] p-6 backdrop-blur-sm" style={{ ["--i" as string]: 3 }}>
+                <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-tan uppercase">What it may help with</h3>
+                <p className="mt-2 text-[14px] leading-[22px] text-white/65">Depending on your anatomy and individual suitability, treatment may help to:</p>
+                <ul className="mt-4 flex flex-col gap-3">
+                  {neckHelps.map((it, k) => {
+                    const a = ACCENTS[(k + 1) % ACCENTS.length];
+                    return (
+                      <li key={it} className="flex items-center gap-3.5">
+                        <span
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full shadow-md"
+                          style={{ background: accentGradient(a), color: a.ink }}
+                        >
+                          <Icon name="check" className="h-[18px] w-[18px]" />
+                        </span>
+                        <span className="text-[15px] leading-[23px] text-white/90">{it}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
-            <p className="rounded-[16px] border border-tan/40 bg-white/70 p-5 text-[14px] leading-[22px] text-body-text">
-              <strong className="font-semibold text-forest">Please note:</strong> the Nefertiti lift is not a substitute for a surgical facelift. It cannot remove excess skin, reduce fat under the chin or correct significant skin laxity. Results are not immediate. The effect develops over the following days and is usually assessed at around two weeks. Results are temporary.
+
+          <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <div className="nef-reveal rounded-[20px] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-sm" style={{ ["--i" as string]: 0 }}>
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: accentGradient(ACCENTS[1]), color: ACCENTS[1].ink }}>
+                  <Icon name="user" className="h-5 w-5" />
+                </span>
+                <h3 className="font-subheading text-[14px] font-semibold tracking-[1.5px] text-cream uppercase">Who may be suitable</h3>
+              </div>
+              <p className="mt-3 text-[14px] leading-[22px] text-white/65">It may suit adults where:</p>
+              <ul className="mt-3 flex flex-col gap-2.5">
+                {neckSuitable.map((it) => (
+                  <li key={it} className="flex items-start gap-2.5 text-[14px] leading-[22px] text-white/85">
+                    <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ffbe02]" />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="nef-reveal rounded-[20px] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-sm" style={{ ["--i" as string]: 1 }}>
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: accentGradient(ACCENTS[3]), color: ACCENTS[3].ink }}>
+                  <Icon name="shield" className="h-5 w-5" />
+                </span>
+                <h3 className="font-subheading text-[14px] font-semibold tracking-[1.5px] text-cream uppercase">Risks and side effects</h3>
+              </div>
+              <p className="mt-3 text-[14px] leading-[22px] text-white/65">As with all treatments of this kind, side effects are possible:</p>
+              <ul className="mt-3 flex flex-col gap-2.5">
+                {neckRisks.map((it) => (
+                  <li key={it} className="flex items-start gap-2.5 text-[14px] leading-[22px] text-white/85">
+                    <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8553d]" />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="nef-reveal mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2" style={{ ["--i" as string]: 1 }}>
+            <p className="rounded-[16px] border border-[#d9b46a]/40 p-5 text-[14px] leading-[22px] text-white/80">
+              <strong className="font-semibold text-cream">Please note:</strong> the Nefertiti lift is not a substitute for a surgical facelift. It cannot remove excess skin, reduce fat under the chin or correct significant skin laxity. Results are not immediate. The effect develops over the following days and is usually assessed at around two weeks. Results are temporary.
             </p>
-            <p className="rounded-[16px] border border-tan/40 bg-white/70 p-5 text-[14px] leading-[22px] text-body-text">
+            <p className="rounded-[16px] border border-[#d9b46a]/40 p-5 text-[14px] leading-[22px] text-white/80">
               The neck contains important muscles that are involved in swallowing, so careful patient selection and detailed knowledge of the anatomy matter in this area. A consultation is essential to assess your face and neck, muscle activity, medical history and expectations. The Nefertiti lift is priced in the table above.
             </p>
           </div>
