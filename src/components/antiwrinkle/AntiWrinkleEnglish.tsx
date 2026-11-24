@@ -210,6 +210,21 @@ const extraFaqs: TreatmentFaq[] = [
       "No. Suitability depends on your anatomy, medical history, muscle activity and expectations, so a consultation is required before treatment.",
   },
   {
+    question: "Can anti-wrinkle injections help with teeth grinding and jaw clenching?",
+    answer:
+      "They may reduce how hard the jaw muscles work, and some people find this helps with clenching or grinding. They do not necessarily stop the habit or deal with every cause, and a dental check can also be important. Sofia will talk this through at your consultation.",
+  },
+  {
+    question: "Can anti-wrinkle injections slim the jawline?",
+    answer:
+      "They may create a slimmer-looking lower face when the width is mainly due to enlarged jaw muscles. The change builds up over several weeks. They do not remove facial fat or tighten loose skin.",
+  },
+  {
+    question: "Can anti-wrinkle injections treat excessive sweating?",
+    answer:
+      "For suitable adults, injections can be considered for heavy sweating under the arms or on the palms of both hands. They temporarily reduce the activity of the sweat glands, so the effect wears off and is not a permanent cure. Treating the palms needs particular care because grip strength can be temporarily weaker. Sweating that is new or does not settle should be looked at first, in case there is an underlying cause.",
+  },
+  {
     question: "Where are you based?",
     answer:
       "2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations.",
@@ -245,6 +260,38 @@ const neckRisks = [
   "Temporary muscle weakness.",
   "Asymmetry or an altered smile.",
   "In uncommon cases, neck weakness or difficulty swallowing.",
+];
+
+const otherAreas: { icon: IconName; title: string; text: string; priceKey: string; priceLabel?: string; accent: number }[] = [
+  {
+    icon: "bolt",
+    title: "Jaw clenching and teeth grinding",
+    text: "Injections into the jaw muscles may reduce how hard they work. It does not suit everyone and does not address every cause, so a consultation comes first.",
+    priceKey: "Teeth grinding / Clenching",
+    accent: 5,
+  },
+  {
+    icon: "drop",
+    title: "Excessive sweating",
+    text: "For suitable adults with heavy sweating under the arms or on the palms. It reduces sweating for a time and is not a permanent cure.",
+    priceKey: "Hyperhidrosis — under both arms",
+    priceLabel: "Underarms or palms",
+    accent: 1,
+  },
+  {
+    icon: "user",
+    title: "Neck bands (Nefertiti lift)",
+    text: "For visible vertical neck bands, and where muscle activity is part of the jawline concern. See the Nefertiti lift above.",
+    priceKey: "Neck lift (platysmal bands)",
+    accent: 4,
+  },
+  {
+    icon: "target",
+    title: "Gummy smile",
+    text: "A small treatment that can reduce how much gum shows when you smile.",
+    priceKey: "Gummy smile",
+    accent: 3,
+  },
 ];
 
 const benefitIcons: IconName[] = ["check", "shield", "target", "user", "bolt", "calendar"];
@@ -756,6 +803,50 @@ export default async function AntiWrinkleEnglish(props: Props) {
         </div>
       </section>
 
+      {/* Other areas we treat: a short strip (full pages for these topics are planned for later) */}
+      <section className="w-full px-5">
+        <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
+          <SectionBars>Other areas we treat with anti-wrinkle injections</SectionBars>
+          <p className="mt-4 max-w-[760px] text-[16px] leading-[26px] text-body-text">
+            Anti-wrinkle injections are used for more than lines on the face. Ask about these at your consultation.
+            {SHOW_DRAFT_MARKERS ? (
+              <>
+                {" "}
+                <Confirm note="Sofia to check the wording in these cards" />
+              </>
+            ) : null}
+          </p>
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {otherAreas.map((c) => {
+              const a = ACCENTS[c.accent];
+              return (
+                <a
+                  key={c.title}
+                  href="#prices"
+                  className="group flex flex-col gap-4 rounded-[18px] border p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  style={{ background: a.tint, borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
+                >
+                  <span
+                    className="flex h-12 w-12 items-center justify-center rounded-full shadow-sm"
+                    style={{ background: accentGradient(a), color: a.ink }}
+                  >
+                    <Icon name={c.icon} className="h-6 w-6" />
+                  </span>
+                  <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] uppercase" style={{ color: a.text }}>
+                    {c.title}
+                  </h3>
+                  <p className="text-[14px] leading-[22px] text-body-text">{c.text}</p>
+                  <p className="mt-auto text-[14px] text-body-text">
+                    {c.priceLabel ? `${c.priceLabel}: ` : "From "}
+                    <strong className="font-subheading text-[16px] font-semibold text-forest">{priceOf(c.priceKey)}</strong>
+                  </p>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* How treatment works (new) */}
       <TreatmentSteps
         title="How anti-wrinkle treatment works in London"
@@ -1022,7 +1113,7 @@ export default async function AntiWrinkleEnglish(props: Props) {
                   <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>All your prices are on the page, with the consultation fee, instead of one &ldquo;from&rdquo; figure</li>
-                    <li>Twenty-seven questions answered, set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Thirty questions answered, set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, aftercare and the 12-week gap, so people know what to expect</li>
                     <li>Six before and after photos instead of three, and easy ways to book by email, phone or WhatsApp</li>
                     <li>Twice the content, with all of your own words still there</li>
@@ -1046,6 +1137,8 @@ export default async function AntiWrinkleEnglish(props: Props) {
                   "Who is the registered prescriber for the anti-wrinkle injections? Please send their name, regulator (for example GMC, NMC or GDC) and registration number, so we can show it on this page.",
                   "The word Botox: it stays in the existing text and in the question about the difference between Botox and anti-wrinkle injections. Are you happy with this, and with using \"anti-wrinkle injections\" everywhere else?",
                   "The new section \"Nefertiti lift for neck bands and jawline\" and five new questions are taken from your email. We left out the claims about lifting the jawline. Which product do you use for this treatment, and are you happy for the page to say \"anti-wrinkle injections\" rather than naming the product, because botulinum toxin is a prescription-only medicine?",
+                  "Your price list has a price for sweating of the soles of the feet, but your email only mentions underarms and palms. Do you treat the feet? If not, we will take that price off the page.",
+                  "The new strip \"Other areas we treat with anti-wrinkle injections\" and three short questions (jaw clenching, jawline slimming, sweating) are taken from your emails. Full pages for these topics, with their own titles, can come later. Please check the wording.",
                   "The quote in \"A natural result\" is taken from the blog post \"Anti-Wrinkle Injections — Everything You Need to Know\" (16 March 2023). Is it yours, and are you happy for it to be used here?",
                 ].map((q, i) => (
                   <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
