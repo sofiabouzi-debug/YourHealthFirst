@@ -120,25 +120,25 @@ type AreaCard = { icon: IconName; title: string; text: string; priceKey: RegExp;
 const areaCards: AreaCard[] = [
   {
     icon: "lips",
-    title: "Lip fillers (Russian lips)",
-    text: "Lip enhancement using the Russian lips technique, with symmetry and proportion in mind. Lips can look noticeably swollen for the first 24 to 48 hours, and lip filler tends to last 6 to 12 months.",
+    title: "Lip fillers in London (Russian lips)",
+    text: "Natural-looking lip fillers, also called lip injections, lip augmentation or lip enhancement, using the Russian lips technique, with symmetry and proportion in mind. Lips can look noticeably swollen for the first 24 to 48 hours, and lip filler tends to last 6 to 12 months.",
     priceKey: /^Lip Enhancement \(Russian Lips\) — 1ml/,
   },
   {
     icon: "cheek",
-    title: "Cheek and mid face fillers",
-    text: "Cheek augmentation replaces volume lost with age and supports the mid face. Structural areas like the cheeks can last longer than the lips.",
+    title: "Cheek fillers and mid face",
+    text: "Cheek filler (cheek augmentation) replaces volume lost with age and supports the mid face. Structural areas like the cheeks can last longer than the lips.",
     priceKey: /^Cheeks/,
   },
   {
     icon: "jaw",
-    title: "Chin filler",
+    title: "Chin filler in London",
     text: "Chin enhancement to balance the profile and add definition, built up gradually to keep the result natural.",
     priceKey: /^Chin Enhancement — 1ml/,
   },
   {
     icon: "jaw",
-    title: "Jawline filler",
+    title: "Jaw filler (jawline fillers)",
     text: "Jawline contouring to define and contour the lower face. Like the cheeks, the jawline can hold the result for longer than the lips.",
     priceKey: /^Jaw-Line/,
   },
@@ -224,8 +224,28 @@ export default async function DermalFillersEnglish(props: Props) {
       answer: `Prices depend on the area and the amount of product. Lip enhancement (Russian lips) is ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml and ${priceOf(/^Lip Enhancement \(Russian Lips\) — 2ml/)} for 2ml. Cheeks or mid face and chin enhancement are ${priceOf(/^Cheeks.*1ml/)} for 1ml and ${priceOf(/^Cheeks.*2ml/)} for 2ml. Nasolabial folds and marionette lines are ${priceOf(/^Nasolabial.*1ml/)} for 1ml and ${priceOf(/^Nasolabial.*2ml/)} for 2ml. A non-surgical nose job is ${priceOf(/^Non-Surgical/)}, tear trough is ${priceOf(/^Tear/)}, the jawline is ${priceOf(/^Jaw/)} and hand fillers are ${priceOf(/^Hands/)}. The exact price is confirmed at your consultation. See the price table on this page or our full price list.`,
     },
     {
-      question: "How much do lip fillers cost?",
-      answer: `Lip enhancement using the Russian lips technique is ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml and ${priceOf(/^Lip Enhancement \(Russian Lips\) — 2ml/)} for 2ml. How much product is right for you is agreed at your consultation.`,
+      question: "How much do lip fillers cost in London?",
+      answer: `Lip fillers (also called lip injections, lip augmentation or lip enhancement) using the Russian lips technique are ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml and ${priceOf(/^Lip Enhancement \(Russian Lips\) — 2ml/)} for 2ml. How much product is right for you is agreed at your consultation.`,
+    },
+    {
+      question: "What is the difference between lip fillers, lip injections and lip augmentation?",
+      answer: `They are different names for the same treatment. Lip filler, lip injections, lip augmentation and lip enhancement all describe having hyaluronic acid filler placed in the lips to add definition, shape or volume. It is a non-surgical treatment, not lip surgery. Sofia explains the options and agrees the amount with you at your consultation.${draftNote("please check this explanation of lip filler, lip injections and lip augmentation")}`,
+    },
+    {
+      question: "Can lip filler look natural?",
+      answer: `That is the aim. Sofia looks at symmetry and proportion first and builds the filler up gradually, so your lips look like yours rather than overdone. The result is visible straight away and settles over the next 1 to 2 weeks.${draftNote("please confirm this is how you describe a natural lip result")}`,
+    },
+    {
+      question: "Can lip filler be dissolved or corrected?",
+      answer: `Yes. Hyaluronic acid lip filler can be dissolved with hyaluronidase if you would like a correction, including lip filler placed by another consultant. Dissolving filler from another consultant is ${priceOf(/^Dissolving Filler — from another/)}, and dissolving filler administered at YHF is ${priceOf(/^Dissolving Filler — administered/)}.`,
+    },
+    {
+      question: "How much does chin filler cost in London?",
+      answer: `Chin enhancement is ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. How much product is right for you is agreed at your consultation.`,
+    },
+    {
+      question: "What does jaw filler do?",
+      answer: `Jaw filler (also called jawline fillers) is used to define and contour the lower face. It is from ${priceOf(/^Jaw/)} and, like the cheeks, the jawline can hold the result for longer than the lips. Sofia agrees the plan with you at your consultation.`,
     },
     {
       question: "How long does the appointment take?",
@@ -252,7 +272,7 @@ export default async function DermalFillersEnglish(props: Props) {
     {
       question: "Where can I have dermal fillers in London?",
       answer:
-        "At YourHealthFirst Clinic, 2 Wimpole Street, London W1G 0EB, in the Harley Street medical district. We are a few minutes' walk from Oxford Circus and Bond Street stations, and you can book by email, phone or WhatsApp.",
+        "At YourHealthFirst Clinic, 2 Wimpole Street, Marylebone, London W1G 0EB, in the Harley Street medical district of central London. We are a few minutes' walk from Oxford Circus and Bond Street stations, and you can book by email, phone or WhatsApp.",
     },
     {
       question: "Can I see before and after photos of dermal fillers?",
@@ -551,7 +571,7 @@ export default async function DermalFillersEnglish(props: Props) {
             <div className="max-w-[720px]">
               <SectionBars>Dermal filler treatments in London</SectionBars>
               <p className="mt-4 text-[16px] leading-[26px] text-body-text">
-                Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through.
+                Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
@@ -950,8 +970,9 @@ export default async function DermalFillersEnglish(props: Props) {
                   <h3 className="font-subheading text-[13px] font-semibold tracking-[2px] text-[#8a6200] uppercase">What it is written to be found for</h3>
                   <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14px] leading-[22px] text-body-text">
                     <li>Dermal fillers London, and Harley Street, Wimpole Street, near Oxford Circus and Bond Street</li>
-                    <li>Lip fillers London and the Russian lips technique</li>
-                    <li>Cheek, chin, jawline and tear trough fillers</li>
+                    <li>Lip fillers London, lip injections, lip augmentation and lip enhancement, and the Russian lips technique</li>
+                    <li>Marylebone and central London</li>
+                    <li>Cheek, chin, jaw and tear trough fillers, including chin filler cost</li>
                     <li>Non-surgical nose job and hand fillers</li>
                     <li>Dermal filler cost and price, lip filler cost</li>
                     <li>Dissolving filler, side effects, aftercare, how long fillers last</li>
@@ -964,7 +985,7 @@ export default async function DermalFillersEnglish(props: Props) {
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>A card for each area you treat (lips, cheeks, chin, jawline, under eyes, nose, hands), each with its own price</li>
                     <li>The whole price list grouped by area, with the consultation fee</li>
-                    <li>Twenty questions answered and set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Twenty-five questions answered and set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, so people know what to expect</li>
                     <li>Six before and after photos, and easy ways to book by email, phone or WhatsApp</li>
                     <li>All of your own words are still there</li>
@@ -990,6 +1011,8 @@ export default async function DermalFillersEnglish(props: Props) {
                   "The consultation is shown as £50, free of charge if you go ahead with treatment, as on your price list. Is this right for dermal fillers?",
                   "Please read the card for each area, the question \"What is the Russian lips technique?\" and the steps under \"How dermal filler treatment works\". They are written from the text already on your page. Please correct anything that is not how you work.",
                   "Do you treat any other areas with filler (for example the temples) that we should add?",
+                  "People search for 0.5ml lip filler and for Juvederm lip filler. Do you offer 0.5ml, and at what price? Which brand do you use, and do you place lip filler with a cannula or a needle? We have not written any of this on the page yet.",
+                  "Please read the new questions about lip filler (names, natural look, dissolving), chin filler cost and jaw filler. They are written from the text and prices already on your page.",
                 ].map((q, i) => (
                   <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
                     <span className="w-6 shrink-0 font-semibold text-forest">{i + 1}.</span>
