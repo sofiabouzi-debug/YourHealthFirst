@@ -500,8 +500,14 @@ export default async function DermalFillersEnglish(props: Props) {
               </div>
 
               {sidebarImage ? (
-                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[14px] border border-black/8 shadow-md">
-                  <Image src={sidebarImage.src} alt={sidebarImage.alt} fill sizes="340px" className="object-cover" />
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[14px] border border-black/8 shadow-md">
+                  <Image
+                    src={sidebarImage.src}
+                    alt={sidebarImage.alt}
+                    fill
+                    sizes="340px"
+                    className="object-cover object-[50%_35%]"
+                  />
                 </div>
               ) : null}
             </div>
@@ -663,32 +669,48 @@ export default async function DermalFillersEnglish(props: Props) {
         </div>
       </section>
 
-      {/* Advantages: the existing six, kept as they are */}
+      {/* Advantages: the existing six, kept word for word, in a calmer editorial layout */}
       {advantages ? (
-        <section className="w-full bg-cream px-5">
-          <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
-            <h2 className="text-center font-subheading text-[26px] font-medium leading-[32px] tracking-[-1px] text-forest uppercase lg:text-[32px] lg:leading-[38px]">
-              {advantages.title}
-            </h2>
-            {advantages.intro ? (
-              <p className="mx-auto mt-3 max-w-[720px] text-center text-[15px] leading-[24px] text-body-text">{advantages.intro}</p>
-            ) : null}
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {advantages.items.map((item, i) => {
-                const a = ACCENTS[i % ACCENTS.length];
-                return (
-                  <div
-                    key={item.title}
-                    className="flex flex-col gap-3 rounded-[14px] border bg-white p-6 shadow-sm"
-                    style={{ borderColor: a.line, borderLeft: `4px solid ${a.grad[0]}` }}
-                  >
-                    <h3 className="font-subheading text-[14px] font-semibold tracking-[1.5px] uppercase" style={{ color: a.text }}>
-                      {item.title}
-                    </h3>
-                    <p className="text-[14px] leading-[22px] text-body-text">{item.description}</p>
+        <section className="relative w-full overflow-hidden bg-[linear-gradient(120deg,#3a2c1a_0%,#241a0f_100%)] px-5">
+          <Image src="/images/treatments/anti-wrinkles/linen-texture.jpg" alt="" fill sizes="100vw" className="object-cover opacity-[0.14]" />
+          <div className="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-10 py-[56px] lg:grid-cols-[340px_1fr] lg:gap-16 lg:py-[72px]">
+            <div className="relative mx-auto w-full max-w-[300px] lg:max-w-none">
+              <div className="nef-glow pointer-events-none absolute -inset-6 rounded-full bg-tan/25 blur-[60px]" />
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-[170px] rounded-b-[16px] border border-tan/50 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+                <Image
+                  src="/images/treatments/dermal-fillers/hyaluronic-gel.jpg"
+                  alt="A droplet of clear hyaluronic acid gel on ivory silk"
+                  fill
+                  sizes="340px"
+                  className="object-cover"
+                />
+                <video
+                  className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+                  src="/images/treatments/dermal-fillers/hyaluronic-gel-loop.mp4"
+                  poster="/images/treatments/dermal-fillers/hyaluronic-gel.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h2 className="font-serif text-[30px] leading-[38px] text-cream lg:text-[40px] lg:leading-[48px]">{advantages.title}</h2>
+              {advantages.intro ? (
+                <p className="mt-4 max-w-[620px] text-[15px] leading-[25px] text-white/70">{advantages.intro}</p>
+              ) : null}
+              <div className="mt-8 grid grid-cols-1 gap-x-12 sm:grid-cols-2">
+                {advantages.items.map((item) => (
+                  <div key={item.title} className="relative border-t border-white/15 pb-7 pt-5">
+                    <span className="absolute -top-px left-0 h-px w-10 bg-tan" />
+                    <h3 className="font-serif text-[21px] leading-[28px] text-cream">{item.title}</h3>
+                    <p className="mt-2 text-[14px] leading-[23px] text-white/70">{item.description}</p>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -698,11 +720,11 @@ export default async function DermalFillersEnglish(props: Props) {
       {diagramImage ? (
         <section className="w-full px-5">
           <div className="mx-auto max-w-[1400px] py-[48px] lg:py-[64px]">
-            <div className="relative mx-auto max-w-[900px] overflow-hidden rounded-[12px] bg-white p-4 shadow-sm">
+            <div className="relative mx-auto max-w-[540px] overflow-hidden rounded-[12px] bg-white p-3 shadow-sm">
               <Image src={diagramImage.src} alt={diagramImage.alt} width={900} height={600} className="h-auto w-full object-contain" />
             </div>
             {SHOW_DRAFT_MARKERS ? (
-              <p className="mx-auto mt-3 max-w-[900px] text-center text-[14px]">
+              <p className="mx-auto mt-3 max-w-[540px] text-center text-[14px]">
                 <Confirm note="Sofia: this picture names forehead lines, glabellar lines, bunny lines, crow's feet and eyebrow lift, which sound like anti-wrinkle areas. Is it right for dermal fillers?" />
               </p>
             ) : null}
