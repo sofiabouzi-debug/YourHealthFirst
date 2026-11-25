@@ -567,8 +567,8 @@ export default async function DermalFillersEnglish(props: Props) {
       {/* Treatment areas (new) */}
       <section className="w-full px-5">
         <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-            <div className="max-w-[720px]">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:justify-between lg:gap-12">
+            <div className="flex max-w-[720px] flex-col">
               <SectionBars>Dermal filler treatments in London</SectionBars>
               <p className="mt-4 text-[16px] leading-[26px] text-body-text">
                 Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
@@ -579,9 +579,35 @@ export default async function DermalFillersEnglish(props: Props) {
                   </>
                 ) : null}
               </p>
+              <div className="mt-8 flex flex-col gap-4 rounded-[18px] border border-tan/40 bg-cream p-6">
+                <h3 className="font-subheading text-[16px] font-semibold text-forest">Not sure which area is right for you?</h3>
+                <p className="text-[15px] leading-[24px] text-body-text">
+                  Sofia looks at your face and agrees the areas and the amount of product with you at a consultation. The consultation is{" "}
+                  <strong className="font-semibold text-forest">{consultationPrice}</strong>
+                  {consultationNote ? `, and ${consultationNote.charAt(0).toLowerCase()}${consultationNote.slice(1)}` : ""}.
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href={EMAIL_HREF}
+                    className="flex h-12 items-center justify-center gap-2 rounded-[8px] bg-tan px-6 font-nav text-[14px] font-semibold tracking-[-0.3px] text-forest transition-opacity hover:opacity-90"
+                  >
+                    <Icon name="mail" className="h-4 w-4" />
+                    Email to book
+                  </a>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-12 items-center justify-center gap-2 rounded-[8px] border border-forest/30 px-6 font-nav text-[14px] font-semibold tracking-[-0.3px] text-forest transition-colors hover:border-tan hover:text-tan"
+                  >
+                    <Icon name="chat" className="h-4 w-4" />
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
             </div>
             {diagramImage ? (
-              <div className="w-full max-w-[420px] shrink-0 lg:w-[400px]">
+              <div className="w-full max-w-[560px] shrink-0 lg:w-[540px]">
                 <ZoomImage src={diagramImage.src} alt={diagramImage.alt} />
                 {SHOW_DRAFT_MARKERS ? (
                   <p className="mt-2 text-[13px] leading-[19px]">

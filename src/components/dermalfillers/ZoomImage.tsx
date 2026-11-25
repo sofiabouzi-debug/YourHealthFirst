@@ -31,7 +31,7 @@ export default function ZoomImage({ src, alt, caption = "Tap to enlarge", classN
         aria-label={`${alt} (opens a larger version)`}
         className={`group relative block overflow-hidden rounded-[14px] border border-black/10 bg-white p-2 text-left shadow-md transition-shadow hover:shadow-lg ${className}`}
       >
-        <Image src={src} alt={alt} width={900} height={900} sizes="420px" className="h-auto w-full rounded-[8px] object-contain" />
+        <Image src={src} alt={alt} width={900} height={900} sizes="560px" className="h-auto w-full rounded-[8px] object-contain" />
         <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-[#241a0f]/85 px-3 py-1.5 font-nav text-[12px] font-semibold text-cream">
           <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
