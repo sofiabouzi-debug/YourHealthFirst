@@ -698,16 +698,18 @@ export default async function DermalFillersEnglish(props: Props) {
               </div>
             </div>
             <div className="flex flex-col">
-              <h2 className="font-serif text-[30px] leading-[38px] text-cream lg:text-[40px] lg:leading-[48px]">{advantages.title}</h2>
+              <h2 className="font-subheading text-[28px] font-semibold leading-[36px] tracking-[-0.5px] text-cream lg:text-[36px] lg:leading-[44px]">
+                {advantages.title}
+              </h2>
               {advantages.intro ? (
-                <p className="mt-4 max-w-[620px] text-[15px] leading-[25px] text-white/70">{advantages.intro}</p>
+                <p className="mt-4 max-w-[620px] text-[16px] leading-[26px] text-white/85">{advantages.intro}</p>
               ) : null}
               <div className="mt-8 grid grid-cols-1 gap-x-12 sm:grid-cols-2">
                 {advantages.items.map((item) => (
                   <div key={item.title} className="relative border-t border-white/15 pb-7 pt-5">
                     <span className="absolute -top-px left-0 h-px w-10 bg-tan" />
-                    <h3 className="font-serif text-[21px] leading-[28px] text-cream">{item.title}</h3>
-                    <p className="mt-2 text-[14px] leading-[23px] text-white/70">{item.description}</p>
+                    <h3 className="font-subheading text-[18px] font-semibold leading-[26px] text-tan">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-[24px] text-white/85">{item.description}</p>
                   </div>
                 ))}
               </div>
