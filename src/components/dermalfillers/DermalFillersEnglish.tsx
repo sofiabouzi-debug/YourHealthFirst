@@ -11,6 +11,7 @@ import priceListRaw from "@/data/priceList_raw.json";
 import { Icon, type IconName } from "../phlebotomy/icons";
 import { ACCENTS, accentGradient } from "../phlebotomy/accents";
 import TreatmentSteps, { type TreatmentStep } from "../antiwrinkle/TreatmentSteps";
+import ZoomImage from "./ZoomImage";
 
 /**
  * English dermal fillers page.
@@ -546,16 +547,30 @@ export default async function DermalFillersEnglish(props: Props) {
       {/* Treatment areas (new) */}
       <section className="w-full px-5">
         <div className="mx-auto max-w-[1400px] py-[56px] lg:py-[72px]">
-          <SectionBars>Dermal filler treatments in London</SectionBars>
-          <p className="mt-4 max-w-[720px] text-[16px] leading-[26px] text-body-text">
-            Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through.
-            {SHOW_DRAFT_MARKERS ? (
-              <>
-                {" "}
-                <Confirm note="Sofia to check the wording in these cards" />
-              </>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+            <div className="max-w-[720px]">
+              <SectionBars>Dermal filler treatments in London</SectionBars>
+              <p className="mt-4 text-[16px] leading-[26px] text-body-text">
+                Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through.
+                {SHOW_DRAFT_MARKERS ? (
+                  <>
+                    {" "}
+                    <Confirm note="Sofia to check the wording in these cards" />
+                  </>
+                ) : null}
+              </p>
+            </div>
+            {diagramImage ? (
+              <div className="w-full max-w-[260px] shrink-0">
+                <ZoomImage src={diagramImage.src} alt={diagramImage.alt} />
+                {SHOW_DRAFT_MARKERS ? (
+                  <p className="mt-2 text-[13px] leading-[19px]">
+                    <Confirm note="Sofia: this picture names forehead lines, glabellar lines, bunny lines, crow's feet and eyebrow lift, which sound like anti-wrinkle areas. Is it right for dermal fillers?" />
+                  </p>
+                ) : null}
+              </div>
             ) : null}
-          </p>
+          </div>
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             {areaCards.map((c, i) => {
               const a = ACCENTS[i % ACCENTS.length];
@@ -714,22 +729,6 @@ export default async function DermalFillersEnglish(props: Props) {
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-      ) : null}
-
-      {/* The existing treatment areas picture */}
-      {diagramImage ? (
-        <section className="w-full px-5">
-          <div className="mx-auto max-w-[1400px] py-[48px] lg:py-[64px]">
-            <div className="relative mx-auto max-w-[540px] overflow-hidden rounded-[12px] bg-white p-3 shadow-sm">
-              <Image src={diagramImage.src} alt={diagramImage.alt} width={900} height={600} className="h-auto w-full object-contain" />
-            </div>
-            {SHOW_DRAFT_MARKERS ? (
-              <p className="mx-auto mt-3 max-w-[540px] text-center text-[14px]">
-                <Confirm note="Sofia: this picture names forehead lines, glabellar lines, bunny lines, crow's feet and eyebrow lift, which sound like anti-wrinkle areas. Is it right for dermal fillers?" />
-              </p>
-            ) : null}
           </div>
         </section>
       ) : null}
