@@ -581,7 +581,7 @@ export default async function DermalFillersEnglish(props: Props) {
               </p>
             </div>
             {diagramImage ? (
-              <div className="w-full max-w-[260px] shrink-0">
+              <div className="w-full max-w-[420px] shrink-0 lg:w-[400px]">
                 <ZoomImage src={diagramImage.src} alt={diagramImage.alt} />
                 {SHOW_DRAFT_MARKERS ? (
                   <p className="mt-2 text-[13px] leading-[19px]">
