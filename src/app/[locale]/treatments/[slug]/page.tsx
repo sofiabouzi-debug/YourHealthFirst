@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
 import DermalFillersEnglish from "@/components/dermalfillers/DermalFillersEnglish";
+import AntiWrinkleEnglish from "@/components/antiwrinkle/AntiWrinkleEnglish";
 import { treatmentDetails } from "@/data/treatments";
 import { getLocalizedTreatment } from "@/data/localizedTreatments";
 import { getEnglishTreatmentSeo } from "@/data/seoMeta";
@@ -588,6 +589,37 @@ export default async function TreatmentPage({ params }: Props) {
       )}
     </>
   );
+
+  // English anti-wrinkle page: new design. Every word of the current page is kept and shown by this
+  // component (it receives the same text the page uses); new content is only added around it.
+  if (slug === "anti-wrinkles" && locale === "en") {
+    return (
+      <AntiWrinkleEnglish
+        locale={locale}
+        docId={docId}
+        slug={slug}
+        title={pageTitle}
+        tagline={pageTagline}
+        intro={pageIntro}
+        body={pageBodyParagraphs}
+        benefits={pageBenefits}
+        suitableFor={pageSuitableFor}
+        faqs={pageFaqs}
+        codeFaqs={treatment.faqs}
+        priceFrom={pagePriceFrom}
+        results={treatment.results}
+        category={pageCategory}
+        bodyImages={treatment.bodyImages ?? []}
+        gallery={treatment.gallery}
+        related={relatedTreatments.map((tItem) => ({
+          slug: tItem.slug,
+          title: tServices.has(`${tItem.slug}.title`) ? tServices(`${tItem.slug}.title`) : tItem.title,
+          intro: tServices.has(`${tItem.slug}.description`) ? tServices(`${tItem.slug}.description`) : tItem.intro,
+        }))}
+        sanitySettings={sanitySettings}
+      />
+    );
+  }
 
   // English dermal fillers page: new design. Every word of the current page is kept and shown by this
   // component (it receives the same text the page uses); new content is only ever added around it.
