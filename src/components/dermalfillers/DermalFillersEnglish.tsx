@@ -242,6 +242,10 @@ export default async function DermalFillersEnglish(props: Props) {
       answer: `Yes. Temple filler restores volume lost at the temples and is from ${priceOf(/^Temples/)}. At YourHealthFirst we agree the plan with you at your consultation.`,
     },
     {
+      question: "Which dermal filler brands do you use?",
+      answer: `We only use high quality, CE marked fillers, such as Juvederm, Stylage, Teoxane and Restylane, among others. At your consultation we explain which product is suitable for the area you would like treated.`,
+    },
+    {
       question: "What is the difference between lip fillers, lip injections and lip augmentation?",
       answer: `They are different names for the same treatment. Lip filler, lip injections, lip augmentation and lip enhancement all describe having hyaluronic acid filler placed in the lips to add definition, shape or volume. It is a non-surgical treatment, not lip surgery. At YourHealthFirst we explain the options and agree the amount with you at your consultation.${draftNote("please check this explanation of lip filler, lip injections and lip augmentation")}`,
     },
@@ -587,7 +591,7 @@ export default async function DermalFillersEnglish(props: Props) {
             <div className="flex max-w-[720px] flex-col">
               <SectionBars>Dermal filler treatments in London</SectionBars>
               <p className="mt-4 text-[16px] leading-[26px] text-body-text">
-                At YourHealthFirst we treat the lips, cheeks, temples, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
+                At YourHealthFirst we treat the lips, cheeks, temples, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London. We only use high quality, CE marked fillers, such as Juvederm, Stylage, Teoxane and Restylane, among others.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
@@ -1027,7 +1031,7 @@ export default async function DermalFillersEnglish(props: Props) {
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>A card for each area you treat (lips, cheeks, chin, jawline, under eyes, nose, hands), each with its own price</li>
                     <li>The whole price list grouped by area, with the consultation fee</li>
-                    <li>Twenty-seven questions answered and set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Twenty-eight questions answered and set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, so people know what to expect</li>
                     <li>Six before and after photos, and easy ways to book by email, phone or WhatsApp</li>
                     <li>All of your own words are still there</li>
@@ -1048,7 +1052,7 @@ export default async function DermalFillersEnglish(props: Props) {
               </h2>
               <ol className="mt-6 flex flex-col gap-3">
                 {[
-                  "Which filler brands do you use (for example the names of the hyaluronic acid products)? People search for brand names, and the page only says \"CE/FDA-approved premium hyaluronic acid products\" at the moment.",
+                  "You told us you only use high quality CE marked fillers such as Juvederm, Stylage, Teoxane and Restylane, among others. We have added this to the page and to a new question. Please check the wording, and tell us if any brand should be left out or added.",
                   "The picture of treatment areas on the page names forehead lines, glabellar lines, bunny lines, crow's feet and eyebrow lift. These sound like anti-wrinkle areas. Is this the right picture for dermal fillers, or should we replace it?",
                   "The consultation is shown as £50, free of charge if you go ahead with treatment, as on your price list. Is this right for dermal fillers?",
                   "Please read the card for each area, the question \"What is the Russian lips technique?\" and the steps under \"How dermal filler treatment works\". They are written from the text already on your page. Please correct anything that is not how you work.",
