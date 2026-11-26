@@ -221,11 +221,11 @@ export default async function DermalFillersEnglish(props: Props) {
   const extraFaqs: TreatmentFaq[] = [
     {
       question: "How much do dermal fillers cost in London?",
-      answer: `Prices depend on the area and the amount of product. Lip enhancement (Russian lips) is ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. Cheeks or mid face are ${priceOf(/^Cheeks.*1ml/)} for 1ml and ${priceOf(/^Cheeks.*2ml/)} for 2ml, and chin enhancement is ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. Nasolabial folds and marionette lines are ${priceOf(/^Nasolabial.*1ml/)} for 1ml and ${priceOf(/^Nasolabial.*2ml/)} for 2ml. A non-surgical nose job is ${priceOf(/^Non-Surgical/)}, tear trough is ${priceOf(/^Tear/)}, the jawline is ${priceOf(/^Jaw/)} and hand fillers are ${priceOf(/^Hands/)}. The exact price is confirmed at your consultation. See the price table on this page or our full price list.`,
+      answer: `Prices depend on the area and the amount of product. Lip enhancement (Russian lips) is from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. Cheeks or mid face are from ${priceOf(/^Cheeks.*1ml/)} for 1ml and ${priceOf(/^Cheeks.*2ml/)} for 2ml, and chin enhancement is from ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. Nasolabial folds and marionette lines are ${priceOf(/^Nasolabial.*1ml/)} for 1ml and ${priceOf(/^Nasolabial.*2ml/)} for 2ml. A non-surgical nose job is from ${priceOf(/^Non-Surgical/)}, tear trough is from ${priceOf(/^Tear/)}, the jawline is from ${priceOf(/^Jaw/)} and hand fillers are ${priceOf(/^Hands/)}. The exact price is confirmed at your consultation. See the price table on this page or our full price list.`,
     },
     {
       question: "How much do lip fillers cost in London?",
-      answer: `Lip fillers (also called lip injections, lip augmentation or lip enhancement) using the Russian lips technique are ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. How much product is right for you is agreed at your consultation.`,
+      answer: `Lip fillers (also called lip injections, lip augmentation or lip enhancement) using the Russian lips technique are from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. How much product is right for you is agreed at your consultation.`,
     },
     {
       question: "What is the difference between lip fillers, lip injections and lip augmentation?",
@@ -241,7 +241,7 @@ export default async function DermalFillersEnglish(props: Props) {
     },
     {
       question: "How much does chin filler cost in London?",
-      answer: `Chin enhancement is ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. How much product is right for you is agreed at your consultation.`,
+      answer: `Chin enhancement is from ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. How much product is right for you is agreed at your consultation.`,
     },
     {
       question: "What does jaw filler do?",
@@ -1039,7 +1039,7 @@ export default async function DermalFillersEnglish(props: Props) {
                   "Do you treat any other areas with filler (for example the temples) that we should add?",
                   "People search for 0.5ml lip filler and for Juvederm lip filler. Do you offer 0.5ml, and at what price? Which brand do you use, and do you place lip filler with a cannula or a needle? We have not written any of this on the page yet.",
                   "Please read the new questions about lip filler (names, natural look, dissolving), chin filler cost and jaw filler. They are written from the text and prices already on your page.",
-                  "Prices: the page now shows chin filler from £250 for 1ml (it was £500) and cheeks and mid face from £350 for 1ml (it was £500). The 2ml prices for chin and cheeks are unchanged at £700. We also removed the 2ml lip filler price (it was £550) from the price table and from the questions, so lips now show 1ml only. Are all of these right?",
+                  "Prices: the page and the full price list now show these \"from\" prices: Russian lips from £250 for 1ml (the 2ml lip price of £550 is removed), nasolabial folds from £375, chin from £250 (was £500), cheeks and mid face from £350 (was £500), non-surgical nose job from £400 (was £500), tear trough from £500 (was £550), jawline from £350 (was £450). The 2ml prices for nasolabial folds, chin and cheeks are unchanged at £700. Are all of these right?",
                 ].map((q, i) => (
                   <li key={q} className="flex gap-4 border-t border-[#d9a400]/40 pt-3 text-[15px] leading-[23px] text-body-text">
                     <span className="w-6 shrink-0 font-semibold text-forest">{i + 1}.</span>

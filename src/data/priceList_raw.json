@@ -164,23 +164,23 @@
     "items": [
       {
         "service": "Lip enhancement / Russian lips",
-        "price": "£250–£350 (1ml) / £550 (2ml)"
+        "price": "From £250 (1ml)"
       },
       {
         "service": "Nasolabial folds / Marionette lines",
-        "price": "£375 (1ml) / £700 (2ml)"
+        "price": "From £375 (1ml) / £700 (2ml)"
       },
       {
         "service": "Chin enhancement",
-        "price": "£500 (1ml) / £700 (2ml)"
+        "price": "From £250 (1ml) / £700 (2ml)"
       },
       {
         "service": "Cheeks / Mid-face",
-        "price": "£500 (1ml) / £700 (2ml)"
+        "price": "From £350 (1ml) / £700 (2ml)"
       },
       {
         "service": "Non-surgical rhinoplasty (nose job)",
-        "price": "£500"
+        "price": "From £400"
       },
       {
         "service": "Glabellar lines (frown)",
@@ -188,11 +188,11 @@
       },
       {
         "service": "Tear trough / Under eyes / Dark circles",
-        "price": "£550"
+        "price": "From £500"
       },
       {
         "service": "Jawline",
-        "price": "£450"
+        "price": "From £350"
       },
       {
         "service": "Hand fillers",
