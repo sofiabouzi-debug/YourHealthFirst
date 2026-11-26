@@ -22,7 +22,15 @@ export type IconName =
   | "jaw"
   | "nose"
   | "hand"
-  | "undo";
+  | "undo"
+  | "neck"
+  | "chest"
+  | "arm"
+  | "knee"
+  | "sparkle"
+  | "layers"
+  | "clock"
+  | "face";
 
 /** Soft second tone: the same colour as the outline, at low opacity, so each icon reads as duotone. */
 const duo = { fill: "currentColor", fillOpacity: 0.22, stroke: "none" } as const;
@@ -231,6 +239,73 @@ export function Icon({ name, className }: { name: IconName; className?: string }
           <path d="M9 7H4v5" />
           <path d="M4.5 11.5A8 8 0 1 1 6 16.5" />
           <circle cx="12" cy="12.5" r="2" {...duo} />
+        </svg>
+      );
+    case "neck":
+      return (
+        <svg className={className} {...common}>
+          <circle cx="12" cy="7" r="4" {...duo} />
+          <path d="M9.8 10.6v4.1L4.5 17.5V21h15v-3.5l-5.3-2.8v-4.1" {...duo} />
+          <circle cx="12" cy="7" r="4" />
+          <path d="M9.8 10.6v4.1L4.5 17.5V21M14.2 10.6v4.1l5.3 2.8V21" />
+          <path d="M9.8 14.7c1.4 1 3 1 4.4 0" />
+        </svg>
+      );
+    case "chest":
+      return (
+        <svg className={className} {...common}>
+          <path d="m3 8 4.5-2.5C9 7.5 10.5 9 12 9s3-1.5 4.5-3.5L21 8v12H3Z" {...duo} />
+          <path d="m3 8 4.5-2.5C9 7.5 10.5 9 12 9s3-1.5 4.5-3.5L21 8v12H3Z" />
+          <path d="M9.2 14.2c1.6 1 4 1 5.6 0" />
+        </svg>
+      );
+    case "arm":
+      return (
+        <svg className={className} {...common}>
+          <path d="M4 17c2.4-1.2 3.8-3.8 4.6-8a3 3 0 0 1 5.8-.6l.7 3.1c3.2.2 5.4 2.2 5.4 5.3 0 2.2-1.4 3.7-3.8 3.7H8c-2.6 0-4-1.4-4-3.5Z" {...duo} />
+          <path d="M4 17c2.4-1.2 3.8-3.8 4.6-8a3 3 0 0 1 5.8-.6l.7 3.1c3.2.2 5.4 2.2 5.4 5.3 0 2.2-1.4 3.7-3.8 3.7H8c-2.6 0-4-1.4-4-3.5Z" />
+          <path d="M11 15.2c1 .7 2.3.9 3.5.5" />
+        </svg>
+      );
+    case "knee":
+      return (
+        <svg className={className} {...common}>
+          <circle cx="12.5" cy="13" r="3" {...duo} />
+          <path d="M7 3.5 12.5 13 7 20.5" />
+          <circle cx="12.5" cy="13" r="3" />
+          <path d="M11 11.2c.8-.5 1.8-.5 2.6 0" />
+        </svg>
+      );
+    case "sparkle":
+      return (
+        <svg className={className} {...common}>
+          <path d="m11 3 1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9Z" {...duo} />
+          <path d="m11 3 1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9Z" />
+          <path d="M18.5 15.5v4M16.5 17.5h4" />
+        </svg>
+      );
+    case "layers":
+      return (
+        <svg className={className} {...common}>
+          <path d="m12 3 9 4.5-9 4.5-9-4.5Z" {...duo} />
+          <path d="m12 3 9 4.5-9 4.5-9-4.5Z" />
+          <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
+        </svg>
+      );
+    case "clock":
+      return (
+        <svg className={className} {...common}>
+          <circle cx="12" cy="12" r="9" {...duo} />
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5.2l3.3 2" />
+        </svg>
+      );
+    case "face":
+      return (
+        <svg className={className} {...common}>
+          <path d="M6 10a6 6 0 1 1 12 0c0 4-2 8.5-6 9.5C8 18.5 6 14 6 10Z" {...duo} />
+          <path d="M6 10a6 6 0 1 1 12 0c0 4-2 8.5-6 9.5C8 18.5 6 14 6 10Z" />
+          <path d="M9.5 10.2v.01M14.5 10.2v.01M9.8 14.2c1.4 1 3 1 4.4 0" />
         </svg>
       );
     default:

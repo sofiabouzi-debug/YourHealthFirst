@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TreatmentFaqAccordion from "@/components/TreatmentFaqAccordion";
 import DermalFillersEnglish from "@/components/dermalfillers/DermalFillersEnglish";
+import ProfhiloEnglish from "@/components/profhilo/ProfhiloEnglish";
 import AntiWrinkleEnglish from "@/components/antiwrinkle/AntiWrinkleEnglish";
 import { treatmentDetails } from "@/data/treatments";
 import { getLocalizedTreatment } from "@/data/localizedTreatments";
@@ -644,6 +645,39 @@ export default async function TreatmentPage({ params }: Props) {
         diagramImage={treatment.diagramImage}
         advantages={treatment.advantages}
         priceList={treatment.priceList ?? []}
+        gallery={treatment.gallery}
+        related={relatedTreatments.map((tItem) => ({
+          slug: tItem.slug,
+          title: tServices.has(`${tItem.slug}.title`) ? tServices(`${tItem.slug}.title`) : tItem.title,
+          intro: tServices.has(`${tItem.slug}.description`) ? tServices(`${tItem.slug}.description`) : tItem.intro,
+        }))}
+        sanitySettings={sanitySettings}
+      />
+    );
+  }
+
+  // English Profhilo page: new design. Every word of the current page is kept and shown by this
+  // component (it receives the same text the page uses); new content is only ever added around it.
+  if (slug === "profhilo" && locale === "en") {
+    return (
+      <ProfhiloEnglish
+        locale={locale}
+        docId={docId}
+        slug={slug}
+        title={pageTitle}
+        tagline={pageTagline}
+        intro={pageIntro}
+        body={pageBodyParagraphs}
+        benefits={pageBenefits}
+        suitableFor={pageSuitableFor}
+        faqs={pageFaqs}
+        priceFrom={pagePriceFrom}
+        results={treatment.results}
+        category={pageCategory}
+        bodyImage={treatment.bodyImages?.[0]}
+        areas={treatment.treatmentAreas ?? []}
+        areasImage={treatment.treatmentAreasInlineImage}
+        guide={treatment.extendedGuide}
         gallery={treatment.gallery}
         related={relatedTreatments.map((tItem) => ({
           slug: tItem.slug,
