@@ -530,7 +530,7 @@ export const treatmentDetails: TreatmentDetail[] = [
     ],
     body: [
       "As we age, our skin loses collagen, elastin and hyaluronic acid, leading to hollowing, sagging and deeper lines. Dermal fillers replenish this lost volume and stimulate collagen production, creating a refreshed and youthful appearance without surgery.",
-      "At YourHealthFirst, Sofia specialises in a wide range of filler treatments: lip enhancement using the Russian lips technique, tear trough treatment for dark circles and hollow eyes, non-surgical rhinoplasty, cheek augmentation, jawline contouring, nasolabial folds and marionette lines correction, and hand rejuvenation.",
+      "At YourHealthFirst, we specialise in a wide range of filler treatments: lip enhancement using the Russian lips technique, tear trough treatment for dark circles and hollow eyes, non-surgical rhinoplasty, cheek augmentation, jawline contouring, nasolabial folds and marionette lines correction, and hand rejuvenation.",
       "All fillers used are CE/FDA-approved premium hyaluronic acid products. Treatments are performed with the utmost care for symmetry and proportion, ensuring a result that looks refreshed, not overdone. Dissolving (hyaluronidase) is also available should a correction be needed.",
       "Following a consultation, most dermal filler appointments take around 25 to 50 minutes from start to finish, depending on how many areas are being treated. On average, most patients choose to repeat their filler course after 4–6 months to maintain results — lip fillers in particular, when performed with premium products, tend to hold their volume for a longer-lasting effect.",
     ],
@@ -608,7 +608,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       {
         question: "Will I look overfilled or unnatural?",
         answer:
-          "No — Sofia's approach prioritises symmetry, proportion and a natural outcome over maximum volume. Filler is built up gradually and conservatively, and dissolving is always available if you ever want a correction.",
+          "No — our approach at YourHealthFirst prioritises symmetry, proportion and a natural outcome over maximum volume. Filler is built up gradually and conservatively, and dissolving is always available if you ever want a correction.",
       },
       {
         question: "What are the side-effects?",

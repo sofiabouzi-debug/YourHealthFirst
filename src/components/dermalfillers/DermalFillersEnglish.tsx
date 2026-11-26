@@ -177,7 +177,7 @@ const areaCards: AreaCard[] = [
 
 const steps: TreatmentStep[] = [
   { icon: "consult", title: "Book", text: "Email us (preferred), or call or WhatsApp. Tell us which areas you would like to look at." },
-  { icon: "assess", title: "Consultation", text: "Sofia takes your medical history, looks at your face and agrees with you which areas and how much product are right for you." },
+  { icon: "assess", title: "Consultation", text: "At YourHealthFirst we take your medical history, look at your face and agree with you which areas and how much product are right for you." },
   { icon: "inject", title: "Treatment", text: "A numbing cream is applied in sensitive areas such as the lips. Most appointments take around 25 to 50 minutes." },
   { icon: "aftercare", title: "Aftercare", text: "No strenuous exercise, alcohol or heat (saunas, sunbeds) for 24 to 48 hours. Do not press or massage the area unless told to." },
   { icon: "results", title: "Results", text: "You see the result straight away. It settles and looks more natural over the next 1 to 2 weeks. A follow-up at 2 to 4 weeks is available." },
@@ -229,11 +229,11 @@ export default async function DermalFillersEnglish(props: Props) {
     },
     {
       question: "What is the difference between lip fillers, lip injections and lip augmentation?",
-      answer: `They are different names for the same treatment. Lip filler, lip injections, lip augmentation and lip enhancement all describe having hyaluronic acid filler placed in the lips to add definition, shape or volume. It is a non-surgical treatment, not lip surgery. Sofia explains the options and agrees the amount with you at your consultation.${draftNote("please check this explanation of lip filler, lip injections and lip augmentation")}`,
+      answer: `They are different names for the same treatment. Lip filler, lip injections, lip augmentation and lip enhancement all describe having hyaluronic acid filler placed in the lips to add definition, shape or volume. It is a non-surgical treatment, not lip surgery. At YourHealthFirst we explain the options and agree the amount with you at your consultation.${draftNote("please check this explanation of lip filler, lip injections and lip augmentation")}`,
     },
     {
       question: "Can lip filler look natural?",
-      answer: `That is the aim. Sofia looks at symmetry and proportion first and builds the filler up gradually, so your lips look like yours rather than overdone. The result is visible straight away and settles over the next 1 to 2 weeks.${draftNote("please confirm this is how you describe a natural lip result")}`,
+      answer: `That is the aim. At YourHealthFirst we look at symmetry and proportion first and build the filler up gradually, so your lips look like yours rather than overdone. The result is visible straight away and settles over the next 1 to 2 weeks.${draftNote("please confirm this is how you describe a natural lip result")}`,
     },
     {
       question: "Can lip filler be dissolved or corrected?",
@@ -245,7 +245,7 @@ export default async function DermalFillersEnglish(props: Props) {
     },
     {
       question: "What does jaw filler do?",
-      answer: `Jaw filler (also called jawline fillers) is used to define and contour the lower face. It is from ${priceOf(/^Jaw/)} and, like the cheeks, the jawline can hold the result for longer than the lips. Sofia agrees the plan with you at your consultation.`,
+      answer: `Jaw filler (also called jawline fillers) is used to define and contour the lower face. It is from ${priceOf(/^Jaw/)} and, like the cheeks, the jawline can hold the result for longer than the lips. At YourHealthFirst we agree the plan with you at your consultation.`,
     },
     {
       question: "How long does the appointment take?",
@@ -254,7 +254,7 @@ export default async function DermalFillersEnglish(props: Props) {
     },
     {
       question: "Do I need a consultation first?",
-      answer: `Yes. Sofia takes a full medical history and looks at your face before any treatment, so that the right areas and the right amount of product are agreed with you. The consultation is ${consultationPrice}${consultationNote ? `, and ${consultationNote.charAt(0).toLowerCase()}${consultationNote.slice(1)}` : ""}.`,
+      answer: `Yes. At YourHealthFirst we take a full medical history and look at your face before any treatment, so that the right areas and the right amount of product are agreed with you. The consultation is ${consultationPrice}${consultationNote ? `, and ${consultationNote.charAt(0).toLowerCase()}${consultationNote.slice(1)}` : ""}.`,
     },
     {
       question: "What is the Russian lips technique?",
@@ -267,7 +267,7 @@ export default async function DermalFillersEnglish(props: Props) {
     {
       question: "What is the difference between dermal fillers and anti-wrinkle injections?",
       answer:
-        "Dermal fillers add volume or shape to an area, for example the lips, cheeks, chin or under the eyes. Anti-wrinkle injections work differently: they relax the muscles that cause expression lines such as frown lines and crow's feet. Some people have both. At your consultation Sofia explains which is suitable for you.",
+        "Dermal fillers add volume or shape to an area, for example the lips, cheeks, chin or under the eyes. Anti-wrinkle injections work differently: they relax the muscles that cause expression lines such as frown lines and crow's feet. Some people have both. At your consultation at YourHealthFirst we explain which is suitable for you.",
     },
     {
       question: "Where can I have dermal fillers in London?",
@@ -277,7 +277,7 @@ export default async function DermalFillersEnglish(props: Props) {
     {
       question: "Can I see before and after photos of dermal fillers?",
       answer:
-        "Yes. Our gallery shows real before and after results from patients treated at YourHealthFirst Clinic in London. Every face is different, so your own results will vary, and Sofia will explain what is realistic for you at your consultation.",
+        "Yes. Our gallery shows real before and after results from patients treated at YourHealthFirst Clinic in London. Every face is different, so your own results will vary, and at YourHealthFirst we will explain what is realistic for you at your consultation.",
     },
     {
       question: "Who carries out the treatment?",
@@ -571,7 +571,7 @@ export default async function DermalFillersEnglish(props: Props) {
             <div className="flex max-w-[720px] flex-col">
               <SectionBars>Dermal filler treatments in London</SectionBars>
               <p className="mt-4 text-[16px] leading-[26px] text-body-text">
-                Sofia treats the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
+                At YourHealthFirst we treat the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
@@ -582,7 +582,7 @@ export default async function DermalFillersEnglish(props: Props) {
               <div className="mt-8 flex flex-col gap-4 rounded-[18px] border border-tan/40 bg-cream p-6">
                 <h3 className="font-subheading text-[16px] font-semibold text-forest">Not sure which area is right for you?</h3>
                 <p className="text-[15px] leading-[24px] text-body-text">
-                  Sofia looks at your face and agrees the areas and the amount of product with you at a consultation. The consultation is{" "}
+                  At YourHealthFirst we look at your face and agree the areas and the amount of product with you at a consultation. The consultation is{" "}
                   <strong className="font-semibold text-forest">{consultationPrice}</strong>
                   {consultationNote ? `, and ${consultationNote.charAt(0).toLowerCase()}${consultationNote.slice(1)}` : ""}.
                 </p>
@@ -708,7 +708,7 @@ export default async function DermalFillersEnglish(props: Props) {
                 <h3 className="font-subheading text-[14px] font-bold tracking-[1.2px] text-cream uppercase">Start with a consultation</h3>
                 <p className="font-subheading text-[28px] font-semibold text-white">{consultationPrice}</p>
                 <p className="text-[14px] leading-[22px] text-white/80">
-                  Sofia takes your medical history, looks at your face and agrees with you which areas and how much product are right for you.
+                  At YourHealthFirst we take your medical history, look at your face and agree with you which areas and how much product are right for you.
                 </p>
               </div>
               <a
@@ -811,7 +811,7 @@ export default async function DermalFillersEnglish(props: Props) {
                 Master of Science (MSc), Postgraduate Diploma (PGDip), and a Level 7 Qualification in Aesthetic Medicine. Founder of YourHealthFirst Clinic in Harley Street, London.
               </p>
               <p className="text-[14px] leading-[22px] text-white/85">
-                Sofia carries out your consultation and treatment.
+                At YourHealthFirst we carry out your consultation and treatment personally.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
