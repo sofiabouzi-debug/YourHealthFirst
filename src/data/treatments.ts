@@ -513,6 +513,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       alt: "Dermal fillers treatment areas — eyebrow lift, crow's feet, square jaw, dimpled chin, forehead lines, glabellar lines, bunny lines and smile lift",
     },
     priceList: [
+      { area: "Lip Enhancement (Russian Lips) — 0.5ml", price: "£200" },
       { area: "Lip Enhancement (Russian Lips) — 1ml", price: "£250" },
       { area: "Nasolabial Folds / Marionette Lines — 1ml", price: "£375" },
       { area: "Nasolabial Folds / Marionette Lines — 2ml", price: "£700" },
@@ -520,6 +521,7 @@ export const treatmentDetails: TreatmentDetail[] = [
       { area: "Chin Enhancement — 2ml", price: "£700" },
       { area: "Cheeks / Mid Face — 1ml", price: "£350" },
       { area: "Cheeks / Mid Face — 2ml", price: "£700" },
+      { area: "Temples", price: "£350" },
       { area: "Non-Surgical Nose Job (Rhinoplasty)", price: "£400" },
       { area: "Glabellar Lines (Frown)", price: "£350" },
       { area: "Tear Trough / Under Eyes / Dark Circles", price: "£500" },

@@ -164,7 +164,7 @@
     "items": [
       {
         "service": "Lip enhancement / Russian lips",
-        "price": "From £250 (1ml)"
+        "price": "From £200 (0.5ml) / £250 (1ml)"
       },
       {
         "service": "Nasolabial folds / Marionette lines",
@@ -177,6 +177,10 @@
       {
         "service": "Cheeks / Mid-face",
         "price": "From £350 (1ml) / £700 (2ml)"
+      },
+      {
+        "service": "Temples",
+        "price": "From £350"
       },
       {
         "service": "Non-surgical rhinoplasty (nose job)",

@@ -164,7 +164,7 @@
     "items": [
       {
         "service": "Rehaussement des lèvres / lèvres russes",
-        "price": "From £250 (1ml)"
+        "price": "From £200 (0.5ml) / £250 (1ml)"
       },
       {
         "service": "Sillons nasogéniens / Lignes de marionnettes",
@@ -177,6 +177,10 @@
       {
         "service": "Joues / Milieu du visage",
         "price": "From £350 (1ml) / £700 (2ml)"
+      },
+      {
+        "service": "Tempes",
+        "price": "From £350"
       },
       {
         "service": "Rhinoplastie non chirurgicale (travail du nez)",

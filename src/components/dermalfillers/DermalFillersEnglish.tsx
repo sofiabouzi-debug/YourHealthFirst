@@ -101,7 +101,7 @@ const consultationNote = consultation?.note ?? "";
 
 const priceGroupDefs: { title: string; icon: IconName; accent: number; test: RegExp }[] = [
   { title: "Lips", icon: "lips", accent: 3, test: /^Lip/ },
-  { title: "Cheeks and chin", icon: "cheek", accent: 4, test: /^(Cheeks|Chin)/ },
+  { title: "Cheeks, temples and chin", icon: "cheek", accent: 4, test: /^(Cheeks|Temples|Chin)/ },
   { title: "Lines and folds", icon: "target", accent: 2, test: /^(Nasolabial|Glabellar)/ },
   { title: "Eyes, nose, jaw and hands", icon: "eye", accent: 5, test: /^(Tear|Non-Surgical|Jaw|Hands)/ },
   { title: "Dissolving filler", icon: "undo", accent: 1, test: /^Dissolving/ },
@@ -121,14 +121,20 @@ const areaCards: AreaCard[] = [
   {
     icon: "lips",
     title: "Lip fillers in London (Russian lips)",
-    text: "Natural-looking lip fillers, also called lip injections, lip augmentation or lip enhancement, using the Russian lips technique, with symmetry and proportion in mind. Lips can look noticeably swollen for the first 24 to 48 hours, and lip filler tends to last 6 to 12 months.",
-    priceKey: /^Lip Enhancement \(Russian Lips\) — 1ml/,
+    text: "Natural-looking lip fillers, also called lip injections, lip augmentation or lip enhancement, using the Russian lips technique, with symmetry and proportion in mind. Lips can look noticeably swollen for the first 24 to 48 hours, and lip filler tends to last 6 to 12 months. Lip filler is available from 0.5ml.",
+    priceKey: /^Lip Enhancement \(Russian Lips\) — 0\.5ml/,
   },
   {
     icon: "cheek",
     title: "Cheek fillers and mid face",
     text: "Cheek filler (cheek augmentation) replaces volume lost with age and supports the mid face. Structural areas like the cheeks can last longer than the lips.",
     priceKey: /^Cheeks/,
+  },
+  {
+    icon: "cheek",
+    title: "Temple filler",
+    text: "Filler to restore volume lost at the temples, which can leave the upper face looking hollow.",
+    priceKey: /^Temples/,
   },
   {
     icon: "jaw",
@@ -221,11 +227,19 @@ export default async function DermalFillersEnglish(props: Props) {
   const extraFaqs: TreatmentFaq[] = [
     {
       question: "How much do dermal fillers cost in London?",
-      answer: `Prices depend on the area and the amount of product. Lip enhancement (Russian lips) is from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. Cheeks or mid face are from ${priceOf(/^Cheeks.*1ml/)} for 1ml and ${priceOf(/^Cheeks.*2ml/)} for 2ml, and chin enhancement is from ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. Nasolabial folds and marionette lines are ${priceOf(/^Nasolabial.*1ml/)} for 1ml and ${priceOf(/^Nasolabial.*2ml/)} for 2ml. A non-surgical nose job is from ${priceOf(/^Non-Surgical/)}, tear trough is from ${priceOf(/^Tear/)}, the jawline is from ${priceOf(/^Jaw/)} and hand fillers are ${priceOf(/^Hands/)}. The exact price is confirmed at your consultation. See the price table on this page or our full price list.`,
+      answer: `Prices depend on the area and the amount of product. Lip enhancement (Russian lips) is from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 0\.5ml/)} for 0.5ml and from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. Temples are from ${priceOf(/^Temples/)}. Cheeks or mid face are from ${priceOf(/^Cheeks.*1ml/)} for 1ml and ${priceOf(/^Cheeks.*2ml/)} for 2ml, and chin enhancement is from ${priceOf(/^Chin Enhancement — 1ml/)} for 1ml and ${priceOf(/^Chin Enhancement — 2ml/)} for 2ml. Nasolabial folds and marionette lines are ${priceOf(/^Nasolabial.*1ml/)} for 1ml and ${priceOf(/^Nasolabial.*2ml/)} for 2ml. A non-surgical nose job is from ${priceOf(/^Non-Surgical/)}, tear trough is from ${priceOf(/^Tear/)}, the jawline is from ${priceOf(/^Jaw/)} and hand fillers are ${priceOf(/^Hands/)}. The exact price is confirmed at your consultation. See the price table on this page or our full price list.`,
     },
     {
       question: "How much do lip fillers cost in London?",
-      answer: `Lip fillers (also called lip injections, lip augmentation or lip enhancement) using the Russian lips technique are from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. How much product is right for you is agreed at your consultation.`,
+      answer: `Lip fillers (also called lip injections, lip augmentation or lip enhancement) using the Russian lips technique are from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 0\.5ml/)} for 0.5ml and from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)} for 1ml. How much product is right for you is agreed at your consultation.`,
+    },
+    {
+      question: "Do you offer 0.5ml lip filler?",
+      answer: `Yes. Lip filler is available from 0.5ml, from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 0\.5ml/)}. 1ml is from ${priceOf(/^Lip Enhancement \(Russian Lips\) — 1ml/)}. How much product is right for you is agreed at your consultation.`,
+    },
+    {
+      question: "Do you treat the temples with filler?",
+      answer: `Yes. Temple filler restores volume lost at the temples and is from ${priceOf(/^Temples/)}. At YourHealthFirst we agree the plan with you at your consultation.`,
     },
     {
       question: "What is the difference between lip fillers, lip injections and lip augmentation?",
@@ -304,9 +318,11 @@ export default async function DermalFillersEnglish(props: Props) {
   ];
 
   const popular = [
+    { label: "Lips, 0.5ml (Russian lips)", re: /^Lip Enhancement \(Russian Lips\) — 0\.5ml/ },
     { label: "Lips, 1ml (Russian lips)", re: /^Lip Enhancement \(Russian Lips\) — 1ml/ },
     { label: "Cheeks / mid face, 1ml", re: /^Cheeks.*1ml/ },
     { label: "Chin, 1ml", re: /^Chin.*1ml/ },
+    { label: "Temples", re: /^Temples/ },
     { label: "Tear trough", re: /^Tear/ },
   ];
 
@@ -571,7 +587,7 @@ export default async function DermalFillersEnglish(props: Props) {
             <div className="flex max-w-[720px] flex-col">
               <SectionBars>Dermal filler treatments in London</SectionBars>
               <p className="mt-4 text-[16px] leading-[26px] text-body-text">
-                At YourHealthFirst we treat the lips, cheeks, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
+                At YourHealthFirst we treat the lips, cheeks, temples, chin, jawline, under eyes, nose, nasolabial folds and hands. Choose the area you would like to look at, and book a consultation to talk it through. We are at 2 Wimpole Street in Marylebone, in the Harley Street medical district of central London.
                 {SHOW_DRAFT_MARKERS ? (
                   <>
                     {" "}
@@ -624,7 +640,7 @@ export default async function DermalFillersEnglish(props: Props) {
               return (
                 <div
                   key={c.title}
-                  className="flex flex-col gap-4 rounded-[18px] border p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  className={`flex flex-col gap-4 rounded-[18px] border p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md${i === areaCards.length - 1 && areaCards.length % 3 === 1 ? " xl:col-span-3" : ""}`}
                   style={{ background: a.tint, borderColor: a.line, borderTop: `4px solid ${a.grad[0]}` }}
                 >
                   <div className="flex items-center gap-3">
@@ -1011,7 +1027,7 @@ export default async function DermalFillersEnglish(props: Props) {
                     <li>The heading says &ldquo;in London&rdquo;, which is how people search</li>
                     <li>A card for each area you treat (lips, cheeks, chin, jawline, under eyes, nose, hands), each with its own price</li>
                     <li>The whole price list grouped by area, with the consultation fee</li>
-                    <li>Twenty-five questions answered and set up so Google can show them directly (the current page has none set up)</li>
+                    <li>Twenty-seven questions answered and set up so Google can show them directly (the current page has none set up)</li>
                     <li>How treatment works, so people know what to expect</li>
                     <li>Six before and after photos, and easy ways to book by email, phone or WhatsApp</li>
                     <li>All of your own words are still there</li>
@@ -1036,8 +1052,8 @@ export default async function DermalFillersEnglish(props: Props) {
                   "The picture of treatment areas on the page names forehead lines, glabellar lines, bunny lines, crow's feet and eyebrow lift. These sound like anti-wrinkle areas. Is this the right picture for dermal fillers, or should we replace it?",
                   "The consultation is shown as £50, free of charge if you go ahead with treatment, as on your price list. Is this right for dermal fillers?",
                   "Please read the card for each area, the question \"What is the Russian lips technique?\" and the steps under \"How dermal filler treatment works\". They are written from the text already on your page. Please correct anything that is not how you work.",
-                  "Do you treat any other areas with filler (for example the temples) that we should add?",
-                  "People search for 0.5ml lip filler and for Juvederm lip filler. Do you offer 0.5ml, and at what price? Which brand do you use, and do you place lip filler with a cannula or a needle? We have not written any of this on the page yet.",
+                  "People search for Juvederm lip filler and for cannula lip filler. Which brand do you use for lips, and do you place lip filler with a cannula or a needle? We have not written this on the page yet.",
+                  "You told us you offer 0.5ml lip filler from £200 and temple filler from £350. We have added both to the page, the price list, the questions and the price table. Please check the wording of the new temple card and the two new questions.",
                   "Please read the new questions about lip filler (names, natural look, dissolving), chin filler cost and jaw filler. They are written from the text and prices already on your page.",
                   "Prices: the page and the full price list now show these \"from\" prices: Russian lips from £250 for 1ml (the 2ml lip price of £550 is removed), nasolabial folds from £375, chin from £250 (was £500), cheeks and mid face from £350 (was £500), non-surgical nose job from £400 (was £500), tear trough from £500 (was £550), jawline from £350 (was £450). The 2ml prices for nasolabial folds, chin and cheeks are unchanged at £700. Are all of these right?",
                 ].map((q, i) => (

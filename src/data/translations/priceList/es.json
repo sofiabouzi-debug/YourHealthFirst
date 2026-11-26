@@ -164,7 +164,7 @@
     "items": [
       {
         "service": "Realce de labios / labios rusos",
-        "price": "From £250 (1ml)"
+        "price": "From £200 (0.5ml) / £250 (1ml)"
       },
       {
         "service": "Pliegues nasolabiales / Líneas de marioneta",
@@ -177,6 +177,10 @@
       {
         "service": "Mejillas / Media cara",
         "price": "From £350 (1ml) / £700 (2ml)"
+      },
+      {
+        "service": "Sienes",
+        "price": "From £350"
       },
       {
         "service": "Rinoplastia no quirúrgica (operación de nariz)",

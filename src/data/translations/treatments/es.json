@@ -177,12 +177,12 @@
     },
     "priceList": [
       {
-        "area": "Realce de labios (labios rusos) — 1 ml",
-        "price": "£250 – £350"
+        "area": "Realce de labios (labios rusos) — 0.5 ml",
+        "price": "£200"
       },
       {
-        "area": "Realce de labios (labios rusos) — 2 ml",
-        "price": "£ 550"
+        "area": "Realce de labios (labios rusos) — 1 ml",
+        "price": "£250"
       },
       {
         "area": "Pliegues nasolabiales/líneas de marioneta — 1 ml",
@@ -194,7 +194,7 @@
       },
       {
         "area": "Mejora del mentón: 1 ml",
-        "price": "£ 500"
+        "price": "£250"
       },
       {
         "area": "Mejora del mentón: 2 ml",
@@ -202,15 +202,19 @@
       },
       {
         "area": "Mejillas/Parte media del rostro — 1 ml",
-        "price": "£ 500"
+        "price": "£350"
       },
       {
         "area": "Mejillas/Parte media del rostro — 2 ml",
         "price": "£ 700"
       },
       {
+        "area": "Sienes",
+        "price": "£350"
+      },
+      {
         "area": "Cirugía de nariz no quirúrgica (rinoplastia)",
-        "price": "£ 500"
+        "price": "£400"
       },
       {
         "area": "Líneas glabelares (fruncido el ceño)",
@@ -218,11 +222,11 @@
       },
       {
         "area": "Canal lagrimal/Debajo de los ojos/Ojeras",
-        "price": "£ 550"
+        "price": "£500"
       },
       {
         "area": "Línea de la mandíbula",
-        "price": "£450"
+        "price": "£350"
       },
       {
         "area": "Rellenos de manos",
