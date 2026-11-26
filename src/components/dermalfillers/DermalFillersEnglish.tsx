@@ -23,7 +23,7 @@ import ZoomImage from "./ZoomImage";
  * SHOW_DRAFT_MARKERS: while true, the page shows a draft banner and highlights the wording Sofia
  * still has to confirm. Set it to false before this page goes to the live site.
  */
-const SHOW_DRAFT_MARKERS = true;
+const SHOW_DRAFT_MARKERS = false;
 
 const PHONE_TEL = "tel:02072253582";
 const WHATSAPP_URL = "https://wa.me/447818474041";
